@@ -11,10 +11,14 @@ TEMPLATE = lib
 
 DEFINES += CRAFTER2DLIB_LIBRARY
 
-SOURCES += crafter2dlib.cpp
+SOURCES += \
+    message.cpp \
+    utils.cpp
 
-HEADERS += crafter2dlib.hpp\
-        Crafter2Dlib_global.hpp
+HEADERS +=\
+    message.hpp \
+    utils.hpp \
+    crafter2dlibglobal.hpp
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -34,3 +38,15 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
+
+
+
+
+
+
+
+
+
+
