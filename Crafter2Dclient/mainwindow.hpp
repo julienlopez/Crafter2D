@@ -27,6 +27,7 @@ private slots:
     void connecte();
     void deconnecte();
     void erreurSocket(QAbstractSocket::SocketError);
+    void sendLogin(QString, QString);
 
 signals:
     void messageRecu(Message);

@@ -46,7 +46,9 @@ void MainWindow::donneesRecues()
 void MainWindow::connecte()
 {
     centralWidget()->deleteLater();
-    setCentralWidget(new LoginWidget);
+    LoginWidget* lw = new LoginWidget;
+    connect(lw, SIGNAL(sendLogin(QString,QString)), this, SLOT(sendLogin(QString, QString)));
+    setCentralWidget(lw);
 }
 
 void MainWindow::deconnecte()
@@ -71,4 +73,10 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
     default:
         QMessageBox::warning(this, erreur, "ERREUR : ") + socket->errorString();
     }
+}
+
+void MainWindow::sendLogin(QString, QString)
+{
+    //TODO envoi du login
+    send(/*Login*/);
 }
