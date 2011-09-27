@@ -1,10 +1,13 @@
 #include "client.hpp"
 
 #include <Utils>
+#include <MessageLogin>
 
 #include <cassert>
 
 #include <QTcpSocket>
+
+#include <QDebug>
 
 Client::Client(QTcpSocket* socket, QObject* parent) :
     QObject(parent), m_socket(socket), tailleMessage(0)
@@ -32,6 +35,7 @@ void Client::write(const QByteArray& paquet)
 
 void Client::donneesRecues()
 {
+    qDebug() << "Client::donneesRecues";
     assert(m_socket == sender());
     QDataStream in(m_socket);
     if(tailleMessage == 0) // Si on ne connaît pas encore la taille du message, on essaie de la récupérer
@@ -47,5 +51,15 @@ void Client::donneesRecues()
     Message message;
     in >> message;
 
-    Utils::out << "Données reçues : " << message.id();
+    if(message.id() == 0)
+    {
+        MessageLogin* m = qobject_cast<MessageLogin*>(&message);
+        if(m == 0)
+        {
+            Utils::out << "Impossible de caster!!!!!";
+            return ;
+        }
+        Utils::out << "Login de " << m->login() << " => " << m->mdp();
+    }
+    else Utils::out << "Données reçues : " << message.id();
 }

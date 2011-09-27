@@ -11,33 +11,24 @@ TEMPLATE = lib
 
 DEFINES += CRAFTER2DLIB_LIBRARY
 
+INCLUDEPATH += ../include
+
 SOURCES += \
     message.cpp \
-    utils.cpp
+    utils.cpp \
+    messagelogin.cpp
 
 HEADERS +=\
     message.hpp \
     utils.hpp \
-    crafter2dlibglobal.hpp
+    messagelogin.hpp
 
-symbian {
-    MMP_RULES += EXPORTUNFROZEN
-    TARGET.UID3 = 0xE57A0257
-    TARGET.CAPABILITY = 
-    TARGET.EPOCALLOWDLLDATA = 1
-    addFiles.sources = Crafter2Dlib.dll
-    addFiles.path = !:/sys/bin
-    DEPLOYMENT += addFiles
-}
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
+
+
+
+
+
 
 
 

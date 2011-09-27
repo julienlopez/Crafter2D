@@ -10,7 +10,7 @@ TARGET = Crafter2Dclient
 TEMPLATE = app
 
 INCLUDEPATH += "../include"
-LIBS += -L../Crafter2Dlib-build-desktop-Qt_4_7_3_for_Desktop_-_MinGW_4_4__Qt_SDK__Debug/debug
+LIBS += -L../Crafter2Dlib-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK__Debug/debug
 LIBS += -lCrafter2Dlib
 
 SOURCES += main.cpp\

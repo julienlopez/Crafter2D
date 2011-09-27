@@ -1,9 +1,13 @@
 #include "mainwindow.hpp"
 #include "loginwidget.hpp"
 
+#include <MessageLogin>
+
 #include <QTcpSocket>
 #include <QMessageBox>
 #include <QLabel>
+
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
@@ -23,7 +27,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::send(const Message& message)
 {
+    QByteArray paquet;
+    QDataStream out(&paquet, QIODevice::WriteOnly);
 
+    out << (quint16) 0; // On écrit 0 au début du paquet pour réserver la place pour écrire la taille
+    out << message; // On ajoute le message à la suite
+    out.device()->seek(0); // On se replace au début du paquet
+    out << (quint16) (paquet.size() - sizeof(quint16)); // On écrase le 0 qu'on avait réservé par la longueur du message
+    socket->write(paquet);
 }
 
 void MainWindow::donneesRecues()
@@ -75,8 +86,11 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
     }
 }
 
-void MainWindow::sendLogin(QString, QString)
+void MainWindow::sendLogin(QString login, QString mdp)
 {
-    //TODO envoi du login
-    send(/*Login*/);
+    send(MessageLogin(login, mdp));
+    QWidget* w = new QWidget;
+    QWidget* l = centralWidget();
+    setCentralWidget(w);
+    l->deleteLater();
 }
