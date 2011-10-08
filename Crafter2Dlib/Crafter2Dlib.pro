@@ -16,12 +16,24 @@ INCLUDEPATH += ../include
 SOURCES += \
     message.cpp \
     utils.cpp \
-    messagelogin.cpp
+    messagelogin.cpp \
+    messageloginfailure.cpp \
+    messageloginsuccess.cpp
 
 HEADERS +=\
     message.hpp \
     utils.hpp \
-    messagelogin.hpp
+    messagelogin.hpp \
+    messageloginfailure.hpp \
+    messageloginsuccess.hpp
+
+
+
+
+
+
+
+
 
 
 

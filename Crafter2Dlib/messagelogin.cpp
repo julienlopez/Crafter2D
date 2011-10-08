@@ -13,18 +13,18 @@ QString MessageLogin::mdp() const
     return m_mdp;
 }
 
-QDataStream& operator << (QDataStream& out, const MessageLogin& m)
+MessageLogin* MessageLogin::extract(QDataStream& in)
 {
-    out << m.m_id;
-    out << m.m_login;
-    out << m.m_mdp;
-    return out;
+    QString login, mdp;
+    in >> login;
+    in >> mdp;
+    return new MessageLogin(login, mdp);
 }
 
-QDataStream& operator >> (QDataStream& in, MessageLogin& m)
+QDataStream& MessageLogin::serialize(QDataStream& out) const
 {
-    in >> m.m_id;
-    in >> m.m_login;
-    in >> m.m_mdp;
-    return in;
+    out << m_id;
+    out << m_login;
+    out << m_mdp;
+    return out;
 }

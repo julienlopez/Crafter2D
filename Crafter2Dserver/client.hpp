@@ -5,6 +5,7 @@
 #include <Message>
 
 class QTcpSocket;
+class MessageHandler;
 
 class Client : public QObject
 {
@@ -15,8 +16,11 @@ public:
     void send(const Message& message);
     void write(const QByteArray& paquet);
 
+    void login(const QString& login, const QString& mdp);
+
 private:
     QTcpSocket* m_socket;
+    MessageHandler* messageHandler;
     quint16 tailleMessage;
 
 signals:

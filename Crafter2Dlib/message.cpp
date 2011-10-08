@@ -1,10 +1,12 @@
 #include "message.hpp"
+#include "messagelogin.hpp"
+#include "messageloginfailure.hpp"
 
 Message::Message(quint64 id, QObject *parent) :
     QObject(parent), m_id(id)
 {}
 
-Message::Message(const Message& m): QObject(m.parent()), m_id(m.id())
+Message::Message(const Message& m): QObject(m.parent()), m_id(m.m_id)
 {}
 
 quint64 Message::id() const
@@ -12,20 +14,17 @@ quint64 Message::id() const
     return m_id;
 }
 
-QDataStream& operator << (QDataStream& out, const Message& m)
-{
-    out << m.m_id;
-    return out;
-}
-
-QDataStream& operator >> (QDataStream& in, Message& m)
+Message* Message::extract(QDataStream& in)
 {
     quint64 id;
     in >> id;
-    if(id == 0) m.m_id = id;
-    else if(id == 1)
-    {
+    if(id == 1) return MessageLogin::extract(in);
+    if(id == 2) return MessageLoginFailure::extract(in);
+    return new Message(id);
+}
 
-    }
-    return in;
+QDataStream& Message::serialize(QDataStream& out) const
+{
+    out << m_id;
+    return out;
 }

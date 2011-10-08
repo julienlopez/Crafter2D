@@ -6,6 +6,7 @@
 
 QT       += core
 QT       += network
+QT       += sql
 QT       -= gui
 
 TARGET = Crafter2Dserver
@@ -20,11 +21,15 @@ LIBS += -lCrafter2Dlib
 
 SOURCES += main.cpp \
     serveur.cpp \
-    client.cpp
+    client.cpp \
+    messagehandler.cpp
 
 HEADERS += \
     serveur.hpp \
-    client.hpp
+    client.hpp \
+    messagehandler.hpp
+
+
 
 
 

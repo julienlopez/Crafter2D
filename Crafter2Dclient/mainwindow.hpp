@@ -28,9 +28,10 @@ private slots:
     void deconnecte();
     void erreurSocket(QAbstractSocket::SocketError);
     void sendLogin(QString, QString);
+    void onNewMessage(Message* message);
 
 signals:
-    void messageRecu(Message);
+    void messageRecu(Message*);
 };
 
 #endif // MAINWINDOW_HPP

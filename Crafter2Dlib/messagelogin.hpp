@@ -6,14 +6,15 @@
 class MessageLogin : public Message
 {
     Q_OBJECT
+
 public:
     MessageLogin(QString login, QString mdp, QObject *parent = 0);
 
     QString login() const;
     QString mdp() const;
 
-    friend QDataStream& operator << (QDataStream& out, const MessageLogin& m);
-    friend QDataStream& operator >> (QDataStream& in, MessageLogin& m);
+    static MessageLogin* extract(QDataStream& in);
+    QDataStream& serialize(QDataStream& out) const;
 
 private:
     QString m_login;

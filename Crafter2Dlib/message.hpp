@@ -2,6 +2,7 @@
 #define MESSAGE_H
 
 #include <QObject>
+#include <QVariant>
 #include <QDataStream>
 
 class Message : public QObject
@@ -13,8 +14,8 @@ public:
 
     quint64 id() const;
 
-    friend QDataStream& operator << (QDataStream& out, const Message& m);
-    friend QDataStream& operator >> (QDataStream& in, Message& m);
+    static Message* extract(QDataStream& in);
+    virtual QDataStream& serialize(QDataStream& out) const;
 
 protected:
     quint64 m_id;

@@ -2,12 +2,16 @@
 #include "loginwidget.hpp"
 
 #include <MessageLogin>
+#include <MessageLoginFailure>
+#include <MessageLoginSuccess>
 
 #include <QTcpSocket>
 #include <QMessageBox>
 #include <QLabel>
 
 #include <QDebug>
+
+#include <cassert>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
@@ -17,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(deconnecte()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
+    connect(this, SIGNAL(messageRecu(Message*)), this, SLOT(onNewMessage(Message*)));
 
     setCentralWidget(new QLabel(tr("Connexion au serveur...")));
     socket->connectToHost("127.0.0.1", 50885);
@@ -30,10 +35,10 @@ void MainWindow::send(const Message& message)
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
 
-    out << (quint16) 0; // On écrit 0 au début du paquet pour réserver la place pour écrire la taille
-    out << message; // On ajoute le message à la suite
-    out.device()->seek(0); // On se replace au début du paquet
-    out << (quint16) (paquet.size() - sizeof(quint16)); // On écrase le 0 qu'on avait réservé par la longueur du message
+    out << (quint16) 0;
+    message.serialize(out);
+    out.device()->seek(0);
+    out << (quint16) (paquet.size() - sizeof(quint16));
     socket->write(paquet);
 }
 
@@ -47,8 +52,7 @@ void MainWindow::donneesRecues()
     }
     if (socket->bytesAvailable() < tailleMessage) return;
 
-    Message message;
-    in >> message;
+    Message* message = Message::extract(in);
     emit messageRecu(message);
 
     tailleMessage = 0;
@@ -88,9 +92,27 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
 
 void MainWindow::sendLogin(QString login, QString mdp)
 {
+    qDebug() << "sendLogin(" << login << "," << mdp << ")";
     send(MessageLogin(login, mdp));
     QWidget* w = new QWidget;
     QWidget* l = centralWidget();
     setCentralWidget(w);
     l->deleteLater();
+}
+
+void MainWindow::onNewMessage(Message* message)
+{
+    if(message->id() == 2)
+    {
+        const MessageLoginFailure* m = qobject_cast<const MessageLoginFailure*>(message);
+        assert(m != 0);
+        QMessageBox::information(this, "Le login a échoué", "Impossible de se logger: "+m->erreur());
+    }
+    else if(message->id() == 3)
+    {
+        QMessageBox::information(this, "Le login a réussi", "Login réussi, chargement du jeu...");
+        //TODO login ok
+    }
+    else QMessageBox::warning(this, "Message inconnu reçu", "Un message Inconnu a été reçu: id = " + QString::number(message->id()));
+    message->deleteLater();
 }
