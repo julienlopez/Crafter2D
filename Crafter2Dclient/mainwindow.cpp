@@ -1,9 +1,11 @@
 #include "mainwindow.hpp"
 #include "loginwidget.hpp"
+#include "screen.hpp"
 
 #include <MessageLogin>
 #include <MessageLoginFailure>
 #include <MessageLoginSuccess>
+#include <MessageScreenGetPosition>
 
 #include <QTcpSocket>
 #include <QMessageBox>
@@ -16,6 +18,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
 {
+    showMaximized();
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
@@ -29,6 +32,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {}
+
+void MainWindow::setUpScreen()
+{
+    centralWidget()->deleteLater();
+    m_screen = new Screen;
+    connect(m_screen, SIGNAL(message(Message&)), this, SLOT(send(Message)));
+    setCentralWidget(m_screen);
+    send(MessageScreenGetPosition());
+}
 
 void MainWindow::send(const Message& message)
 {
@@ -92,7 +104,6 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
 
 void MainWindow::sendLogin(QString login, QString mdp)
 {
-    qDebug() << "sendLogin(" << login << "," << mdp << ")";
     send(MessageLogin(login, mdp));
     QWidget* w = new QWidget;
     QWidget* l = centralWidget();
@@ -102,7 +113,8 @@ void MainWindow::sendLogin(QString login, QString mdp)
 
 void MainWindow::onNewMessage(Message* message)
 {
-    if(message->id() == 2)
+    if(message->id() >= 5000 && m_screen != 0) m_screen->handleMessage(message);
+    else if(message->id() == 2)
     {
         const MessageLoginFailure* m = qobject_cast<const MessageLoginFailure*>(message);
         assert(m != 0);
@@ -111,7 +123,7 @@ void MainWindow::onNewMessage(Message* message)
     else if(message->id() == 3)
     {
         QMessageBox::information(this, "Le login a réussi", "Login réussi, chargement du jeu...");
-        //TODO login ok
+        setUpScreen();
     }
     else QMessageBox::warning(this, "Message inconnu reçu", "Un message Inconnu a été reçu: id = " + QString::number(message->id()));
     message->deleteLater();

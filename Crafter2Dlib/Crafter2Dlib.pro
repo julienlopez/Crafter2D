@@ -18,14 +18,22 @@ SOURCES += \
     utils.cpp \
     messagelogin.cpp \
     messageloginfailure.cpp \
-    messageloginsuccess.cpp
+    messageloginsuccess.cpp \
+    position.cpp \
+    messagescreengetposition.cpp
 
 HEADERS +=\
     message.hpp \
     utils.hpp \
     messagelogin.hpp \
     messageloginfailure.hpp \
-    messageloginsuccess.hpp
+    messageloginsuccess.hpp \
+    position.hpp \
+    messagescreengetposition.hpp
+
+
+
+
 
 
 

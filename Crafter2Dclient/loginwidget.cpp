@@ -9,9 +9,14 @@
 LoginWidget::LoginWidget(QWidget *parent) :
     QWidget(parent)
 {
+    QWidget* w = new QWidget();
+    w->setFixedSize(250,200);
+
     QVBoxLayout* vl = new QVBoxLayout;
+    vl->setAlignment(Qt::AlignCenter);
 
     QHBoxLayout* hl = new QHBoxLayout;
+    hl->setAlignment(Qt::AlignCenter);
     hl->addWidget(new QLabel(tr("Login: ")));
     loginLabel = new QLineEdit;
     hl->addWidget(loginLabel);
@@ -31,7 +36,12 @@ LoginWidget::LoginWidget(QWidget *parent) :
     hl->addWidget(bouton);
     vl->addLayout(hl);
 
-    setLayout(vl);
+    w->setLayout(vl);
+
+    QVBoxLayout* l = new QVBoxLayout;
+    l->setAlignment(Qt::AlignCenter);
+    l->addWidget(w);
+    setLayout(l);
 }
 
 void LoginWidget::onLoginSend()

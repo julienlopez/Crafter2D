@@ -39,7 +39,6 @@ void Client::write(const QByteArray& paquet)
 
 void Client::login(const QString& login, const QString& mdp)
 {
-    qDebug() << "Login de " << login << " => " << mdp;
     QSqlQuery query;
     query.prepare("SELECT id FROM user WHERE pseudo = :login AND mdp = :mdp");
     query.bindValue(":login", login);
@@ -57,8 +56,6 @@ void Client::login(const QString& login, const QString& mdp)
         send(MessageLoginFailure("Informations de login incorrectes"));
         return;
     }
-
-    qDebug() << "login ok";
     send(MessageLoginSuccess());
 }
 

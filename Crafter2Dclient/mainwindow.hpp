@@ -7,6 +7,7 @@
 #include <QAbstractSocket>
 
 class QTcpSocket;
+class Screen;
 
 class MainWindow : public QMainWindow
 {
@@ -19,10 +20,12 @@ public:
 private:
     quint16 tailleMessage;
     QTcpSocket* socket;
+    Screen* m_screen;
 
-    void send(const Message& message);
+    void setUpScreen();
 
 private slots:
+    void send(const Message& message);
     void donneesRecues();
     void connecte();
     void deconnecte();
