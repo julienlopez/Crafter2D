@@ -51,7 +51,7 @@ bool Serveur::start()
     return true;
 }
 
-void Serveur::envoyerATous(const Message& message)
+void Serveur::envoyerATous(const Message::Message& message)
 {
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);

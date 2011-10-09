@@ -1,4 +1,4 @@
-#include "screen.hpp"
+#include "screenwidget.hpp"
 
 #include <QPainter>
 
@@ -6,14 +6,14 @@
 
 #include <QDebug>
 
-Screen::Screen(QWidget *parent) :
+ScreenWidget::ScreenWidget(QWidget *parent) :
     QWidget(parent)
 {
     setAutoFillBackground(true);
     setPalette(QPalette(Qt::white, Qt::black));
 }
 
-void Screen::paintEvent(QPaintEvent* evt)
+void ScreenWidget::paintEvent(QPaintEvent* evt)
 {
     Q_UNUSED(evt)
     QPainter p(this);
@@ -25,7 +25,7 @@ void Screen::paintEvent(QPaintEvent* evt)
     }
 }
 
-void Screen::handleMessage(Message* message)
+void ScreenWidget::handleMessage(Message::Message* message)
 {
     assert(message->id() >= 5000);
     qDebug() << "traitement du message";

@@ -1,7 +1,7 @@
 #include "messagehandler.hpp"
 #include "client.hpp"
 
-#include <MessageLogin>
+#include <Message/Login>
 
 #include <cassert>
 
@@ -13,11 +13,11 @@ MessageHandler::MessageHandler(Client* parent) :
     QObject(parent), m_client(parent)
 {}
 
-void MessageHandler::traiter(const Message* message) const
+void MessageHandler::traiter(const Message::Message* message) const
 {
     if(message->id() == 1)
     {
-        const MessageLogin* m = qobject_cast<const MessageLogin*>(message);
+        const Message::Login* m = qobject_cast<const Message::Login*>(message);
         assert(m != 0);
         m_client->login(m->login(), m->mdp());
     }

@@ -1,15 +1,16 @@
 #include "mainwindow.hpp"
 #include "loginwidget.hpp"
-#include "screen.hpp"
+#include "screenwidget.hpp"
 
-#include <MessageLogin>
-#include <MessageLoginFailure>
-#include <MessageLoginSuccess>
-#include <MessageScreenGetPosition>
+#include <Message/Login>
+#include <Message/LoginFailure>
+#include <Message/LoginSuccess>
+#include <Message/Screen/GetPosition>
 
 #include <QTcpSocket>
 #include <QMessageBox>
 #include <QLabel>
+#include <QCloseEvent>
 
 #include <QDebug>
 
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(deconnecte()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
-    connect(this, SIGNAL(messageRecu(Message*)), this, SLOT(onNewMessage(Message*)));
+    connect(this, SIGNAL(messageRecu(Message::Message*)), this, SLOT(onNewMessage(Message::Message*)));
 
     setCentralWidget(new QLabel(tr("Connexion au serveur...")));
     socket->connectToHost("127.0.0.1", 50885);
@@ -33,16 +34,22 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {}
 
+void MainWindow::closeEvent(QCloseEvent* evt)
+{
+    socket->close();
+    evt->accept();
+}
+
 void MainWindow::setUpScreen()
 {
     centralWidget()->deleteLater();
-    m_screen = new Screen;
-    connect(m_screen, SIGNAL(message(Message&)), this, SLOT(send(Message)));
+    m_screen = new ScreenWidget;
+    connect(m_screen, SIGNAL(message(Message::Message&)), this, SLOT(send(Message::Message)));
     setCentralWidget(m_screen);
-    send(MessageScreenGetPosition());
+    send(Message::Screen::GetPosition());
 }
 
-void MainWindow::send(const Message& message)
+void MainWindow::send(const Message::Message& message)
 {
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
@@ -64,7 +71,7 @@ void MainWindow::donneesRecues()
     }
     if (socket->bytesAvailable() < tailleMessage) return;
 
-    Message* message = Message::extract(in);
+    Message::Message* message = Message::Message::extract(in);
     emit messageRecu(message);
 
     tailleMessage = 0;
@@ -104,19 +111,19 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
 
 void MainWindow::sendLogin(QString login, QString mdp)
 {
-    send(MessageLogin(login, mdp));
+    send(Message::Login(login, mdp));
     QWidget* w = new QWidget;
     QWidget* l = centralWidget();
     setCentralWidget(w);
     l->deleteLater();
 }
 
-void MainWindow::onNewMessage(Message* message)
+void MainWindow::onNewMessage(Message::Message* message)
 {
     if(message->id() >= 5000 && m_screen != 0) m_screen->handleMessage(message);
     else if(message->id() == 2)
     {
-        const MessageLoginFailure* m = qobject_cast<const MessageLoginFailure*>(message);
+        const Message::LoginFailure* m = qobject_cast<const Message::LoginFailure*>(message);
         assert(m != 0);
         QMessageBox::information(this, "Le login a échoué", "Impossible de se logger: "+m->erreur());
     }

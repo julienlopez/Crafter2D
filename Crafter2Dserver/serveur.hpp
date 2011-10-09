@@ -2,7 +2,7 @@
 #define SERVEUR_HPP
 
 #include <QObject>
-#include <Message>
+#include <Message/Message>
 
 #include <QAbstractSocket>
 
@@ -21,7 +21,7 @@ private:
     QList<Client*> clients;
     QTcpServer* serveur;
 
-    void envoyerATous(const Message& message);
+    void envoyerATous(const Message::Message& message);
 
 signals:
 

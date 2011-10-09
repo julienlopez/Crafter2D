@@ -1,8 +1,8 @@
 #include "client.hpp"
 #include "messagehandler.hpp"
 
-#include <MessageLoginFailure>
-#include <MessageLoginSuccess>
+#include <Message/LoginFailure>
+#include <Message/LoginSuccess>
 
 #include <cassert>
 
@@ -20,7 +20,7 @@ Client::Client(QTcpSocket* socket, QObject* parent) :
     connect(socket, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
 }
 
-void Client::send(const Message& message)
+void Client::send(const Message::Message& message)
 {
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
@@ -43,20 +43,19 @@ void Client::login(const QString& login, const QString& mdp)
     query.prepare("SELECT id FROM user WHERE pseudo = :login AND mdp = :mdp");
     query.bindValue(":login", login);
     query.bindValue(":mdp", mdp);
-    qDebug() << query.executedQuery();
     if(!query.exec())
     {
         qDebug() << "impossible d'executer la requete de login" << query.lastError().text();
-        send(MessageLoginFailure("Erreur serveur"));
+        send(Message::LoginFailure("Erreur serveur"));
         return;
     }
 
     if(query.size() != 1)
     {
-        send(MessageLoginFailure("Informations de login incorrectes"));
+        send(Message::LoginFailure("Informations de login incorrectes"));
         return;
     }
-    send(MessageLoginSuccess());
+    send(Message::LoginSuccess());
 }
 
 void Client::donneesRecues()
@@ -71,7 +70,7 @@ void Client::donneesRecues()
     if (m_socket->bytesAvailable() < tailleMessage) return;
 
     // Si ces lignes s'exécutent, c'est qu'on a reçu tout le message : on peut le récupérer !
-    Message* message = Message::extract(in);
+    Message::Message* message = Message::Message::extract(in);
     messageHandler->traiter(message);
     message->deleteLater();
 }

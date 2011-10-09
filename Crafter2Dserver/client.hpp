@@ -2,7 +2,7 @@
 #define CLIENT_HPP
 
 #include <QObject>
-#include <Message>
+#include <Message/Message>
 
 class QTcpSocket;
 class MessageHandler;
@@ -13,7 +13,7 @@ class Client : public QObject
 public:
     explicit Client(QTcpSocket* socket, QObject *parent = 0);
 
-    void send(const Message& message);
+    void send(const Message::Message& message);
     void write(const QByteArray& paquet);
 
     void login(const QString& login, const QString& mdp);

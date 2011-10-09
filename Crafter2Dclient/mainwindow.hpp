@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <Message>
+#include <Message/Message>
 
 #include <QMainWindow>
 #include <QAbstractSocket>
 
 class QTcpSocket;
-class Screen;
+class ScreenWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -17,24 +17,27 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent* evt);
+
 private:
     quint16 tailleMessage;
     QTcpSocket* socket;
-    Screen* m_screen;
+    ScreenWidget* m_screen;
 
     void setUpScreen();
 
 private slots:
-    void send(const Message& message);
+    void send(const Message::Message& message);
     void donneesRecues();
     void connecte();
     void deconnecte();
     void erreurSocket(QAbstractSocket::SocketError);
     void sendLogin(QString, QString);
-    void onNewMessage(Message* message);
+    void onNewMessage(Message::Message* message);
 
 signals:
-    void messageRecu(Message*);
+    void messageRecu(Message::Message*);
 };
 
 #endif // MAINWINDOW_HPP

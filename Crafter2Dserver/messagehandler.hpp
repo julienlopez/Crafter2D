@@ -4,7 +4,10 @@
 #include <QObject>
 
 class Client;
+
+namespace Message {
 class Message;
+}
 
 class MessageHandler : public QObject
 {
@@ -12,7 +15,7 @@ class MessageHandler : public QObject
 public:
     explicit MessageHandler(Client* parent);
 
-    void traiter(const Message* message) const;
+    void traiter(const Message::Message* message) const;
 
 private:
     Client* m_client;

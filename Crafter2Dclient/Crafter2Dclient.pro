@@ -16,11 +16,15 @@ LIBS += -lCrafter2Dlib
 SOURCES += main.cpp\
         mainwindow.cpp \
     loginwidget.cpp \
-    screen.cpp
+    screenwidget.cpp
 
 HEADERS  += mainwindow.hpp \
     loginwidget.hpp \
-    screen.hpp
+    screenwidget.hpp
+
+
+
+
 
 
 
