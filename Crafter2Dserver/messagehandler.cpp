@@ -1,5 +1,6 @@
 #include "messagehandler.hpp"
 #include "client.hpp"
+#include <screenmessagehandler.hpp>
 
 #include <Message/Login>
 
@@ -11,7 +12,9 @@
 
 MessageHandler::MessageHandler(Client* parent) :
     QObject(parent), m_client(parent)
-{}
+{
+    screenMessageHandler = new ScreenMessageHandler(parent);
+}
 
 void MessageHandler::traiter(const Message::Message* message) const
 {
@@ -21,6 +24,7 @@ void MessageHandler::traiter(const Message::Message* message) const
         assert(m != 0);
         m_client->login(m->login(), m->mdp());
     }
+    else if(message->id() >= 5000) screenMessageHandler->traiter(message);
     else //Utils::out << "Données reçues : " << message->id();
          qDebug() << "Données reçues : " << message->id();
 }

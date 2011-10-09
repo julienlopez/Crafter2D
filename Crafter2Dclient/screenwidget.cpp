@@ -1,5 +1,7 @@
 #include "screenwidget.hpp"
 
+#include <Message/Screen/SetPosition>
+
 #include <QPainter>
 
 #include <cassert>
@@ -25,8 +27,19 @@ void ScreenWidget::paintEvent(QPaintEvent* evt)
     }
 }
 
+void ScreenWidget::setPosition(const Position& p)
+{
+    position = p;
+}
+
 void ScreenWidget::handleMessage(Message::Message* message)
 {
     assert(message->id() >= 5000);
     qDebug() << "traitement du message";
+    if(message->id() == 5002)
+    {
+        const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
+        assert(p != 0);
+        setPosition(p->position());
+    }
 }

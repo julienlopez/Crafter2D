@@ -1,13 +1,15 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
+#include "clientinfo.hpp"
+
 #include <QObject>
 #include <Message/Message>
 
 class QTcpSocket;
 class MessageHandler;
 
-class Client : public QObject
+class Client : public QObject, public ClientInfo
 {
     Q_OBJECT
 public:

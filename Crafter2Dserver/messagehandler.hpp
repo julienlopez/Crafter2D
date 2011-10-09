@@ -4,6 +4,7 @@
 #include <QObject>
 
 class Client;
+class ScreenMessageHandler;
 
 namespace Message {
 class Message;
@@ -19,6 +20,7 @@ public:
 
 private:
     Client* m_client;
+    ScreenMessageHandler* screenMessageHandler;
 
 signals:
 

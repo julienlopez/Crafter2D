@@ -44,7 +44,7 @@ void MainWindow::setUpScreen()
 {
     centralWidget()->deleteLater();
     m_screen = new ScreenWidget;
-    connect(m_screen, SIGNAL(message(Message::Message&)), this, SLOT(send(Message::Message)));
+    connect(m_screen, SIGNAL(message(const Message::Message&)), this, SLOT(send(const Message::Message&)));
     setCentralWidget(m_screen);
     send(Message::Screen::GetPosition());
 }
@@ -54,11 +54,14 @@ void MainWindow::send(const Message::Message& message)
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
 
+//    qDebug() << "sending " << message.id();
+
     out << (quint16) 0;
     message.serialize(out);
     out.device()->seek(0);
     out << (quint16) (paquet.size() - sizeof(quint16));
     socket->write(paquet);
+//    qDebug() << "sent : " << " (" << paquet.size() << ")";
 }
 
 void MainWindow::donneesRecues()

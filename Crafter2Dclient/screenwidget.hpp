@@ -18,8 +18,10 @@ protected:
 private:
     Position position;
 
+    void setPosition(const Position& p);
+
 signals:
-    void message(Message::Message&);
+    void message(const Message::Message&);
 
 public slots:
     void handleMessage(Message::Message* message);

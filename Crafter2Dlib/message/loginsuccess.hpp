@@ -1,0 +1,21 @@
+#ifndef MESSAGELOGINSUCCESS_HPP
+#define MESSAGELOGINSUCCESS_HPP
+
+#include "message.hpp"
+
+namespace Message {
+
+class LoginSuccess : public Message
+{
+    Q_OBJECT
+public:
+    explicit LoginSuccess();
+
+    static LoginSuccess* extract(QDataStream& in);
+    virtual QDataStream& serialize(QDataStream& out) const;
+
+};
+
+}
+
+#endif // MESSAGELOGINSUCCESS_HPP

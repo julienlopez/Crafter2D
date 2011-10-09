@@ -22,12 +22,20 @@ LIBS += -lCrafter2Dlib
 SOURCES += main.cpp \
     serveur.cpp \
     client.cpp \
-    messagehandler.cpp
+    messagehandler.cpp \
+    screenmessagehandler.cpp \
+    clientinfo.cpp
 
 HEADERS += \
     serveur.hpp \
     client.hpp \
-    messagehandler.hpp
+    messagehandler.hpp \
+    screenmessagehandler.hpp \
+    clientinfo.hpp
+
+
+
+
 
 
 

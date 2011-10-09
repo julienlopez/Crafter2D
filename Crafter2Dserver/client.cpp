@@ -55,12 +55,17 @@ void Client::login(const QString& login, const QString& mdp)
         send(Message::LoginFailure("Informations de login incorrectes"));
         return;
     }
+
+    setPseudo(login);
+    query.first();
+    setId(query.value(0).toULongLong());
     send(Message::LoginSuccess());
 }
 
 void Client::donneesRecues()
 {
     assert(m_socket == sender());
+//    qDebug() << "Client::donneesRecues()";
     QDataStream in(m_socket);
     if(tailleMessage == 0)
     {
@@ -69,8 +74,9 @@ void Client::donneesRecues()
     }
     if (m_socket->bytesAvailable() < tailleMessage) return;
 
-    // Si ces lignes s'exécutent, c'est qu'on a reçu tout le message : on peut le récupérer !
     Message::Message* message = Message::Message::extract(in);
+//    qDebug() << message->id();
     messageHandler->traiter(message);
     message->deleteLater();
+    tailleMessage = 0;
 }

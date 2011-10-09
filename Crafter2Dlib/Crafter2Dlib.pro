@@ -20,8 +20,12 @@ SOURCES += \
     message/login.cpp \
     message/loginfailure.cpp \
     message/loginsuccess.cpp \
+    message/erreur/erreur.cpp \
+    message/erreur/erreurserveur.cpp \
+    message/erreur/erreurclient.cpp \
     message/screen/getposition.cpp \
-    message/screen/screen.cpp
+    message/screen/screen.cpp \
+    message/screen/setposition.cpp
 
 HEADERS +=\
     utils.hpp \
@@ -30,38 +34,11 @@ HEADERS +=\
     message/login.hpp \
     message/loginfailure.hpp \
     message/loginsuccess.hpp \
+    message/erreur/erreur.hpp \
+    message/erreur/erreurserveur.hpp \
+    message/erreur/erreurclient.hpp \
     message/screen/getposition.hpp \
-    message/screen/screen.hpp
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    message/screen/screen.hpp \
+    message/screen/setposition.hpp
 
 

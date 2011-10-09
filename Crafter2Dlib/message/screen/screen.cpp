@@ -1,5 +1,6 @@
 #include "screen.hpp"
 #include "getposition.hpp"
+#include "setposition.hpp"
 
 #include <cassert>
 
@@ -10,6 +11,7 @@ Message::Screen::Screen* Message::Screen::Screen::extract(QDataStream& in, quint
 {
     assert(id >= 5000);
     if(id == 5001) return GetPosition::extract(in, id);
+    if(id == 5002) return SetPosition::extract(in, id);
 
     return new Screen(id);
 }
