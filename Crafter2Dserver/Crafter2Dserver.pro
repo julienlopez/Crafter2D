@@ -24,14 +24,40 @@ SOURCES += main.cpp \
     client.cpp \
     messagehandler.cpp \
     screenmessagehandler.cpp \
-    clientinfo.cpp
+    clientinfo.cpp \
+    dataaccessor.cpp \
+    playeraccessor.cpp \
+    buildingaccessor.cpp \
+    objectaccessor.cpp \
+    staticobjectaccessor.cpp
 
 HEADERS += \
     serveur.hpp \
     client.hpp \
     messagehandler.hpp \
     screenmessagehandler.hpp \
-    clientinfo.hpp
+    clientinfo.hpp \
+    dataaccessor.hpp \
+    faccessor.hpp \
+    playeraccessor.hpp \
+    buildingaccessor.hpp \
+    objectaccessor.hpp \
+    staticobjectaccessor.hpp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

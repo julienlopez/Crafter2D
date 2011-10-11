@@ -25,7 +25,12 @@ SOURCES += \
     message/erreur/erreurclient.cpp \
     message/screen/getposition.cpp \
     message/screen/screen.cpp \
-    message/screen/setposition.cpp
+    message/screen/setposition.cpp \
+    worldelement.cpp \
+    player.cpp \
+    building.cpp \
+    object.cpp \
+    staticobject.cpp
 
 HEADERS +=\
     utils.hpp \
@@ -39,6 +44,21 @@ HEADERS +=\
     message/erreur/erreurclient.hpp \
     message/screen/getposition.hpp \
     message/screen/screen.hpp \
-    message/screen/setposition.hpp
+    message/screen/setposition.hpp \
+    worldelement.hpp \
+    player.hpp \
+    building.hpp \
+    object.hpp \
+    staticobject.hpp
+
+
+
+
+
+
+
+
+
+
 
 
