@@ -3,35 +3,53 @@
 
 #include <QObject>
 
-#include "playeraccessor.hpp"
-#include "buildingaccessor.hpp"
-#include "objectaccessor.hpp"
-#include "staticObjectaccessor.hpp"
+class gPlayer;
+class gBuilding;
+class gObject;
+class gStaticObject;
+class PlayerAccessor;
+class BuildingAccessor;
+class ObjectAccessor;
+class StaticObjectAccessor;
 
 class DataAccessor : public QObject
 {
     Q_OBJECT
 public:
+    ~DataAccessor();
     static DataAccessor& instance();
 
-    static Player* getPlayer(quint64 id);
-    static Building* getBuilding(quint64 id);
-    static Object* getObject(quint64 id);
-    static StaticObject* getStaticObject(quint64 id);
+    static gPlayer* getPlayer(quint64 id);
+    static gBuilding* getBuilding(quint64 id);
+    static gObject* getObject(quint64 id);
+    static gStaticObject* getStaticObject(quint64 id);
 
 private:
     static DataAccessor m_instance;
 
     DataAccessor();
 
-    PlayerAccessor playerAccessor;
-    BuildingAccessor buildingAccessor;
-    ObjectAccessor objectAccessor;
-    StaticObjectAccessor staticObjectAccessor;
+    PlayerAccessor* playerAccessor;
+    BuildingAccessor* buildingAccessor;
+    ObjectAccessor* objectAccessor;
+    StaticObjectAccessor* staticObjectAccessor;
 
 signals:
 
 public slots:
+
+public:
+    class Exception : public std::exception
+    {
+    public:
+        Exception(const QString& message) throw();
+        virtual ~Exception() throw();
+
+        QString message() const;
+
+    protected:
+        QString m_message;
+    };
 
 };
 

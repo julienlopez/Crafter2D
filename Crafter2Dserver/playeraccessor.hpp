@@ -2,10 +2,9 @@
 #define PLAYERACCESSOR_HPP
 
 #include "faccessor.hpp"
+#include "splayer.hpp"
 
-#include <Player>
-
-class PlayerAccessor : public fAccessor<Player>
+class PlayerAccessor : public fAccessor<gPlayer, sPlayer>
 {
 public:
     PlayerAccessor();

@@ -1,7 +1,9 @@
 #include "screenmessagehandler.hpp"
 #include "client.hpp"
+#include "dataaccessor.hpp"
 
 #include <Position>
+#include <gPlayer>
 #include <Message/Erreur/ErreurServeur>
 #include <Message/Screen/SetPosition>
 
@@ -31,23 +33,13 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
 
 void ScreenMessageHandler::sendPosition() const
 {
-    QSqlQuery q("SELECT position FROM user WHERE id=" + QString::number(m_client->id()));
-    if(!q.exec())
+    try
     {
-        qDebug() << "impossible d'éxecuter la requete";
-        m_client->send(Message::Erreur::ErreurServeur("Impossible d'executer la requetes"));
-        return;
+        gPlayer* p = DataAccessor::getPlayer(m_client->id());
+        m_client->send(Message::Screen::SetPosition(p->position()));
     }
-    if(q.size() != 1)
+    catch(DataAccessor::Exception& e)
     {
-        qDebug() << "erreur bd";
-        m_client->send(Message::Erreur::ErreurServeur("Erreur de base de données"));
-        return;
+        m_client->send(Message::Erreur::ErreurServeur(e.message()));
     }
-    q.first();
-    Position p(q.value(0).toString());
-
-    if(p.isValid()) qDebug() << p.position();
-    else qDebug() << "position invalide";
-    m_client->send(Message::Screen::SetPosition(p));
 }

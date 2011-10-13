@@ -3,9 +3,9 @@
 
 #include "faccessor.hpp"
 
-#include <StaticObject>
+#include <gStaticObject>
 
-class StaticObjectAccessor : public fAccessor<StaticObject>
+class StaticObjectAccessor : public fAccessor<gStaticObject, gStaticObject>
 {
 public:
     StaticObjectAccessor();

@@ -27,10 +27,10 @@ SOURCES += \
     message/screen/screen.cpp \
     message/screen/setposition.cpp \
     worldelement.cpp \
-    player.cpp \
-    building.cpp \
-    object.cpp \
-    staticobject.cpp
+    gplayer.cpp \
+    gbuilding.cpp \
+    gobject.cpp \
+    gstaticobject.cpp
 
 HEADERS +=\
     utils.hpp \
@@ -46,10 +46,26 @@ HEADERS +=\
     message/screen/screen.hpp \
     message/screen/setposition.hpp \
     worldelement.hpp \
-    player.hpp \
-    building.hpp \
-    object.hpp \
-    staticobject.hpp
+    gplayer.hpp \
+    gobject.hpp \
+    gbuilding.hpp \
+    gstaticobject.hpp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

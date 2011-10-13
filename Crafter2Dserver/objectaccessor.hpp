@@ -3,9 +3,9 @@
 
 #include "faccessor.hpp"
 
-#include <Object>
+#include <gObject>
 
-class ObjectAccessor : public fAccessor<Object>
+class ObjectAccessor : public fAccessor<gObject, gObject>
 {
 public:
     ObjectAccessor();

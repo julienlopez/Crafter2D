@@ -3,9 +3,9 @@
 
 #include "faccessor.hpp"
 
-#include <Building>
+#include <gBuilding>
 
-class BuildingAccessor : public fAccessor<Building>
+class BuildingAccessor : public fAccessor<gBuilding, gBuilding>
 {
 public:
     BuildingAccessor();

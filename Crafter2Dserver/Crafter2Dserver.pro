@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     playeraccessor.cpp \
     buildingaccessor.cpp \
     objectaccessor.cpp \
-    staticobjectaccessor.cpp
+    staticobjectaccessor.cpp \
+    splayer.cpp
 
 HEADERS += \
     serveur.hpp \
@@ -42,7 +43,10 @@ HEADERS += \
     playeraccessor.hpp \
     buildingaccessor.hpp \
     objectaccessor.hpp \
-    staticobjectaccessor.hpp
+    staticobjectaccessor.hpp \
+    splayer.hpp
+
+
 
 
 
