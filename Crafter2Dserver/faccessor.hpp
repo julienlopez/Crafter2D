@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMap>
 
+#include <QDebug>
+
 template<class G, class S> class fAccessor
 {
 public:

@@ -2,7 +2,7 @@
 #include "login.hpp"
 #include "loginfailure.hpp"
 #include "loginsuccess.hpp"
-
+#include "erreur/erreur.hpp"
 #include "screen/screen.hpp"
 
 Message::Message::Message(quint64 id, QObject *parent) :
@@ -24,6 +24,8 @@ Message::Message* Message::Message::extract(QDataStream& in)
     if(id == 1) return Login::extract(in);
     if(id == 2) return LoginFailure::extract(in);
     if(id == 3) return LoginSuccess::extract(in);
+
+    if(id >= 1000 && id < 5000) return Erreur::Erreur::extract(id, in); //TODO mettre les extract dans le même ordre
 
     if(id >= 5000) return Screen::Screen::extract(in, id);
 

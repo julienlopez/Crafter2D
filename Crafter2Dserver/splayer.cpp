@@ -3,9 +3,12 @@
 #include <QSqlQuery>
 #include <QVariant>
 
+#include <QSqlError>
+#include <QDebug>
+
 sPlayer::sPlayer(quint64 id) throw(DataAccessor::Exception): gPlayer(id)
 {
-    QSqlQuery q("SELECT position FROM user WHERE id=" + id);
+    QSqlQuery q("SELECT position FROM user WHERE id=" + QString::number(id));
     if(!q.exec()) throw DataAccessor::Exception("Impossible d'executer la requetes");
     if(q.size() != 1) throw DataAccessor::Exception("Erreur de base de données");
 

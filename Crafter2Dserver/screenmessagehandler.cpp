@@ -8,6 +8,7 @@
 #include <Message/Screen/SetPosition>
 
 #include <QSqlQuery>
+#include <QSqlError>
 
 #include <QDebug>
 
