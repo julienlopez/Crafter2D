@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QAbstractSocket>
 
+class DebugDock;
+
 class QTcpSocket;
 class ScreenWidget;
 
@@ -24,6 +26,7 @@ private:
     quint16 tailleMessage;
     QTcpSocket* socket;
     ScreenWidget* m_screen;
+    DebugDock* debug;
 
     void setUpScreen();
 

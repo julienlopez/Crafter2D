@@ -3,6 +3,7 @@
 #include <Message/Screen/SetPosition>
 
 #include <QPainter>
+#include <QMessageBox>
 
 #include <cassert>
 
@@ -30,6 +31,7 @@ void ScreenWidget::paintEvent(QPaintEvent* evt)
 void ScreenWidget::setPosition(const Position& p)
 {
     position = p;
+    emit newPosition(p);
 }
 
 void ScreenWidget::handleMessage(Message::Message* message)

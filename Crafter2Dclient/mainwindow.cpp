@@ -1,10 +1,12 @@
 #include "mainwindow.hpp"
 #include "loginwidget.hpp"
 #include "screenwidget.hpp"
+#include "debugdock.hpp"
 
 #include <Message/Login>
 #include <Message/LoginFailure>
 #include <Message/LoginSuccess>
+#include <Message/Erreur/ErreurServeur>
 #include <Message/Screen/GetPosition>
 
 #include <QTcpSocket>
@@ -27,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
     connect(this, SIGNAL(messageRecu(Message::Message*)), this, SLOT(onNewMessage(Message::Message*)));
 
+    debug = new DebugDock;
+    addDockWidget(Qt::RightDockWidgetArea, debug, Qt::Vertical);
+
     setCentralWidget(new QLabel(tr("Connexion au serveur...")));
     socket->connectToHost("127.0.0.1", 50885);
 }
@@ -45,6 +50,7 @@ void MainWindow::setUpScreen()
     centralWidget()->deleteLater();
     m_screen = new ScreenWidget;
     connect(m_screen, SIGNAL(message(const Message::Message&)), this, SLOT(send(const Message::Message&)));
+    connect(m_screen, SIGNAL(newPosition(const Position&)), debug, SLOT(setPosition(const Position&)));
     setCentralWidget(m_screen);
     send(Message::Screen::GetPosition());
 }
@@ -134,6 +140,14 @@ void MainWindow::onNewMessage(Message::Message* message)
     {
         QMessageBox::information(this, "Le login a réussi", "Login réussi, chargement du jeu...");
         setUpScreen();
+    }
+    else if(message->id() >= 1000 && message->id() < 3000)
+    {
+        qDebug() << "id: " << message->id() << " => " <<message;
+        const Message::Erreur::ErreurServeur* e = qobject_cast<const Message::Erreur::ErreurServeur*>(message);
+        assert(e != 0);
+        QMessageBox::critical(this, "Erreur serveur", e->message());
+        exit(-1);
     }
     else QMessageBox::warning(this, "Message inconnu reçu", "Un message Inconnu a été reçu: id = " + QString::number(message->id()));
     message->deleteLater();

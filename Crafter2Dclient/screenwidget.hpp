@@ -22,6 +22,7 @@ private:
 
 signals:
     void message(const Message::Message&);
+    void newPosition(const Position&);
 
 public slots:
     void handleMessage(Message::Message* message);
