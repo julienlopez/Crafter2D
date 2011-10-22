@@ -9,6 +9,7 @@
 class DebugDock;
 
 class QTcpSocket;
+class Scene;
 class ScreenWidget;
 
 class MainWindow : public QMainWindow
@@ -25,6 +26,7 @@ protected:
 private:
     quint16 tailleMessage;
     QTcpSocket* socket;
+    Scene* m_scene;
     ScreenWidget* m_screen;
     DebugDock* debug;
 

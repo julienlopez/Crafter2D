@@ -24,6 +24,7 @@ bool Serveur::start()
     if(!QSqlDatabase::drivers().contains("QMYSQL"))
     {
         qDebug() << "Impossible de charger le plugin mysql!!";
+        qDebug() << "plugins dispo: " << QSqlDatabase::drivers();
         return false;
     }
 

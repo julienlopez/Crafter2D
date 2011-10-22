@@ -2,6 +2,7 @@
 #include "loginwidget.hpp"
 #include "screenwidget.hpp"
 #include "debugdock.hpp"
+#include "scene.hpp"
 
 #include <Message/Login>
 #include <Message/LoginFailure>
@@ -13,6 +14,8 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <QCloseEvent>
+
+#include <stdexcept>
 
 #include <QDebug>
 
@@ -48,9 +51,10 @@ void MainWindow::closeEvent(QCloseEvent* evt)
 void MainWindow::setUpScreen()
 {
     centralWidget()->deleteLater();
-    m_screen = new ScreenWidget;
-    connect(m_screen, SIGNAL(message(const Message::Message&)), this, SLOT(send(const Message::Message&)));
-    connect(m_screen, SIGNAL(newPosition(const Position&)), debug, SLOT(setPosition(const Position&)));
+    m_scene = new Scene(this);
+    m_screen = new ScreenWidget(m_scene);
+    connect(m_scene, SIGNAL(message(const Message::Message&)), this, SLOT(send(const Message::Message&)));
+    connect(m_scene, SIGNAL(newPosition(const Position&)), debug, SLOT(setPosition(const Position&)));
     setCentralWidget(m_screen);
     send(Message::Screen::GetPosition());
 }
@@ -129,7 +133,7 @@ void MainWindow::sendLogin(QString login, QString mdp)
 
 void MainWindow::onNewMessage(Message::Message* message)
 {
-    if(message->id() >= 5000 && m_screen != 0) m_screen->handleMessage(message);
+    if(message->id() >= 5000 && m_scene != 0) m_scene->handleMessage(message);
     else if(message->id() == 2)
     {
         const Message::LoginFailure* m = qobject_cast<const Message::LoginFailure*>(message);
@@ -147,7 +151,7 @@ void MainWindow::onNewMessage(Message::Message* message)
         const Message::Erreur::ErreurServeur* e = qobject_cast<const Message::Erreur::ErreurServeur*>(message);
         assert(e != 0);
         QMessageBox::critical(this, "Erreur serveur", e->message());
-        exit(-1);
+        throw std::logic_error("Erreur critique");
     }
     else QMessageBox::warning(this, "Message inconnu reçu", "Un message Inconnu a été reçu: id = " + QString::number(message->id()));
     message->deleteLater();
