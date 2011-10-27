@@ -14,6 +14,7 @@ public:
 
     bool isValid() const;
     QPointF position() const;
+    QPointF& position();
 
     QString toString() const;
 
