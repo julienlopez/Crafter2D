@@ -33,6 +33,11 @@ QPointF Position::position() const
     return m_position;
 }
 
+QPointF& Position::position()
+{
+    return m_position;
+}
+
 QString Position::toString() const
 {
     return '{' + QString::number(m_position.x()) + "," + QString::number(m_position.y()) + '}';
