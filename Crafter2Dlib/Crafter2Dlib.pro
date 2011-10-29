@@ -30,7 +30,8 @@ SOURCES += \
     gplayer.cpp \
     gbuilding.cpp \
     gobject.cpp \
-    gstaticobject.cpp
+    gstaticobject.cpp \
+    message/screen/sendposition.cpp
 
 HEADERS +=\
     utils.hpp \
@@ -49,7 +50,12 @@ HEADERS +=\
     gplayer.hpp \
     gobject.hpp \
     gbuilding.hpp \
-    gstaticobject.hpp
+    gstaticobject.hpp \
+    message/screen/sendposition.hpp
+
+
+
+
 
 
 

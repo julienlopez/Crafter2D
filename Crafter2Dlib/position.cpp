@@ -56,3 +56,13 @@ QDataStream& operator <<(QDataStream& out, const Position& pos)
     out << pos.m_position;
     return out;
 }
+
+bool Position::operator == (const Position& pos) const
+{
+    return m_valid==pos.m_valid && m_position == pos.m_position;
+}
+
+bool Position::operator != (const Position& pos) const
+{
+    return m_valid!=pos.m_valid || m_position != pos.m_position;
+}

@@ -21,6 +21,9 @@ public:
     friend QDataStream& operator >>(QDataStream& in, Position& pos);
     friend QDataStream& operator <<(QDataStream& out, const Position& pos);
 
+    bool operator == (const Position& pos) const;
+    bool operator != (const Position& pos) const;
+
 private:
     bool m_valid;
     QPointF m_position;

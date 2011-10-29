@@ -1,6 +1,7 @@
 #include "scene.hpp"
 
 #include <Message/Screen/SetPosition>
+#include <Message/Screen/SendPosition>
 
 #include <QTimer>
 #include <QGraphicsTextItem>
@@ -18,6 +19,10 @@ Scene::Scene(QObject *parent) :
     timer = new QTimer(this);
     timer->setInterval(dt);
     connect(timer, SIGNAL(timeout()), this, SLOT(maj()));
+
+    timer_sendPos = new QTimer(this);
+    timer_sendPos->setInterval(100);
+    connect(timer_sendPos, SIGNAL(timeout()), this, SLOT(sendPosition()));
 
     if(!position.isValid()) addItem(new QGraphicsTextItem("Chargement en cours..."));
 }
@@ -46,20 +51,18 @@ void Scene::setPosition(const Position& p)
         addItem(m_root);
         QGraphicsLineItem* it = new QGraphicsLineItem(-1000,0,1000,0, m_root);
         it->setPen(QPen(Qt::red));
-        addItem(it);
         it = new QGraphicsLineItem(0,1000,0,-1000, m_root);
         it->setPen(QPen(Qt::red));
-        addItem(it);
         QGraphicsRectItem* ite = new QGraphicsRectItem(-1,-1,2,2, m_root);
         ite->setPen(QPen(Qt::blue));
-        addItem(ite);
         QVector<QPointF> v;
         v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
         m_player = new QGraphicsPolygonItem(QPolygonF(v),m_root);
         m_player->setPos(p.position());
-        //addItem(m_player);
         timer->start();
+        timer_sendPos->start();
     }
+    old_pos = position;
     position = p;
     emit newPosition(p);
 }
@@ -79,6 +82,7 @@ void Scene::handleMessage(Message::Message* message)
 void Scene::maj()
 {
     if(togo.isEmpty() || !position.isValid()) return;
+    old_pos = position;
     QVector2D reste(togo.at(0)-position.position());
     QVector2D u = reste.normalized();
     double vitesse = 2;
@@ -90,4 +94,12 @@ void Scene::maj()
     else position.position() += (u*vitesse*dt).toPointF();
     m_player->setPos(position.position());
     emit newPosition(position);
+}
+
+void Scene::sendPosition()
+{
+    if(position == old_pos) return;
+//    qDebug() << '{' << position.isValid() << ", " << position.position() << "} != {" << old_pos.isValid() << ", " << old_pos.position();
+    emit message(Message::Screen::SendPosition(position));
+    old_pos = position;
 }
