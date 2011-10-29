@@ -39,7 +39,6 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
         assert(m);
         gPlayer* p = DataAccessor::getPlayer(m_client->id());
         p->setPosition(m->position());
-        qDebug() << "nouvelle position:" << m->position().position();
         return;
     }
 

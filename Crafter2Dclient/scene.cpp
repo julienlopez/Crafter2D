@@ -35,7 +35,6 @@ Position Scene::player() const
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QPointF click = event->scenePos();
-    qDebug() << "clique sur" << click;
     togo.clear();
     togo << click;
 }
@@ -43,7 +42,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void Scene::setPosition(const Position& p)
 {
     if(!p.isValid()) return;
-    qDebug() << "setPosition " << p.position();
     if(!position.isValid())
     {
         clear();
@@ -70,7 +68,6 @@ void Scene::setPosition(const Position& p)
 void Scene::handleMessage(Message::Message* message)
 {
     assert(message->id() >= 5000);
-    qDebug() << "traitement du message";
     if(message->id() == 5002)
     {
         const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
@@ -99,7 +96,6 @@ void Scene::maj()
 void Scene::sendPosition()
 {
     if(position == old_pos) return;
-//    qDebug() << '{' << position.isValid() << ", " << position.position() << "} != {" << old_pos.isValid() << ", " << old_pos.position();
     emit message(Message::Screen::SendPosition(position));
     old_pos = position;
 }
