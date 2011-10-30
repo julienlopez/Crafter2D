@@ -9,6 +9,7 @@
 
 #include <QVector2D>
 
+#include <cmath>
 #include <cassert>
 
 #include <QDebug>
@@ -56,6 +57,7 @@ void Scene::setPosition(const Position& p)
         QVector<QPointF> v;
         v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
         m_player = new QGraphicsPolygonItem(QPolygonF(v),m_root);
+        it = new QGraphicsLineItem(0,0,1,0,m_player);
         m_player->setPos(p.position());
         timer->start();
         timer_sendPos->start();
@@ -82,6 +84,8 @@ void Scene::maj()
     old_pos = position;
     QVector2D reste(togo.at(0)-position.position());
     QVector2D u = reste.normalized();
+    double a = atan2(reste.y(), reste.x());
+    position.angle() = a;
     double vitesse = 2;
     if((u*vitesse*dt).toPointF().manhattanLength() > (togo.at(0)-position.position()).manhattanLength())
     {
@@ -90,6 +94,9 @@ void Scene::maj()
     }
     else position.position() += (u*vitesse*dt).toPointF();
     m_player->setPos(position.position());
+    double diff = position.angle()-m_player->rotation();
+    qDebug() << position.angle() << " =!= " << m_player->rotation();
+    if(abs(diff) > 0.01) m_player->setRotation(diff);
     emit newPosition(position);
 }
 
