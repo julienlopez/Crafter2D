@@ -9,12 +9,15 @@ class Position
 {
 public:
     Position();
-    Position(const QPointF& position);
+    Position(const QPointF& position, double angle);
     Position(QString str);
 
     bool isValid() const;
     QPointF position() const;
     QPointF& position();
+
+    double angle() const;
+    double& angle();
 
     QString toString() const;
 
@@ -26,6 +29,7 @@ public:
 
 private:
     bool m_valid;
+    double m_angle;
     QPointF m_position;
 };
 
