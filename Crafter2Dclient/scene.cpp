@@ -1,5 +1,6 @@
 #include "scene.hpp"
 
+#include <Utils>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
 
@@ -94,9 +95,7 @@ void Scene::maj()
     }
     else position.position() += (u*vitesse*dt).toPointF();
     m_player->setPos(position.position());
-    double diff = position.angle()-m_player->rotation();
-    qDebug() << position.angle() << " =!= " << m_player->rotation();
-    if(abs(diff) > 0.01) m_player->setRotation(diff);
+    m_player->setRotation(180*position.angle()/Utils::PI);
     emit newPosition(position);
 }
 
