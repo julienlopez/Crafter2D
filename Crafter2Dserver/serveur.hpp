@@ -29,6 +29,7 @@ private slots:
     void nouvelleConnexion();
     void deconnexionClient();
     void onSocketError(QAbstractSocket::SocketError);
+    void onQuit();
 };
 
 #endif // SERVEUR_HPP

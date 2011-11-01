@@ -2,10 +2,9 @@
 #define BUILDINGACCESSOR_HPP
 
 #include "faccessor.hpp"
+#include "sbuilding.hpp"
 
-#include <gBuilding>
-
-class BuildingAccessor : public fAccessor<gBuilding, gBuilding>
+class BuildingAccessor : public fAccessor<gBuilding, sBuilding>
 {
 public:
     BuildingAccessor();

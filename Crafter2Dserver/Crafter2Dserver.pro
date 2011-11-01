@@ -30,7 +30,11 @@ SOURCES += main.cpp \
     buildingaccessor.cpp \
     objectaccessor.cpp \
     staticobjectaccessor.cpp \
-    splayer.cpp
+    splayer.cpp \
+    sutils.cpp \
+    sbuilding.cpp \
+    sobject.cpp \
+    sstaticobject.cpp
 
 HEADERS += \
     serveur.hpp \
@@ -44,7 +48,21 @@ HEADERS += \
     buildingaccessor.hpp \
     objectaccessor.hpp \
     staticobjectaccessor.hpp \
-    splayer.hpp
+    splayer.hpp \
+    sutils.hpp \
+    sworldelement.hpp \
+    sbuilding.hpp \
+    sobject.hpp \
+    sstaticobject.hpp
+
+
+
+
+
+
+
+
+
 
 
 
