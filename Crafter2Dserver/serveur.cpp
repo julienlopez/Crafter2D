@@ -1,10 +1,13 @@
 #include "serveur.hpp"
 #include "client.hpp"
+#include "sutils.hpp"
+#include "dataaccessor.hpp"
 
 #include <Utils>
 
 #include <cassert>
 
+#include <QCoreApplication>
 #include <QTcpServer>
 #include <QTcpSocket>
 
@@ -17,6 +20,7 @@ Serveur::Serveur(QObject *parent) :
     QObject(parent)
 {
     serveur = new QTcpServer(this);
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onQuit()));
 }
 
 bool Serveur::start()
@@ -77,6 +81,8 @@ void Serveur::nouvelleConnexion()
     clients << nouveauClient;
     connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
+
+    SUtils::log() << "serveur démarré\n";
 }
 
 void Serveur::deconnexionClient()
@@ -94,4 +100,9 @@ void Serveur::onSocketError(QAbstractSocket::SocketError err)
 {
 //    Utils::out << "SocketError: " << err;
     qDebug() << "SocketError: " << err;
+}
+
+void Serveur::onQuit()
+{
+    DataAccessor::instance().processSavingQueue();
 }

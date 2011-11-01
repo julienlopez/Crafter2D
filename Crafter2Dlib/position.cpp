@@ -53,7 +53,7 @@ double& Position::angle()
 
 QString Position::toString() const
 {
-    return '{' + QString::number(m_position.x()) + "," + QString::number(m_position.y()) + '}';
+    return '{' + QString::number(m_position.x()) + "," + QString::number(m_position.y()) + "," + QString::number(m_angle) + '}';
 }
 
 QDataStream& operator >>(QDataStream& in, Position& pos)

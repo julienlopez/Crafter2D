@@ -2,10 +2,9 @@
 #define STATICOBJECTACCESSOR_HPP
 
 #include "faccessor.hpp"
+#include "sstaticobject.hpp"
 
-#include <gStaticObject>
-
-class StaticObjectAccessor : public fAccessor<gStaticObject, gStaticObject>
+class StaticObjectAccessor : public fAccessor<gStaticObject, sStaticObject>
 {
 public:
     StaticObjectAccessor();
