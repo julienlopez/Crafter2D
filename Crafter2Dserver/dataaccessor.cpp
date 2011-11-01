@@ -5,7 +5,8 @@
 #include "objectaccessor.hpp"
 #include "staticObjectaccessor.hpp"
 
-#include <QSqlQuery>
+#include <typeinfo>
+#include <QDebug>
 
 DataAccessor DataAccessor::m_instance;
 
@@ -34,9 +35,9 @@ gPlayer* DataAccessor::getPlayer(quint64 id)
     return instance().playerAccessor->get(id);
 }
 
-void DataAccessor::save(sWorldElement* building, bool destroy)
+void DataAccessor::save(sWorldElement* element, bool destroy)
 {
-    instance().m_saveQueue.push_back(toSave(building, destroy));
+    instance().m_saveQueue.push_back(toSave(element, destroy));
 }
 
 void DataAccessor::processSavingQueue()
@@ -45,9 +46,15 @@ void DataAccessor::processSavingQueue()
     {
         toSave s = m_saveQueue.first();
         m_saveQueue.pop_front();
+        qDebug() << "saving " << typeid(*s.m_object).name() << " avec l'id ";
         s.m_object->save();
         if(s.m_destroy) delete s.m_object;
     }
+}
+
+void DataAccessor::saveSlot(sWorldElement* element, bool destroy)
+{
+    m_saveQueue.push_back(toSave(element, destroy));
 }
 
 DataAccessor::Exception::Exception(const QString& message) throw(): std::exception(), m_message(message)

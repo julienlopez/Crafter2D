@@ -10,9 +10,9 @@
 #include <QCoreApplication>
 #include <QTcpServer>
 #include <QTcpSocket>
-
 #include <QSqlDatabase>
 #include <QStringList>
+#include <QTimer>
 
 #include <QDebug>
 
@@ -21,6 +21,10 @@ Serveur::Serveur(QObject *parent) :
 {
     serveur = new QTcpServer(this);
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onQuit()));
+
+    m_savingTimer = new QTimer(this);
+    connect(m_savingTimer, SIGNAL(timeout()), &DataAccessor::instance(), SLOT(processSavingQueue()));
+    m_savingTimer->start(10000);
 }
 
 bool Serveur::start()
@@ -104,5 +108,6 @@ void Serveur::onSocketError(QAbstractSocket::SocketError err)
 
 void Serveur::onQuit()
 {
+    qDebug() << "onQuit()";
     DataAccessor::instance().processSavingQueue();
 }

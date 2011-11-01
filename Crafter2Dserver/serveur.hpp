@@ -8,6 +8,7 @@
 
 class Client;
 class QTcpServer;
+class QTimer;
 
 class Serveur : public QObject
 {
@@ -20,6 +21,7 @@ public:
 private:
     QList<Client*> clients;
     QTcpServer* serveur;
+    QTimer* m_savingTimer;
 
     void envoyerATous(const Message::Message& message);
 

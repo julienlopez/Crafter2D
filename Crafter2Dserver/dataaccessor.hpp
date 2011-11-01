@@ -13,6 +13,7 @@ class PlayerAccessor;
 class BuildingAccessor;
 class ObjectAccessor;
 class StaticObjectAccessor;
+class QTimer;
 
 class DataAccessor : public QObject
 {
@@ -43,17 +44,18 @@ private:
     static DataAccessor m_instance;
     QQueue<toSave> m_saveQueue;
 
-    DataAccessor();
-
     PlayerAccessor* playerAccessor;
     BuildingAccessor* buildingAccessor;
     ObjectAccessor* objectAccessor;
     StaticObjectAccessor* staticObjectAccessor;
 
+    DataAccessor();
+
 signals:
 
 public slots:
     void processSavingQueue();
+    void saveSlot(sWorldElement* element, bool destroy = false);
 
 public:
     class Exception : public std::exception

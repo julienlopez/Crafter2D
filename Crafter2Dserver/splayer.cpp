@@ -21,11 +21,13 @@ sPlayer::sPlayer(quint64 id) throw(DataAccessor::Exception): gPlayer(id)
 }
 
 sPlayer::~sPlayer()
-{}
+{
+    qDebug() << "destruction du player " << id();
+}
 
 void sPlayer::save()
 {
-    qDebug() << "destruction du player " << id();
+    qDebug() << "sauvegarde du player " << id();
     QSqlQuery query;
     query.prepare("UPDATE user SET position=:pos WHERE id=:id");
     query.bindValue(":pos", position().toString());
