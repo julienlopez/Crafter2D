@@ -109,5 +109,6 @@ void Serveur::onSocketError(QAbstractSocket::SocketError err)
 void Serveur::onQuit()
 {
     qDebug() << "onQuit()";
+    DataAccessor::instance().clearAll();
     DataAccessor::instance().processSavingQueue();
 }

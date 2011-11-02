@@ -28,6 +28,7 @@ public:
     static gStaticObject* getStaticObject(quint64 id);
 
     static void save(sWorldElement* element, bool destroy = false);
+    void clearAll();
 
 private:
     struct toSave {

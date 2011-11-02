@@ -40,6 +40,14 @@ void DataAccessor::save(sWorldElement* element, bool destroy)
     instance().m_saveQueue.push_back(toSave(element, destroy));
 }
 
+void DataAccessor::clearAll()
+{
+    playerAccessor->clear();
+    buildingAccessor->clear();
+    objectAccessor->clear();
+    staticObjectAccessor->clear();
+}
+
 void DataAccessor::processSavingQueue()
 {
     while(!m_saveQueue.isEmpty())

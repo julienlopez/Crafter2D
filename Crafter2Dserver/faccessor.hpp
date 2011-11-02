@@ -20,16 +20,8 @@ public:
     virtual ~fAccessor()
     {
         qDebug() << "destruction de l'accesseur" << typeid(S).name();
-        /*
-        while(!buffer.empty())
-        {
-            DataAccessor::save(buffer.begin().value(), true);
-            //buffer.remove(buffer.begin().key());
-        }
-        */
-
         S* s;
-        foreach(s, buffer) DataAccessor::save(s, true);
+        foreach(s, buffer) qDebug() << "fuite memoire: " << s->id();
     }
 
     G* get(quint64 id)
@@ -38,6 +30,12 @@ public:
         S* s = new S(id);
         buffer[id] = s;
         return s;
+    }
+
+    void clear()
+    {
+        S* s;
+        foreach(s, buffer) DataAccessor::save(s, true);
     }
 
 protected:
