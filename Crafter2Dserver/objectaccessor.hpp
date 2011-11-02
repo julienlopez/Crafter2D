@@ -2,10 +2,9 @@
 #define OBJECTACCESSOR_HPP
 
 #include "faccessor.hpp"
+#include "sobject.hpp"
 
-#include <gObject>
-
-class ObjectAccessor : public fAccessor<gObject, gObject>
+class ObjectAccessor : public fAccessor<gObject, sObject>
 {
 public:
     ObjectAccessor();

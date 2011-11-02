@@ -2,7 +2,9 @@
 #define DATAACCESSOR_HPP
 
 #include <QObject>
+#include <QQueue>
 
+class sWorldElement;
 class gPlayer;
 class gBuilding;
 class gObject;
@@ -11,6 +13,7 @@ class PlayerAccessor;
 class BuildingAccessor;
 class ObjectAccessor;
 class StaticObjectAccessor;
+class QTimer;
 
 class DataAccessor : public QObject
 {
@@ -24,19 +27,35 @@ public:
     static gObject* getObject(quint64 id);
     static gStaticObject* getStaticObject(quint64 id);
 
-private:
-    static DataAccessor m_instance;
+    static void save(sWorldElement* element, bool destroy = false);
 
-    DataAccessor();
+private:
+    struct toSave {
+        toSave(sWorldElement* object, bool destroy)
+        {
+            m_object = object;
+            m_destroy = destroy;
+        }
+
+        sWorldElement* m_object;
+        bool m_destroy;
+    };
+
+    static DataAccessor m_instance;
+    QQueue<toSave> m_saveQueue;
 
     PlayerAccessor* playerAccessor;
     BuildingAccessor* buildingAccessor;
     ObjectAccessor* objectAccessor;
     StaticObjectAccessor* staticObjectAccessor;
 
+    DataAccessor();
+
 signals:
 
 public slots:
+    void processSavingQueue();
+    void saveSlot(sWorldElement* element, bool destroy = false);
 
 public:
     class Exception : public std::exception

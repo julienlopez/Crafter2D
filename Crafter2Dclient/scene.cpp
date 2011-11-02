@@ -1,13 +1,15 @@
 #include "scene.hpp"
 
+#include <Utils>
 #include <Message/Screen/SetPosition>
+#include <Message/Screen/SendPosition>
 
 #include <QTimer>
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
-
 #include <QVector2D>
 
+#include <cmath>
 #include <cassert>
 
 #include <QDebug>
@@ -18,6 +20,10 @@ Scene::Scene(QObject *parent) :
     timer = new QTimer(this);
     timer->setInterval(dt);
     connect(timer, SIGNAL(timeout()), this, SLOT(maj()));
+
+    timer_sendPos = new QTimer(this);
+    timer_sendPos->setInterval(100);
+    connect(timer_sendPos, SIGNAL(timeout()), this, SLOT(sendPosition()));
 
     if(!position.isValid()) addItem(new QGraphicsTextItem("Chargement en cours..."));
 }
@@ -30,7 +36,6 @@ Position Scene::player() const
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QPointF click = event->scenePos();
-    qDebug() << "clique sur" << click;
     togo.clear();
     togo << click;
 }
@@ -38,7 +43,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void Scene::setPosition(const Position& p)
 {
     if(!p.isValid()) return;
-    qDebug() << "setPosition " << p.position();
     if(!position.isValid())
     {
         clear();
@@ -53,9 +57,12 @@ void Scene::setPosition(const Position& p)
         QVector<QPointF> v;
         v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
         m_player = new QGraphicsPolygonItem(QPolygonF(v),m_root);
+        it = new QGraphicsLineItem(0,0,1,0,m_player);
         m_player->setPos(p.position());
         timer->start();
+        timer_sendPos->start();
     }
+    old_pos = position;
     position = p;
     emit newPosition(p);
 }
@@ -63,7 +70,6 @@ void Scene::setPosition(const Position& p)
 void Scene::handleMessage(Message::Message* message)
 {
     assert(message->id() >= 5000);
-    qDebug() << "traitement du message";
     if(message->id() == 5002)
     {
         const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
@@ -75,8 +81,11 @@ void Scene::handleMessage(Message::Message* message)
 void Scene::maj()
 {
     if(togo.isEmpty() || !position.isValid()) return;
+    old_pos = position;
     QVector2D reste(togo.at(0)-position.position());
     QVector2D u = reste.normalized();
+    double a = atan2(reste.y(), reste.x());
+    position.angle() = a;
     double vitesse = 2;
     if((u*vitesse*dt).toPointF().manhattanLength() > (togo.at(0)-position.position()).manhattanLength())
     {
@@ -85,5 +94,13 @@ void Scene::maj()
     }
     else position.position() += (u*vitesse*dt).toPointF();
     m_player->setPos(position.position());
+    m_player->setRotation(180*position.angle()/Utils::PI);
     emit newPosition(position);
+}
+
+void Scene::sendPosition()
+{
+    if(position == old_pos) return;
+    emit message(Message::Screen::SendPosition(position));
+    old_pos = position;
 }

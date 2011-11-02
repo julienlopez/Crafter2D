@@ -12,7 +12,11 @@ class ScreenWidget : public QGraphicsView
 public:
     ScreenWidget(Scene* scene, QWidget *parent = 0);
 
+protected:
+    void wheelEvent(QWheelEvent* event);
+
 private:
+    double zoomLevel;
     Scene* m_scene;
 
 private slots:

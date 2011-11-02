@@ -13,7 +13,8 @@ class Client : public QObject, public ClientInfo
 {
     Q_OBJECT
 public:
-    explicit Client(QTcpSocket* socket, QObject *parent = 0);
+    Client(QTcpSocket* socket, QObject *parent = 0);
+    ~Client();
 
     void send(const Message::Message& message);
     void write(const QByteArray& paquet);

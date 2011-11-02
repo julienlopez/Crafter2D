@@ -139,6 +139,10 @@ void MainWindow::onNewMessage(Message::Message* message)
         const Message::LoginFailure* m = qobject_cast<const Message::LoginFailure*>(message);
         assert(m != 0);
         QMessageBox::information(this, "Le login a échoué", "Impossible de se logger: "+m->erreur());
+        centralWidget()->deleteLater();
+        LoginWidget* lw = new LoginWidget;
+        connect(lw, SIGNAL(sendLogin(QString,QString)), this, SLOT(sendLogin(QString, QString)));
+        setCentralWidget(lw);
     }
     else if(message->id() == 3)
     {

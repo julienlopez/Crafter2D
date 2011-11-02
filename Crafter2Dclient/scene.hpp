@@ -23,10 +23,12 @@ protected:
 
 private:
     Position position;
+    Position old_pos;
     QList<QPointF> togo;
     QGraphicsItem* m_player;
     QGraphicsItem* m_root;
     QTimer* timer;
+    QTimer* timer_sendPos;
 
     void setPosition(const Position& p);
 
@@ -39,7 +41,7 @@ public slots:
 
 private slots:
     void maj();
-
+    void sendPosition();
 };
 
 #endif // SCENE_HPP

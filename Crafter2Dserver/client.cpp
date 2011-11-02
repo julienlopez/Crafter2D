@@ -1,5 +1,7 @@
 #include "client.hpp"
 #include "messagehandler.hpp"
+#include "dataaccessor.hpp"
+#include "splayer.hpp"
 
 #include <Message/LoginFailure>
 #include <Message/LoginSuccess>
@@ -18,6 +20,11 @@ Client::Client(QTcpSocket* socket, QObject* parent) :
     messageHandler = new MessageHandler(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(socket, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
+}
+
+Client::~Client()
+{
+    DataAccessor::instance().saveSlot(static_cast<sPlayer*>(DataAccessor::getPlayer(id())));
 }
 
 void Client::send(const Message::Message& message)

@@ -9,20 +9,27 @@ class Position
 {
 public:
     Position();
-    Position(const QPointF& position);
+    Position(const QPointF& position, double angle);
     Position(QString str);
 
     bool isValid() const;
     QPointF position() const;
     QPointF& position();
 
+    double angle() const;
+    double& angle();
+
     QString toString() const;
 
     friend QDataStream& operator >>(QDataStream& in, Position& pos);
     friend QDataStream& operator <<(QDataStream& out, const Position& pos);
 
+    bool operator == (const Position& pos) const;
+    bool operator != (const Position& pos) const;
+
 private:
     bool m_valid;
+    double m_angle;
     QPointF m_position;
 };
 
