@@ -31,7 +31,10 @@ SOURCES += \
     gbuilding.cpp \
     gobject.cpp \
     gstaticobject.cpp \
-    message/screen/sendposition.cpp
+    message/screen/sendposition.cpp \
+    commande/commande.cpp \
+    commande/status.cpp \
+    shutdown.cpp
 
 HEADERS +=\
     utils.hpp \
@@ -51,7 +54,16 @@ HEADERS +=\
     gobject.hpp \
     gbuilding.hpp \
     gstaticobject.hpp \
-    message/screen/sendposition.hpp
+    message/screen/sendposition.hpp \
+    commande/commande.hpp \
+    commande/status.hpp \
+    shutdown.hpp
+
+
+
+
+
+
 
 
 
