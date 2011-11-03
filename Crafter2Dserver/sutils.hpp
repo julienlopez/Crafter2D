@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 
-class SUtils
+class sUtils
 {
 public:
     static QTextStream& log();

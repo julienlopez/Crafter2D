@@ -35,7 +35,11 @@ public:
     void clear()
     {
         S* s;
-        foreach(s, buffer) DataAccessor::save(s, true);
+        foreach(s, buffer)
+        {
+            DataAccessor::save(s, true);
+            buffer.remove(buffer.key(s));
+        }
     }
 
 protected:

@@ -86,7 +86,7 @@ void Serveur::nouvelleConnexion()
     connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
 
-    SUtils::log() << "serveur démarré\n";
+    sUtils::log() << "serveur démarré\n";
 }
 
 void Serveur::deconnexionClient()

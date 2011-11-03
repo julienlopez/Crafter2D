@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     sutils.cpp \
     sbuilding.cpp \
     sobject.cpp \
-    sstaticobject.cpp
+    sstaticobject.cpp \
+    localserveur.cpp
 
 HEADERS += \
     serveur.hpp \
@@ -53,7 +54,10 @@ HEADERS += \
     sworldelement.hpp \
     sbuilding.hpp \
     sobject.hpp \
-    sstaticobject.hpp
+    sstaticobject.hpp \
+    localserveur.hpp
+
+
 
 
 
