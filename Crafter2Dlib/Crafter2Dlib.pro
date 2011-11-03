@@ -14,10 +14,9 @@ DEFINES += CRAFTER2DLIB_LIBRARY
 INCLUDEPATH += ../include
 
 SOURCES += \
-    
-	commande/commande.cpp \
+    commande/commande.cpp \
     commande/status.cpp \
-    commande/shutdown.cpp
+    commande/shutdown.cpp \
     message/message.cpp \
     message/login.cpp \
     message/loginfailure.cpp \
@@ -28,19 +27,19 @@ SOURCES += \
     message/screen/getposition.cpp \
     message/screen/screen.cpp \
     message/screen/setposition.cpp \
-	message/screen/sendposition.cpp \
+    message/screen/sendposition.cpp \
     gplayer.cpp \
     gbuilding.cpp \
     gobject.cpp \
     gstaticobject.cpp \
-	position.cpp \
-	utils.cpp \
-	worldelement.cpp \
+    position.cpp \
+    utils.cpp \
+    worldelement.cpp
 
 HEADERS +=\
-	commande/commande.hpp \
+    commande/commande.hpp \
     commande/status.hpp \
-    commande/shutdown.hpp
+    commande/shutdown.hpp \
     message/message.hpp \
     message/login.hpp \
     message/loginfailure.hpp \
@@ -51,16 +50,14 @@ HEADERS +=\
     message/screen/getposition.hpp \
     message/screen/screen.hpp \
     message/screen/setposition.hpp \
-	message/screen/sendposition.hpp \
+    message/screen/sendposition.hpp \
     gplayer.hpp \
     gobject.hpp \
     gbuilding.hpp \
     gstaticobject.hpp \
-	position.hpp \
+    position.hpp \
     utils.hpp \
-    worldelement.hpp \
-    
-
+    worldelement.hpp
 
 
 
