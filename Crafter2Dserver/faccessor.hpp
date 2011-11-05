@@ -20,6 +20,8 @@ public:
     virtual ~fAccessor()
     {
         qDebug() << "destruction de l'accesseur" << typeid(S).name();
+        if(buffer.size() == 0) return;
+        qDebug() << "accesseur non-vide";
         S* s;
         foreach(s, buffer) qDebug() << "fuite memoire: " << s->id();
     }

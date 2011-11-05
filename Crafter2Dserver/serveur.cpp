@@ -2,6 +2,7 @@
 #include "client.hpp"
 #include "sutils.hpp"
 #include "dataaccessor.hpp"
+#include "localserveur.hpp"
 
 #include <Utils>
 
@@ -25,6 +26,8 @@ Serveur::Serveur(QObject *parent) :
     m_savingTimer = new QTimer(this);
     connect(m_savingTimer, SIGNAL(timeout()), &DataAccessor::instance(), SLOT(processSavingQueue()));
     m_savingTimer->start(10000);
+
+    m_localServeur = new LocalServeur(this);
 }
 
 bool Serveur::start()
@@ -58,6 +61,14 @@ bool Serveur::start()
 
     connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
     return true;
+}
+
+QString Serveur::status() const
+{
+    QString res;
+    res += "server status:\n";
+    res += QString::number(clients.size()) + " clients connectés\n";
+    return res;
 }
 
 void Serveur::envoyerATous(const Message::Message& message)
@@ -111,4 +122,12 @@ void Serveur::onQuit()
     qDebug() << "onQuit()";
     DataAccessor::instance().clearAll();
     DataAccessor::instance().processSavingQueue();
+}
+
+void Serveur::shutdown()
+{
+    qDebug() << "shuting down";
+    DataAccessor::instance().clearAll();
+    DataAccessor::instance().processSavingQueue();
+    deleteLater();
 }

@@ -1,6 +1,7 @@
 #include "commande.hpp"
 #include "status.hpp"
 #include "shutdown.hpp"
+#include "statusupdate.hpp"
 
 Commande::Commande::Commande(quint64 id, QObject *parent) :
     QObject(parent), m_id(id)
@@ -20,6 +21,7 @@ Commande::Commande* Commande::Commande::extract(QDataStream& in)
     in >> id;
     if(id == 1) return Status::extract(in);
     if(id == 2) return Shutdown::extract(in);
+    if(id == 3) return StatusUpdate::extract(in);
     return new Commande(id);
 }
 

@@ -34,7 +34,8 @@ SOURCES += \
     gstaticobject.cpp \
     position.cpp \
     utils.cpp \
-    worldelement.cpp
+    worldelement.cpp \
+    commande/statusupdate.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -57,7 +58,10 @@ HEADERS +=\
     gstaticobject.hpp \
     position.hpp \
     utils.hpp \
-    worldelement.hpp
+    worldelement.hpp \
+    commande/statusupdate.hpp
+
+
 
 
 
