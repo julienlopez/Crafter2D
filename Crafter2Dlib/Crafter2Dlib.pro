@@ -35,7 +35,9 @@ SOURCES += \
     position.cpp \
     utils.cpp \
     worldelement.cpp \
-    commande/statusupdate.cpp
+    commande/statusupdate.cpp \
+    idset.cpp \
+    message/screen/objectinformation.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -59,7 +61,13 @@ HEADERS +=\
     position.hpp \
     utils.hpp \
     worldelement.hpp \
-    commande/statusupdate.hpp
+    commande/statusupdate.hpp \
+    idset.hpp \
+    message/screen/objectinformation.hpp
+
+
+
+
 
 
 

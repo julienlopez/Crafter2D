@@ -3,6 +3,7 @@
 #include "sutils.hpp"
 #include "dataaccessor.hpp"
 #include "localserveur.hpp"
+#include "splayer.hpp"
 
 #include <Utils>
 
@@ -21,11 +22,15 @@ Serveur::Serveur(QObject *parent) :
     QObject(parent)
 {
     serveur = new QTcpServer(this);
-    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onQuit()));
+    //connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onQuit()));
 
     m_savingTimer = new QTimer(this);
     connect(m_savingTimer, SIGNAL(timeout()), &DataAccessor::instance(), SLOT(processSavingQueue()));
     m_savingTimer->start(10000);
+
+    m_updatePosTimer = new QTimer(this);
+    connect(m_updatePosTimer, SIGNAL(timeout()), this, SLOT(updatePosition()));
+    m_updatePosTimer->start(100);
 
     m_localServeur = new LocalServeur(this);
 }
@@ -88,23 +93,15 @@ void Serveur::envoyerATous(const Message::Message& message)
 
 void Serveur::nouvelleConnexion()
 {
-//    Utils::out << "Un nouveau client vient de se connecter";
-    qDebug() << "Un nouveau client vient de se connecter";
-
     QTcpSocket* socket = serveur->nextPendingConnection();
     Client* nouveauClient = new Client(socket, this);
     clients << nouveauClient;
     connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
-
-    sUtils::log() << "serveur démarré\n";
 }
 
 void Serveur::deconnexionClient()
 {
-//    Utils::out << "déconnexion client";
-    qDebug() << "déconnexion client";
-
     Client* client = qobject_cast<Client*>(sender());
     assert(client != 0);
     clients.removeOne(client);
@@ -117,11 +114,39 @@ void Serveur::onSocketError(QAbstractSocket::SocketError err)
     qDebug() << "SocketError: " << err;
 }
 
+/*
 void Serveur::onQuit()
 {
     qDebug() << "onQuit()";
     DataAccessor::instance().clearAll();
     DataAccessor::instance().processSavingQueue();
+}
+
+void Serveur::onClientUpdatePosition(quint64 id, const Position& pos)
+{
+    qDebug() << "pos update " << id << " => " << pos.position();
+    Client* c;
+    foreach(c, clients)
+    {
+        if(c->id() == id) continue;
+    }
+}*/
+
+void Serveur::updatePosition()
+{
+    Client* c, *cl;
+    Position pos;
+    foreach(c, clients)
+    {
+        pos = c->player()->position();
+        foreach(cl, clients)
+        {
+            if(c == cl || c == 0 || cl == 0) continue;
+            if((c->player()->position().position()cl->player()->position().position()).manhattanLength() < 50)
+                c->send()
+        }
+
+    }
 }
 
 void Serveur::shutdown()

@@ -87,3 +87,9 @@ void Client::donneesRecues()
     message->deleteLater();
     tailleMessage = 0;
 }
+
+void Client::updatePosition(const Position& position)
+{
+    gPlayer* p = DataAccessor::getPlayer(id());
+    p->setPosition(position);
+}

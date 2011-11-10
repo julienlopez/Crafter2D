@@ -26,8 +26,6 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
         qDebug() << "message invalide!";
         return;
     }
-
-    qDebug() << "ScreenMessageHandler::traiter(" << message->id() << ")";
     if(message->id() == 5001)
     {
         sendPosition();
@@ -37,8 +35,7 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
     {
         const Message::Screen::SendPosition* m = qobject_cast<const Message::Screen::SendPosition*>(message);
         assert(m);
-        gPlayer* p = DataAccessor::getPlayer(m_client->id());
-        p->setPosition(m->position());
+        m_client->updatePosition(m->position());
         return;
     }
 

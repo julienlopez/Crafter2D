@@ -4,6 +4,7 @@
 #include "clientinfo.hpp"
 
 #include <QObject>
+#include <Position>
 #include <Message/Message>
 
 class QTcpSocket;
@@ -28,9 +29,13 @@ private:
 
 signals:
     void disconnected();
+    void positionUpdated(quint64 id, const Position& position);
 
 private slots:
     void donneesRecues();
+
+public slots:
+    void updatePosition(const Position& position);
 };
 
 #endif // CLIENT_HPP
