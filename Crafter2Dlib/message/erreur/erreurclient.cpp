@@ -1,18 +1,19 @@
 #include "erreurclient.hpp"
+#include "../screen/screen.hpp"
 
 #include <cassert>
 
-Message::Erreur::ErreurClient::ErreurClient(const QString& message): Erreur(3000, message)
+Message::Erreur::ErreurClient::ErreurClient(const QString& message): Erreur(ErreurClient::s_id, message)
 {}
 
 Message::Erreur::ErreurClient::ErreurClient(quint64 id, const QString& message): Erreur(id, message)
 {
-    assert(id>=3000 && id <5000);
+    assert(id>=ErreurClient::s_id && id < Screen::Screen::Screen::s_id);
 }
 
 Message::Erreur::ErreurClient* Message::Erreur::ErreurClient::extract(quint64 id, QDataStream& in)
 {
-    assert(id>=3000 && id <5000);
+    assert(id>=ErreurClient::s_id && id < Screen::Screen::s_id);
     QString mess;
     in >> mess;
 

@@ -2,12 +2,12 @@
 
 #include <cassert>
 
-Message::Screen::GetPosition::GetPosition(): Screen(5001)
+Message::Screen::GetPosition::GetPosition(): Screen(GetPosition::s_id)
 {}
 
 Message::Screen::GetPosition* Message::Screen::GetPosition::extract(QDataStream& in, quint64 id)
 {
-    assert(id == 5001);
+    assert(id == GetPosition::s_id);
     return new GetPosition;
 }
 

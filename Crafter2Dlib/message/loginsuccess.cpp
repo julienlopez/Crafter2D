@@ -1,6 +1,6 @@
 #include "loginsuccess.hpp"
 
-Message::LoginSuccess::LoginSuccess(): Message(3)
+Message::LoginSuccess::LoginSuccess(): Message(LoginSuccess::s_id)
 {}
 
 Message::LoginSuccess* Message::LoginSuccess::extract(QDataStream& in)

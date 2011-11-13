@@ -14,6 +14,8 @@ public:
 
     static GetPosition* extract(QDataStream& in, quint64 id);
     virtual QDataStream& serialize(QDataStream& out) const;
+
+    static const quint64 s_id = 5001;
 };
 
 }}

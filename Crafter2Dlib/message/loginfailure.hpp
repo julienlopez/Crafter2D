@@ -16,6 +16,7 @@ public:
     static LoginFailure* extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
+    static const quint64 s_id = 2;
 private:
     QString m_erreur;
 };

@@ -2,7 +2,7 @@
 
 namespace Message {
 
-Login::Login(QString login, QString mdp, QObject *parent) : Message(1, parent), m_login(login), m_mdp(mdp)
+Login::Login(QString login, QString mdp, QObject *parent) : Message(Login::s_id, parent), m_login(login), m_mdp(mdp)
 {}
 
 QString Login::login() const

@@ -1,6 +1,6 @@
 #include "loginfailure.hpp"
 
-Message::LoginFailure::LoginFailure(const QString& erreur): Message(2), m_erreur(erreur)
+Message::LoginFailure::LoginFailure(const QString& erreur): Message(LoginFailure::s_id), m_erreur(erreur)
 {}
 
 QString Message::LoginFailure::erreur() const

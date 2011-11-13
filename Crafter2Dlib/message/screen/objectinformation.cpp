@@ -1,21 +1,19 @@
 #include "objectinformation.hpp"
 
-//#include <
+#include <WorldElement>
 
 #include <cassert>
 
 Message::Screen::ObjectInformation::ObjectInformation() :
-    Screen(5004)
-{
-}
+    Screen(ObjectInformation::s_id), m_element(0)
+{}
 
 Message::Screen::ObjectInformation::ObjectInformation* Message::Screen::ObjectInformation::extract(QDataStream& in, quint64 id)
 {
-    assert(id == 5004);
-    if(m_element != 0) delete m_element;
-    m_element = WorldElement::extract(in);
-
-    return new ObjectInformation;
+    assert(id == ObjectInformation::s_id);
+    ObjectInformation* res = new ObjectInformation;
+    res->m_element = WorldElement::extract(in);
+    return res;
 }
 
 QDataStream& Message::Screen::ObjectInformation::serialize(QDataStream& out) const

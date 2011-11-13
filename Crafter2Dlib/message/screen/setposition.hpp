@@ -18,6 +18,8 @@ public:
     static SetPosition* extract(QDataStream& in, quint64 id);
     virtual QDataStream& serialize(QDataStream& out) const;
 
+    static const quint64 s_id = 5002;
+
 private:
     Position m_position;
 };

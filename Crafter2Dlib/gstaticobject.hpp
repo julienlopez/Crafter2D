@@ -7,6 +7,11 @@ class gStaticObject : public WorldElement
 {
 public:
     gStaticObject(quint64 id);
+
+    static const quint64 s_code = 3;
+
+    virtual void serialize(QDataStream& out) const;
+    static gStaticObject* extract(QDataStream& in);
 };
 
 #endif // GSTATICOBJECT_HPP

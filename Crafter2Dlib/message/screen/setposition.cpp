@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-Message::Screen::SetPosition::SetPosition(const Position& position): Screen(5002), m_position(position)
+Message::Screen::SetPosition::SetPosition(const Position& position): Screen(SetPosition::s_id), m_position(position)
 {}
 
 Position Message::Screen::SetPosition::position() const
@@ -12,7 +12,7 @@ Position Message::Screen::SetPosition::position() const
 
 Message::Screen::SetPosition* Message::Screen::SetPosition::extract(QDataStream& in, quint64 id)
 {
-    assert(id == 5002);
+    assert(id == SetPosition::s_id);
     Position p;
     in >> p;
     return new SetPosition(p);

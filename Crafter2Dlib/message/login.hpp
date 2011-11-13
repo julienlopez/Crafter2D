@@ -18,6 +18,8 @@ public:
     static Login* extract(QDataStream& in);
     QDataStream& serialize(QDataStream& out) const;
 
+    static const quint64 s_id = 1;
+
 private:
     QString m_login;
     QString m_mdp;

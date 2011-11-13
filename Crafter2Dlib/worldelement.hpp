@@ -9,11 +9,12 @@ class WorldElement
 public:
     quint64 id() const;
 
+    virtual void serialize(QDataStream& out) const;
+    static WorldElement* extract(QDataStream& in);
+
 protected:
     WorldElement(quint64 id);
 
-    virtual void serialize(QDataStream& out) const;
-    static WorldElement* extract(QDataStream& in);
 private:
     quint64 m_id;
 };
