@@ -6,6 +6,7 @@
 #include "splayer.hpp"
 
 #include <Utils>
+#include <Message/Screen/SendPosition>
 
 #include <cassert>
 
@@ -134,6 +135,7 @@ void Serveur::onClientUpdatePosition(quint64 id, const Position& pos)
 
 void Serveur::updatePosition()
 {
+    //TODO optimiser l'echange des positions entre joueurs;
     Client* c, *cl;
     Position pos;
     foreach(c, clients)
@@ -142,8 +144,8 @@ void Serveur::updatePosition()
         foreach(cl, clients)
         {
             if(c == cl || c == 0 || cl == 0) continue;
-            if((c->player()->position().position()cl->player()->position().position()).manhattanLength() < 50)
-                c->send()
+            if((c->player()->position().position() - cl->player()->position().position()).manhattanLength() < 50)
+                c->send(Message::Screen::SendPosition(cl->player()->position()));
         }
 
     }
