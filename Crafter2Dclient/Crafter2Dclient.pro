@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     loginwidget.cpp \
     screenwidget.cpp \
     debugdock.cpp \
-    scene.cpp
+    scene.cpp \
+    store.cpp
 
 HEADERS  += mainwindow.hpp \
     loginwidget.hpp \
     screenwidget.hpp \
     debugdock.hpp \
-    scene.hpp
+    scene.hpp \
+    store.hpp
 
 
 
