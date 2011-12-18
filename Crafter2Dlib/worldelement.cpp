@@ -4,12 +4,22 @@
 #include "gobject.hpp"
 #include "gstaticobject.hpp"
 
-WorldElement::WorldElement(quint64 id): m_id(id)
+WorldElement::WorldElement(quint64 id, const Position& position): m_id(id), m_position(position)
 {}
 
 quint64 WorldElement::id() const
 {
     return m_id;
+}
+
+Position WorldElement::position() const
+{
+    return m_position;
+}
+
+void WorldElement::setPosition(const Position& p)
+{
+    m_position = p;
 }
 
 void WorldElement::serialize(QDataStream& out) const
@@ -26,6 +36,8 @@ WorldElement* WorldElement::extract(QDataStream& in)
     if(c == gObject::s_code) return gObject::extract(in);
     if(c == gStaticObject::s_code) return gStaticObject::extract(in);
 
+    Position pos;
     in >> id;
-    return new WorldElement(id);
+    in >> pos;
+    return new WorldElement(id, pos);
 }
