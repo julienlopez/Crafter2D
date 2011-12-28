@@ -7,6 +7,7 @@
 
 #include <Utils>
 #include <Message/Screen/SendPosition>
+#include <Message/Screen/MajPosition>
 
 #include <cassert>
 
@@ -145,7 +146,7 @@ void Serveur::updatePosition()
         {
             if(c == cl || c == 0 || cl == 0) continue;
             if((c->player()->position().position() - cl->player()->position().position()).manhattanLength() < 50)
-                c->send(Message::Screen::SendPosition(cl->player()->position()));
+                c->send(Message::Screen::MajPosition(cl->player()));
         }
 
     }

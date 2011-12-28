@@ -15,3 +15,8 @@ gObject* gObject::extract(QDataStream& in)
     in >> id;
     return new gObject(id);
 }
+
+quint64 gObject::code() const
+{
+    return s_code;
+}

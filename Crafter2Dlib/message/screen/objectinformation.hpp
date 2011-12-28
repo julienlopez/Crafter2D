@@ -12,7 +12,9 @@ class ObjectInformation : public Screen
 {
     Q_OBJECT
 public:
-    ObjectInformation();
+    ObjectInformation(WorldElement* element =0);
+
+    WorldElement* element();
 
     static ObjectInformation* extract(QDataStream& in, quint64 id);
     virtual QDataStream& serialize(QDataStream& out) const;

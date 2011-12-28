@@ -12,6 +12,8 @@ public:
 
     virtual void serialize(QDataStream& out) const;
     static gPlayer* extract(QDataStream& in);
+
+    quint64 code() const;
 };
 
 #endif // GPLAYER_HPP

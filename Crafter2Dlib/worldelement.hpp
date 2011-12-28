@@ -12,10 +12,12 @@ public:
     quint64 id() const;
 
     Position position() const;
-    void setPosition(const Position& p);
+    virtual void setPosition(const Position& p);
 
     virtual void serialize(QDataStream& out) const;
     static WorldElement* extract(QDataStream& in);
+
+    virtual quint64 code() const = 0;
 
 protected:
     WorldElement(quint64 id, const Position& position = Position());

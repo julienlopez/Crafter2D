@@ -7,7 +7,8 @@
 #include <Message/Erreur/ErreurServeur>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
-
+#include <Message/Screen/RequestObjectInformation>
+#include <Message/Screen/ObjectInformation>
 #include <QSqlQuery>
 #include <QSqlError>
 
@@ -31,14 +32,24 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
         sendPosition();
         return;
     }
-    if(message->id() == 5003) //mettre à jour la position
+    if(message->id() == Message::Screen::SendPosition::s_id) //mettre à jour la position
     {
         const Message::Screen::SendPosition* m = qobject_cast<const Message::Screen::SendPosition*>(message);
         assert(m);
         m_client->updatePosition(m->position());
         return;
     }
-
+    if(message->id() == Message::Screen::RequestObjectInformation::s_id)
+    {
+        const Message::Screen::RequestObjectInformation* m = qobject_cast<const Message::Screen::RequestObjectInformation*>(message);
+        assert(m);
+        switch(m->code()){
+        case gPlayer::s_code:
+            gPlayer* p = DataAccessor::getPlayer(m->id());
+            m_client->send(Message::Screen::ObjectInformation(p));
+            break;
+        }
+    }
 }
 
 void ScreenMessageHandler::sendPosition() const

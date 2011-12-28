@@ -12,6 +12,8 @@ public:
 
     virtual void serialize(QDataStream& out) const;
     static gObject* extract(QDataStream& in);
+
+    quint64 code() const;
 };
 
 #endif // GOBJECT_HPP

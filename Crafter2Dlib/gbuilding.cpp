@@ -15,3 +15,8 @@ gBuilding* gBuilding::extract(QDataStream& in)
     in >> id;
     return new gBuilding(id);
 }
+
+quint64 gBuilding::code() const
+{
+    return s_code;
+}

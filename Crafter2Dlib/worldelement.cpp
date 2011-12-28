@@ -29,15 +29,12 @@ void WorldElement::serialize(QDataStream& out) const
 
 WorldElement* WorldElement::extract(QDataStream& in)
 {
-    quint64 c, id;
+    quint64 c;
     in >> c;
     if(c == gPlayer::s_code) return gPlayer::extract(in);
     if(c == gBuilding::s_code) return gBuilding::extract(in);
     if(c == gObject::s_code) return gObject::extract(in);
     if(c == gStaticObject::s_code) return gStaticObject::extract(in);
 
-    Position pos;
-    in >> id;
-    in >> pos;
-    return new WorldElement(id, pos);
+    return 0;
 }

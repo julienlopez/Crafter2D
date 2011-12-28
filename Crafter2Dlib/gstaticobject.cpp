@@ -15,3 +15,8 @@ gStaticObject* gStaticObject::extract(QDataStream& in)
     in >> id;
     return new gStaticObject(id);
 }
+
+quint64 gStaticObject::code() const
+{
+    return s_code;
+}

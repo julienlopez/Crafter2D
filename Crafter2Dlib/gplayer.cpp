@@ -18,3 +18,8 @@ gPlayer* gPlayer::extract(QDataStream& in)
     res->setPosition(pos);
     return res;
 }
+
+quint64 gPlayer::code() const
+{
+    return s_code;
+}

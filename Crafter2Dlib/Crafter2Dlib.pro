@@ -37,7 +37,9 @@ SOURCES += \
     worldelement.cpp \
     commande/statusupdate.cpp \
     idset.cpp \
-    message/screen/objectinformation.cpp
+    message/screen/objectinformation.cpp \
+    message/screen/majposition.cpp \
+    message/screen/requestobjectinformation.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -63,7 +65,9 @@ HEADERS +=\
     worldelement.hpp \
     commande/statusupdate.hpp \
     idset.hpp \
-    message/screen/objectinformation.hpp
+    message/screen/objectinformation.hpp \
+    message/screen/majposition.hpp \
+    message/screen/requestobjectinformation.hpp
 
 
 

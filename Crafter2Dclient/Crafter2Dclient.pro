@@ -19,14 +19,18 @@ SOURCES += main.cpp\
     screenwidget.cpp \
     debugdock.cpp \
     scene.cpp \
-    store.cpp
+    store.cpp \
+    cplayer.cpp \
+    cworldelement.cpp
 
 HEADERS  += mainwindow.hpp \
     loginwidget.hpp \
     screenwidget.hpp \
     debugdock.hpp \
     scene.hpp \
-    store.hpp
+    store.hpp \
+    cplayer.hpp \
+    cworldelement.hpp
 
 
 
