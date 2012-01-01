@@ -18,6 +18,7 @@ Message::Screen::ObjectInformation::ObjectInformation* Message::Screen::ObjectIn
     assert(id == ObjectInformation::s_id);
     ObjectInformation* res = new ObjectInformation;
     res->m_element = WorldElement::extract(in);
+    assert(res->m_element);
     return res;
 }
 
