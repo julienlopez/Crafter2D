@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(deconnecte()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
-    connect(this, SIGNAL(messageRecu(Message::Message*)), this, SLOT(onNewMessage(Message::Message*)));
+    connect(this, SIGNAL(messageRecu(Message::Message*)), this, SLOT(handleMessage(Message::Message*)));
 
     debug = new DebugDock;
     addDockWidget(Qt::RightDockWidgetArea, debug, Qt::Vertical);
@@ -48,10 +48,10 @@ void MainWindow::closeEvent(QCloseEvent* evt)
     evt->accept();
 }
 
-void MainWindow::setUpScreen()
+void MainWindow::setUpScreen(quint64 idPlayer)
 {
     centralWidget()->deleteLater();
-    m_scene = new Scene(this);
+    m_scene = new Scene(idPlayer, this);
     m_screen = new ScreenWidget(m_scene);
     connect(m_scene, SIGNAL(message(const Message::Message&)), this, SLOT(send(const Message::Message&)));
     connect(m_scene, SIGNAL(newPosition(const Position&)), debug, SLOT(setPosition(const Position&)));
@@ -131,7 +131,7 @@ void MainWindow::sendLogin(QString login, QString mdp)
     l->deleteLater();
 }
 
-void MainWindow::onNewMessage(Message::Message* message)
+void MainWindow::handleMessage(Message::Message* message)
 {
     if(message->id() >= 5000 && m_scene != 0) m_scene->handleMessage(message);
     else if(message->id() == 2)
@@ -144,10 +144,12 @@ void MainWindow::onNewMessage(Message::Message* message)
         connect(lw, SIGNAL(sendLogin(QString,QString)), this, SLOT(sendLogin(QString, QString)));
         setCentralWidget(lw);
     }
-    else if(message->id() == 3)
+    else if(message->id() == Message::LoginSuccess::s_id)
     {
         QMessageBox::information(this, "Le login a réussi", "Login réussi, chargement du jeu...");
-        setUpScreen();
+        const Message::LoginSuccess* l = qobject_cast<const Message::LoginSuccess*>(message);
+        assert(l);
+        setUpScreen(l->idPlayer());
     }
     else if(message->id() >= 1000 && message->id() < 3000)
     {

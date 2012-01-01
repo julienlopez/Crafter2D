@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <Message/Message>
+#include <iMessageHandler>
 
 #include <QMainWindow>
 #include <QAbstractSocket>
@@ -12,7 +12,7 @@ class QTcpSocket;
 class Scene;
 class ScreenWidget;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public iMessageHandler
 {
     Q_OBJECT
 
@@ -30,7 +30,7 @@ private:
     ScreenWidget* m_screen;
     DebugDock* debug;
 
-    void setUpScreen();
+    void setUpScreen(quint64 idPlayer);
 
 private slots:
     void send(const Message::Message& message);
@@ -39,7 +39,7 @@ private slots:
     void deconnecte();
     void erreurSocket(QAbstractSocket::SocketError);
     void sendLogin(QString, QString);
-    void onNewMessage(Message::Message* message);
+    void handleMessage(Message::Message* message);
 
 signals:
     void messageRecu(Message::Message*);
