@@ -6,6 +6,8 @@
 
 #include <QMap>
 
+class WorldElement;
+class gPlayer;
 class cPlayer;
 class gBuilding;
 class gObject;
@@ -27,6 +29,12 @@ public:
     static void updatePositionBuilding(quint64 id, const Position &pos);
     static void updatePositionObject(quint64 id, const Position &pos);
     static void updatePositionStaticObject(quint64 id, const Position &pos);
+
+    static void setInformation(WorldElement* el);
+    static void setInformationPlayer(gPlayer* p);
+    static void setInformationBuilding(gBuilding *g);
+    static void setInformationObject(gObject* o);
+    static void setInformationStaticObject(gStaticObject* s);
 
     static Store& instance();
 
