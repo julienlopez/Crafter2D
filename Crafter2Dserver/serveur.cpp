@@ -141,14 +141,14 @@ void Serveur::updatePosition()
     Position pos;
     foreach(c, clients)
     {
-        pos = c->player()->position();
         foreach(cl, clients)
         {
-            if(c == cl || c == 0 || cl == 0) continue;
+            if(c == cl || !c || !cl) continue;
+            if(!c->player() || !cl->player()) continue;
+            pos = c->player()->position();
             if((c->player()->position().position() - cl->player()->position().position()).manhattanLength() < 50)
                 c->send(Message::Screen::MajPosition(cl->player()));
         }
-
     }
 }
 
