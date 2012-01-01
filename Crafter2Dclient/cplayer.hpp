@@ -10,12 +10,14 @@
   *
   *
   */
-class cPlayer : public gPlayer, public cWorldElement
+class cPlayer : public cWorldElement, public gPlayer
 {
 public:
-    cPlayer(quint64 id);
+    cPlayer(quint64 id, QGraphicsItem *parent);
+    cPlayer(gPlayer* player);
 
     void setPosition(const Position& p);
+    virtual Position position() const;
 };
 
 #endif // CPLAYER_HPP

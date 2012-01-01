@@ -1,10 +1,12 @@
 #include "scene.hpp"
 #include "store.hpp"
+#include "cplayer.hpp"
 
 #include <Utils>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>
+#include <Message/Screen/ObjectInformation>
 
 #include <QTimer>
 #include <QGraphicsTextItem>
@@ -16,9 +18,10 @@
 
 #include <QDebug>
 
-Scene::Scene(QObject *parent) :
+Scene::Scene(quint64 idPlayer, QObject *parent) :
     QGraphicsScene(-1000, -1000, 2000, 2000, parent)
 {
+    m_idPlayer = idPlayer;
     timer = new QTimer(this);
     timer->setInterval(dt);
     connect(timer, SIGNAL(timeout()), this, SLOT(maj()));
@@ -27,7 +30,8 @@ Scene::Scene(QObject *parent) :
     timer_sendPos->setInterval(100);
     connect(timer_sendPos, SIGNAL(timeout()), this, SLOT(sendPosition()));
 
-    connect(&Store::instance(), SIGNAL(message(const Message::Message&)), this, SIGNAL(message(const Message::Message&)));
+    connect(&Store::instance(), SIGNAL(sendMessage(const Message::Message&)), this, SIGNAL(message(const Message::Message&)));
+    connect(&Store::instance(), SIGNAL(newElement(cWorldElement*)), this, SLOT(onNewElement(cWorldElement*)));
 
     if(!position.isValid()) addItem(new QGraphicsTextItem("Chargement en cours..."));
 }
@@ -58,11 +62,10 @@ void Scene::setPosition(const Position& p)
         it->setPen(QPen(Qt::red));
         QGraphicsRectItem* ite = new QGraphicsRectItem(-1,-1,2,2, m_root);
         ite->setPen(QPen(Qt::blue));
-        QVector<QPointF> v;
-        v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
-        m_player = new QGraphicsPolygonItem(QPolygonF(v),m_root);
+        m_player = new cPlayer(m_idPlayer, m_root);
+        m_player->setPosition(p);
+        Store::setInformationPlayer(m_player);
         it = new QGraphicsLineItem(0,0,1,0,m_player);
-        m_player->setPos(p.position());
         timer->start();
         timer_sendPos->start();
     }
@@ -82,9 +85,17 @@ void Scene::handleMessage(Message::Message* message)
     }
     if(message->id() == Message::Screen::MajPosition::s_id)
     {
+        qDebug() << "maj position";
         const Message::Screen::MajPosition* p = qobject_cast<const Message::Screen::MajPosition*>(message);
         assert(p != 0);
         Store::updatePosition(p->objectCode(), p->objectId(), p->position());
+    }
+    if(message->id() == Message::Screen::ObjectInformation::s_id)
+    {
+        qDebug() << "ObjectInformation";
+        Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(message);
+        assert(i != 0);
+        Store::setInformation(i->element());
     }
 }
 
@@ -103,8 +114,7 @@ void Scene::maj()
         togo.removeFirst();
     }
     else position.position() += (u*vitesse*dt).toPointF();
-    m_player->setPos(position.position());
-    m_player->setRotation(180*position.angle()/Utils::PI);
+    m_player->setPosition(position);
     emit newPosition(position);
 }
 
@@ -113,4 +123,10 @@ void Scene::sendPosition()
     if(position == old_pos) return;
     emit message(Message::Screen::SendPosition(position));
     old_pos = position;
+}
+
+void Scene::onNewElement(cWorldElement* el)
+{
+    if(el->parentItem() != m_root)
+        el->setParentItem(m_root);
 }

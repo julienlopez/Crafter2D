@@ -3,16 +3,20 @@
 
 #include <Message/Message>
 #include <Position>
+#include <iMessageHandler>
 
 #include <QGraphicsScene>
 
+class cWorldElement;
+class cPlayer;
+
 class QTimer;
 
-class Scene : public QGraphicsScene
+class Scene : public QGraphicsScene, public iMessageHandler
 {
     Q_OBJECT
 public:
-    explicit Scene(QObject *parent = 0);
+    explicit Scene(quint64 idPlayer, QObject *parent = 0);
 
     Position player() const;
 
@@ -25,7 +29,8 @@ private:
     Position position;
     Position old_pos;
     QList<QPointF> togo;
-    QGraphicsItem* m_player;
+    quint64 m_idPlayer;
+    cPlayer* m_player;
     QGraphicsItem* m_root;
     QTimer* timer;
     QTimer* timer_sendPos;
@@ -42,6 +47,7 @@ public slots:
 private slots:
     void maj();
     void sendPosition();
+    void onNewElement(cWorldElement*);
 };
 
 #endif // SCENE_HPP
