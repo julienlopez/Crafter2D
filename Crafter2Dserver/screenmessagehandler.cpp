@@ -43,12 +43,10 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
     {
         const Message::Screen::RequestObjectInformation* m = qobject_cast<const Message::Screen::RequestObjectInformation*>(message);
         assert(m);
-        switch(m->code()){
-        case gPlayer::s_code:
-            gPlayer* p = DataAccessor::getPlayer(m->id());
-            m_client->send(Message::Screen::ObjectInformation(p));
-            break;
-        }
+
+        WorldElement* e = DataAccessor::getWorldElement(m->code(), m->id());
+        assert(e);
+        m_client->send(Message::Screen::ObjectInformation(e));
     }
 }
 

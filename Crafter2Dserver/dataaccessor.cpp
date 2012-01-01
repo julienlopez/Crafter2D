@@ -19,7 +19,8 @@ DataAccessor::~DataAccessor()
     delete staticObjectAccessor;
 }
 
-DataAccessor& DataAccessor::instance() {
+DataAccessor& DataAccessor::instance()
+{
     return m_instance;
 }
 
@@ -31,9 +32,39 @@ DataAccessor::DataAccessor(): QObject()
     staticObjectAccessor = new StaticObjectAccessor;
 }
 
+WorldElement* DataAccessor::getWorldElement(quint64 code, quint64 id)
+{
+    switch(code){
+    case gPlayer::s_code:
+        return getPlayer(id);
+    case gBuilding::s_code:
+        return getBuilding(id);
+    case gObject::s_code:
+        return getObject(id);
+    case gStaticObject::s_code:
+        return  getStaticObject(id);
+    }
+    return 0;
+}
+
 gPlayer* DataAccessor::getPlayer(quint64 id)
 {
     return instance().playerAccessor->get(id);
+}
+
+gBuilding* DataAccessor::getBuilding(quint64 id)
+{
+    return instance().buildingAccessor->get(id);
+}
+
+gObject* DataAccessor::getObject(quint64 id)
+{
+    return instance().objectAccessor->get(id);
+}
+
+gStaticObject* DataAccessor::getStaticObject(quint64 id)
+{
+    return instance().staticObjectAccessor->get(id);
 }
 
 void DataAccessor::save(sWorldElement* element, bool destroy)

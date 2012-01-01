@@ -5,6 +5,7 @@
 #include <QQueue>
 
 class sWorldElement;
+class WorldElement;
 class gPlayer;
 class gBuilding;
 class gObject;
@@ -22,6 +23,7 @@ public:
     ~DataAccessor();
     static DataAccessor& instance();
 
+    static WorldElement* getWorldElement(quint64 code, quint64 id);
     static gPlayer* getPlayer(quint64 id);
     static gBuilding* getBuilding(quint64 id);
     static gObject* getObject(quint64 id);
