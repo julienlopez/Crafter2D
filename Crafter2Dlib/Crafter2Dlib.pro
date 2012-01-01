@@ -67,7 +67,8 @@ HEADERS +=\
     idset.hpp \
     message/screen/objectinformation.hpp \
     message/screen/majposition.hpp \
-    message/screen/requestobjectinformation.hpp
+    message/screen/requestobjectinformation.hpp \
+    imessagehandler.hpp
 
 
 
