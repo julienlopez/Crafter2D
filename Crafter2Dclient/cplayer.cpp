@@ -5,6 +5,7 @@ cPlayer::cPlayer(quint64 id, QGraphicsItem* parent): cWorldElement(parent), gPla
     QVector<QPointF> v;
     v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
     setPolygon(QPolygonF(v));
+    new QGraphicsLineItem(0,0,1,0,this);
 }
 
 cPlayer::cPlayer(gPlayer* player):
@@ -13,6 +14,7 @@ cPlayer::cPlayer(gPlayer* player):
     QVector<QPointF> v;
     v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
     setPolygon(QPolygonF(v));
+    new QGraphicsLineItem(0,0,1,0,this);
 }
 
 void cPlayer::setPosition(const Position& p) {
