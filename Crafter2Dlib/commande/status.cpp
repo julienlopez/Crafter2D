@@ -1,6 +1,6 @@
 #include "status.hpp"
 
-Commande::Status::Status() : Commande(1)
+Commande::Status::Status() : Commande(s_id)
 {}
 
 Commande::Status* Commande::Status::extract(QDataStream& in)
