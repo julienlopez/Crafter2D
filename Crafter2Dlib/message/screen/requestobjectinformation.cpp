@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-Message::Screen::RequestObjectInformation::RequestObjectInformation(quint64 code, quint64 id): Screen(s_id), m_code(code), m_id(id)
+Message::Screen::RequestObjectInformation::RequestObjectInformation(quint64 code, quint64 idPlayer): Screen(s_id), m_code(code), m_idPlayer(idPlayer)
 {}
 
 quint64 Message::Screen::RequestObjectInformation::code() const
@@ -10,9 +10,9 @@ quint64 Message::Screen::RequestObjectInformation::code() const
     return m_code;
 }
 
-quint64 Message::Screen::RequestObjectInformation::id() const
+quint64 Message::Screen::RequestObjectInformation::idPlayer() const
 {
-    return m_id;
+    return m_idPlayer;
 }
 
 Message::Screen::RequestObjectInformation::RequestObjectInformation* Message::Screen::RequestObjectInformation::extract(QDataStream& in, quint64 id)
@@ -28,6 +28,6 @@ QDataStream& Message::Screen::RequestObjectInformation::serialize(QDataStream& o
 {
     out << id();
     out << m_code;
-    out << m_id;
+    out << m_idPlayer;
     return out;
 }

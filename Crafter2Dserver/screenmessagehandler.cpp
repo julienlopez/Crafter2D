@@ -44,8 +44,7 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
     {
         const Message::Screen::RequestObjectInformation* m = qobject_cast<const Message::Screen::RequestObjectInformation*>(message);
         assert(m);
-
-        WorldElement* e = DataAccessor::getWorldElement(m->code(), m->id());
+        WorldElement* e = DataAccessor::getWorldElement(m->code(), m->idPlayer());
         assert(e);
         m_client->send(Message::Screen::ObjectInformation(e));
     }
