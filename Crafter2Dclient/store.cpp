@@ -8,8 +8,6 @@
 
 #include <cassert>
 
-#include <QDebug>
-
 Store Store::s_instance;
 
 void Store::updatePosition(quint64 code, quint64 id, const Position& pos)
@@ -37,7 +35,6 @@ void Store::updatePositionPlayer(quint64 id, const Position &pos)
         s_instance.m_players[id]->setPosition(pos);
         return;
     }
-
     s_instance.emitMessage(Message::Screen::RequestObjectInformation(gPlayer::s_code, id));
 }
 
@@ -105,9 +102,8 @@ void Store::setInformation(WorldElement* el)
 
 void Store::setInformationPlayer(gPlayer* p)
 {
-    qDebug() << "ajout d'un nouveau player au magasin (" << p->id() << ")";
     if(instance().m_players.keys().contains(p->id())) {
-        assert(0&&" a faire ");
+        instance().m_players[p->id()]->gPlayer::operator=(*p);
     }
     else
     {
