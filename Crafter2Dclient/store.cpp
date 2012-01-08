@@ -111,7 +111,8 @@ void Store::setInformationPlayer(gPlayer* p)
     }
     else
     {
-        cPlayer* cp = new cPlayer(p);
+        cPlayer* cp = dynamic_cast<cPlayer*>(p);
+        if(cp == 0) cp = new cPlayer(p);
         instance().m_players[p->id()] = cp;
         emit instance().newElement(cp);
     }
