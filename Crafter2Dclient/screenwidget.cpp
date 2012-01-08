@@ -7,16 +7,10 @@
 #include <QMessageBox>
 #include <QWheelEvent>
 
-#include <QDebug>
-
-#include <QDebug>
-
 ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     QGraphicsView(scene, parent), zoomLevel(10), m_scene(scene)
 {
     connect(scene, SIGNAL(newPosition(Position)), this, SLOT(onNewPosition(Position)));
-    /*setAutoFillBackground(true);
-    setPalette(QPalette(Qt::white, Qt::black));*/
     scale(zoomLevel, zoomLevel);
     setDragMode(NoDrag);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -37,7 +31,6 @@ void ScreenWidget::wheelEvent(QWheelEvent* event)
 
 void ScreenWidget::onNewPosition(const Position& p)
 {
-    //qDebug() << "ScreenWidget::onNewPosition(" << p.position() << ")";
     if(!p.isValid()) return;
     centerOn(m_scene->player().position());
 }
