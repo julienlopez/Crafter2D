@@ -26,7 +26,7 @@ public:
         foreach(s, buffer) qDebug() << "fuite memoire: " << s->id();
     }
 
-    G* get(quint64 id)
+    S* get(quint64 id)
     {
         if(buffer.keys().contains(id)) return buffer[id];
         S* s = new S(id);

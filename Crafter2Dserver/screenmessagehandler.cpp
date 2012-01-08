@@ -1,6 +1,7 @@
 #include "screenmessagehandler.hpp"
 #include "client.hpp"
 #include "dataaccessor.hpp"
+#include "splayer.hpp"
 
 #include <Position>
 #include <gPlayer>

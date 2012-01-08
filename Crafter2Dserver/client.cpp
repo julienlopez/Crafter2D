@@ -66,6 +66,7 @@ void Client::login(const QString& login, const QString& mdp)
     setPseudo(login);
     query.first();
     setId(query.value(0).toULongLong());
+    setPlayer(DataAccessor::getPlayer(id()));
     send(Message::LoginSuccess(id()));
 }
 
