@@ -25,6 +25,5 @@ void MessageHandler::traiter(const Message::Message* message) const
         m_client->login(m->login(), m->mdp());
     }
     else if(message->id() >= 5000) screenMessageHandler->traiter(message);
-    else //Utils::out << "Données reçues : " << message->id();
-         qDebug() << "Données reçues : " << message->id();
+    else qDebug() << "Données reçues : " << message->id();
 }
