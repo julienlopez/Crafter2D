@@ -68,7 +68,8 @@ HEADERS +=\
     message/screen/objectinformation.hpp \
     message/screen/majposition.hpp \
     message/screen/requestobjectinformation.hpp \
-    imessagehandler.hpp
+    imessagehandler.hpp \
+    singleton.hpp
 
 
 
