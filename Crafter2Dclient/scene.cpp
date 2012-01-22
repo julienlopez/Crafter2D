@@ -94,7 +94,6 @@ void Scene::handleMessage(Message::Message* message)
     }
     if(message->id() == Message::Screen::ObjectInformation::s_id)
     {
-        qDebug() << "ObjectInformation";
         Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(message);
         assert(i);
         Store::setInformation(i->element());
