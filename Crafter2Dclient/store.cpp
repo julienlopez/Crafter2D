@@ -8,10 +8,6 @@
 
 #include <cassert>
 
-#include <QDebug>
-
-Store Store::s_instance;
-
 void Store::updatePosition(quint64 code, quint64 id, const Position& pos)
 {
     switch(code)
@@ -33,42 +29,41 @@ void Store::updatePosition(quint64 code, quint64 id, const Position& pos)
 
 void Store::updatePositionPlayer(quint64 id, const Position &pos)
 {
-    if(s_instance.m_players.contains(id)) {
-        s_instance.m_players[id]->setPosition(pos);
+    if(instance().m_players.contains(id)) {
+        instance().m_players[id]->setPosition(pos);
         return;
     }
-
-    s_instance.emitMessage(Message::Screen::RequestObjectInformation(gPlayer::s_code, id));
+    instance().emitMessage(Message::Screen::RequestObjectInformation(gPlayer::s_code, id));
 }
 
 void Store::updatePositionBuilding(quint64 id, const Position &pos)
 {
-    if(s_instance.m_building.contains(id)) {
-        s_instance.m_building[id]->setPosition(pos);
+    if(instance().m_building.contains(id)) {
+        instance().m_building[id]->setPosition(pos);
         return;
     }
 
-    s_instance.emitMessage(Message::Screen::RequestObjectInformation(gBuilding::s_code, id));
+    instance().emitMessage(Message::Screen::RequestObjectInformation(gBuilding::s_code, id));
 }
 
 void Store::updatePositionObject(quint64 id, const Position &pos)
 {
-    if(s_instance.m_objetcs.contains(id)) {
-        s_instance.m_objetcs[id]->setPosition(pos);
+    if(instance().m_objetcs.contains(id)) {
+        instance().m_objetcs[id]->setPosition(pos);
         return;
     }
 
-    s_instance.emitMessage(Message::Screen::RequestObjectInformation(gObject::s_code, id));
+    instance().emitMessage(Message::Screen::RequestObjectInformation(gObject::s_code, id));
 }
 
 void Store::updatePositionStaticObject(quint64 id, const Position &pos)
 {
-    if(s_instance.m_staticobjects.contains(id)) {
-        s_instance.m_staticobjects[id]->setPosition(pos);
+    if(instance().m_staticobjects.contains(id)) {
+        instance().m_staticobjects[id]->setPosition(pos);
         return;
     }
 
-    s_instance.emitMessage(Message::Screen::RequestObjectInformation(gStaticObject::s_code, id));
+    instance().emitMessage(Message::Screen::RequestObjectInformation(gStaticObject::s_code, id));
 }
 
 void Store::setInformation(WorldElement* el)
@@ -105,13 +100,13 @@ void Store::setInformation(WorldElement* el)
 
 void Store::setInformationPlayer(gPlayer* p)
 {
-    qDebug() << "ajout d'un nouveau player au magasin (" << p->id() << ")";
     if(instance().m_players.keys().contains(p->id())) {
-        assert(0&&" a faire ");
+        instance().m_players[p->id()]->gPlayer::operator=(*p);
     }
     else
     {
-        cPlayer* cp = new cPlayer(p);
+        cPlayer* cp = dynamic_cast<cPlayer*>(p);
+        if(cp == 0) cp = new cPlayer(p);
         instance().m_players[p->id()] = cp;
         emit instance().newElement(cp);
     }
@@ -139,11 +134,6 @@ void Store::setInformationStaticObject(gStaticObject* s)
         assert(0&&" a faire ");
     }
     else instance().m_staticobjects[s->id()] = new gStaticObject(*s);
-}
-
-Store& Store::instance()
-{
-    return s_instance;
 }
 
 Store::Store()

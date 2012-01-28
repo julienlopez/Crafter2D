@@ -43,9 +43,13 @@ Position Scene::player() const
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    QPointF click = event->scenePos();
-    togo.clear();
-    togo << click;
+    if(event->button() == Qt::LeftButton) {
+        QPointF click = event->scenePos();
+        togo.clear();
+        togo << click;
+    }
+    if(event->button() == Qt::RightButton)
+        togo.clear();
 }
 
 void Scene::setPosition(const Position& p)
@@ -65,7 +69,6 @@ void Scene::setPosition(const Position& p)
         m_player = new cPlayer(m_idPlayer, m_root);
         m_player->setPosition(p);
         Store::setInformationPlayer(m_player);
-        it = new QGraphicsLineItem(0,0,1,0,m_player);
         timer->start();
         timer_sendPos->start();
     }
@@ -80,21 +83,19 @@ void Scene::handleMessage(Message::Message* message)
     if(message->id() == Message::Screen::SetPosition::s_id)
     {
         const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
-        assert(p != 0);
+        assert(p);
         setPosition(p->position());
     }
     if(message->id() == Message::Screen::MajPosition::s_id)
     {
-        qDebug() << "maj position";
         const Message::Screen::MajPosition* p = qobject_cast<const Message::Screen::MajPosition*>(message);
-        assert(p != 0);
+        assert(p);
         Store::updatePosition(p->objectCode(), p->objectId(), p->position());
     }
     if(message->id() == Message::Screen::ObjectInformation::s_id)
     {
-        qDebug() << "ObjectInformation";
         Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(message);
-        assert(i != 0);
+        assert(i);
         Store::setInformation(i->element());
     }
 }

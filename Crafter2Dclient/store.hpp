@@ -3,6 +3,7 @@
 
 #include <Message/Message>
 #include <Position>
+#include <Singleton>
 
 #include <QMap>
 
@@ -20,9 +21,11 @@ class cWorldElement;
   * Conteneur global contenant toutes les données serveurs dont le client a besoin.
   * Demande automatiquement les informations nécessaires si besoin est.
   */
-class Store : public QObject
+class Store : public QObject, public Singleton<Store>
 {
     Q_OBJECT
+    friend class Singleton<Store>;
+
 public:
     static void updatePosition(quint64 code, quint64 id, const Position &pos);
     static void updatePositionPlayer(quint64 id, const Position &pos);
@@ -36,12 +39,8 @@ public:
     static void setInformationObject(gObject* o);
     static void setInformationStaticObject(gStaticObject* s);
 
-    static Store& instance();
-
 private:
     Store();
-
-    static Store s_instance;
 
     QMap<quint64, cPlayer*> m_players;
     QMap<quint64, gBuilding*> m_building;

@@ -67,14 +67,18 @@ bool Serveur::start()
     }
 
     connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
+    qDebug() << "serveur pret";
     return true;
 }
 
 QString Serveur::status() const
 {
     QString res;
-    res += "server status:\n";
-    res += QString::number(clients.size()) + " clients connectés\n";
+    /*res += "server status:\n";
+    res += QString::number(clients.size()) + " clients connectés\n";*/
+    res += "server status: ";
+    res += QString::number(clients.size()) + " clients connectes";
+
     return res;
 }
 
@@ -134,6 +138,8 @@ void Serveur::onClientUpdatePosition(quint64 id, const Position& pos)
     }
 }*/
 
+#include <typeinfo>
+
 void Serveur::updatePosition()
 {
     //TODO optimiser l'echange des positions entre joueurs;
@@ -141,10 +147,11 @@ void Serveur::updatePosition()
     Position pos;
     foreach(c, clients)
     {
+        assert(c);
         foreach(cl, clients)
         {
-            if(c == cl || !c || !cl) continue;
-            if(!c->player() || !cl->player()) continue;
+            assert(cl);
+            if(c == cl || !c->player() || !cl->player()) continue;
             pos = c->player()->position();
             if((c->player()->position().position() - cl->player()->position().position()).manhattanLength() < 50)
                 c->send(Message::Screen::MajPosition(cl->player()));

@@ -1,5 +1,6 @@
 #include "screenwidget.hpp"
 #include "scene.hpp"
+#include "terrainmanager.hpp"
 
 #include <Position>
 
@@ -7,7 +8,7 @@
 #include <QMessageBox>
 #include <QWheelEvent>
 
-#include <QDebug>
+#include <cmath>
 
 #include <QDebug>
 
@@ -15,12 +16,15 @@ ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     QGraphicsView(scene, parent), zoomLevel(10), m_scene(scene)
 {
     connect(scene, SIGNAL(newPosition(Position)), this, SLOT(onNewPosition(Position)));
-    /*setAutoFillBackground(true);
-    setPalette(QPalette(Qt::white, Qt::black));*/
     scale(zoomLevel, zoomLevel);
     setDragMode(NoDrag);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //creation des pens
+    m_sandPen = QPen(QBrush(QColor(255,255,100), Qt::SolidPattern/*Qt::RadialGradientPattern*/), dx);
+    m_grassPen = QPen(QBrush(QColor(100,255,100), Qt::SolidPattern), dx/2-2);
+    m_waterPen = QPen(QBrush(QColor(100,100,255), Qt::SolidPattern), dx/2-2);
 }
 
 void ScreenWidget::wheelEvent(QWheelEvent* event)
@@ -35,9 +39,34 @@ void ScreenWidget::wheelEvent(QWheelEvent* event)
     event->accept();
 }
 
+void ScreenWidget::drawBackground(QPainter* painter, const QRectF &rect)
+{
+    painter->save();
+    int right = round(rect.right()) + dx;
+    int bottom = round(rect.bottom()) + dx;
+    for(int x = round(rect.left())-dx; x<=right; x += dx)
+        for(int y = round(rect.top())-dx; y<=bottom; y += dx)
+        {
+            TerrainManager::Terrain t = TerrainManager::get(x,y);
+            switch(t)
+            {
+                case TerrainManager::sand:
+                    painter->setPen(m_sandPen);
+                    break;
+                case TerrainManager::grass:
+                    painter->setPen(m_grassPen);
+                    break;
+                case TerrainManager::water:
+                    painter->setPen(m_waterPen);
+                    break;
+            }
+            //painter->drawPoint(x,y);
+        }
+    painter->restore();
+}
+
 void ScreenWidget::onNewPosition(const Position& p)
 {
-    //qDebug() << "ScreenWidget::onNewPosition(" << p.position() << ")";
     if(!p.isValid()) return;
     centerOn(m_scene->player().position());
 }

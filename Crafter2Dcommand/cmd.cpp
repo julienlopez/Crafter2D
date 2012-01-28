@@ -84,7 +84,7 @@ void Cmd::onError(QLocalSocket::LocalSocketError socketError)
     if(socketError == QLocalSocket::ServerNotFoundError)
     {
         qDebug() << "impossible de se connecter au serveur";
-        qApp->exit();
+        emit quit(); //qApp->quit();//exit();
         return;
     }
     qDebug() << m_socket->errorString();
@@ -97,9 +97,10 @@ void Cmd::onStateChanged(QLocalSocket::LocalSocketState socketState)
         qDebug()  << "connexion en cours";
         return;
     }
-    if(socketState == QLocalSocket::ConnectingState)
+    if(socketState == QLocalSocket::ConnectedState)
     {
         qDebug()  << "connecté";
+        Cmd::start();
         return;
     }
 

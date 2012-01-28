@@ -10,7 +10,7 @@ TARGET = Crafter2Dclient
 TEMPLATE = app
 
 INCLUDEPATH += "../include"
-LIBS += -L../Crafter2Dlib-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK__Debug/debug
+LIBS += -L../Crafter2Dlib/debug
 LIBS += -lCrafter2Dlib
 
 SOURCES += main.cpp\
@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     scene.cpp \
     store.cpp \
     cplayer.cpp \
-    cworldelement.cpp
+    cworldelement.cpp \
+    terrainmanager.cpp
 
 HEADERS  += mainwindow.hpp \
     loginwidget.hpp \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.hpp \
     scene.hpp \
     store.hpp \
     cplayer.hpp \
-    cworldelement.hpp
+    cworldelement.hpp \
+    terrainmanager.hpp
 
 
 

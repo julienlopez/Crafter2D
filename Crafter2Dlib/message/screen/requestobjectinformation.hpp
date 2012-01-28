@@ -10,10 +10,10 @@ class RequestObjectInformation : public Screen
 {
     Q_OBJECT
 public:
-    RequestObjectInformation(quint64 code, quint64 id);
+    RequestObjectInformation(quint64 code, quint64 idPlayer);
 
     quint64 code() const;
-    quint64 id() const;
+    quint64 idPlayer() const;
 
     static RequestObjectInformation* extract(QDataStream& in, quint64 id);
     virtual QDataStream& serialize(QDataStream& out) const;
@@ -22,7 +22,7 @@ public:
 
 private:
     quint64 m_code;
-    quint64 m_id;
+    quint64 m_idPlayer;
 };
 
 }}

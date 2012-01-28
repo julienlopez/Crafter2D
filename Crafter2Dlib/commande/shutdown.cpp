@@ -1,6 +1,6 @@
 #include "shutdown.hpp"
 
-Commande::Shutdown::Shutdown(): Commande(2)
+Commande::Shutdown::Shutdown(): Commande(s_id)
 {}
 
 Commande::Shutdown* Commande::Shutdown::extract(QDataStream& in)

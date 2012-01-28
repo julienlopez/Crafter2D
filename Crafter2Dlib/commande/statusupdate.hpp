@@ -16,9 +16,10 @@ public:
 
     QString message() const;
 
+    static const quint64 s_id = 3;
+
 private:
     QString m_message;
-
 };
 
 }

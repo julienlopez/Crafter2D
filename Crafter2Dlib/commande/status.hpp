@@ -14,6 +14,7 @@ public:
     static Status* extract(QDataStream& in);
     QDataStream& serialize(QDataStream& out) const;
 
+    static const quint64 s_id = 1;
 };
 
 }

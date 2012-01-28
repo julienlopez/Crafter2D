@@ -70,47 +70,5 @@ HEADERS +=\
     message/screen/majposition.hpp \
     message/screen/requestobjectinformation.hpp \
     imessagehandler.hpp \
+    singleton.hpp \
     inventory.hpp
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

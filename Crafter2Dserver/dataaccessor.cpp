@@ -47,7 +47,7 @@ WorldElement* DataAccessor::getWorldElement(quint64 code, quint64 id)
     return 0;
 }
 
-gPlayer* DataAccessor::getPlayer(quint64 id)
+sPlayer* DataAccessor::getPlayer(quint64 id)
 {
     return instance().playerAccessor->get(id);
 }

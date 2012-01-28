@@ -22,19 +22,15 @@ LocalServeur::LocalServeur(Serveur* parent) :
 void LocalServeur::handle(Commande::Commande* commande)
 {
     qDebug() << "commande reçue " << commande->id();
-    if(commande->id() == 1)
+    if(commande->id() == Commande::Status::s_id)
     {
-        Commande::Status* s = qobject_cast<Commande::Status*>(commande);
-        assert(s);
         QString str = qobject_cast<Serveur*>(parent())->status();
         qDebug() << "status : " << str;
         send(Commande::StatusUpdate(str));
         return;
     }
-    if(commande->id() == 2)
+    if(commande->id() == Commande::Shutdown::s_id)
     {
-        Commande::Shutdown* s = qobject_cast<Commande::Shutdown*>(commande);
-        assert(s);
         qDebug() << "shutdown";
         qobject_cast<Serveur*>(parent())->shutdown();
         return;
@@ -81,25 +77,30 @@ void LocalServeur::onStateChanged(QLocalSocket::LocalSocketState socketState)
 
 void LocalServeur::send(const Commande::Commande& commande)
 {
+    qDebug() << "LocalServeur::send(" << commande.id() << ")";
     QByteArray paquet;
+    //paquet.clear();
     QDataStream out(&paquet, QIODevice::WriteOnly);
 
-    out << (quint16) 0; // On écrit 0 au début du paquet pour réserver la place pour écrire la taille
+    //out << (quint16) 0; // On écrit 0 au début du paquet pour réserver la place pour écrire la taille
     commande.serialize(out); // On ajoute le message à la suite
+    //qDebug() << "paquet = " << QString(paquet);
     out.device()->seek(0); // On se replace au début du paquet
+    //qDebug() << "paquet.size() = " << paquet.size();
+    //qDebug() << "paquet = " << QString(paquet);
     out << (quint16) (paquet.size() - sizeof(quint16)); // On écrase le 0 qu'on avait réservé par la longueur du message
     write(paquet);
 }
 
 void LocalServeur::write(const QByteArray& paquet)
 {
+    //qDebug() << "LocalServeur::write(" << QString(paquet) << ")";
     if(m_socket != 0) m_socket->write(paquet);
     else qDebug() << "aucun socket connecté";
 }
 
 void LocalServeur::donneesRecues()
 {
-//    qDebug() << "Client::donneesRecues()";
     QDataStream in(m_socket);
     if(tailleMessage == 0)
     {
