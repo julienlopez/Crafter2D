@@ -134,6 +134,39 @@ void Store::setInformationStaticObject(gStaticObject* s)
     else instance().m_staticobjects[s->id()] = new gStaticObject(*s);
 }
 
+WorldElement* Store::get(quint64 code, quint64 id)
+{
+    if(gPlayer::s_code == code) return getPlayer(id);
+    if(gBuilding::s_code == code) return getBuilding(id);
+    if(gObject::s_code == code) return getObjetcs(id);
+    if(gStaticObject::s_code == code) return getStaticobjects(id);
+    return 0;
+}
+
+Store::type_player Store::getPlayer(quint64 id)
+{
+    if(instance().m_players.keys().contains(id)) return instance().m_players[id];
+    return 0;
+}
+
+Store::type_building Store::getBuilding(quint64 id)
+{
+    if(instance().m_building.keys().contains(id)) return instance().m_building[id];
+    return 0;
+}
+
+Store::type_object Store::getObjetcs(quint64 id)
+{
+    if(instance().m_objetcs.keys().contains(id)) return instance().m_objetcs[id];
+    return 0;
+}
+
+Store::type_staticObject Store::getStaticobjects(quint64 id)
+{
+    if(instance().m_staticobjects.keys().contains(id)) return instance().m_staticobjects[id];
+    return 0;
+}
+
 Store::Store()
 {}
 

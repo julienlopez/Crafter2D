@@ -27,6 +27,11 @@ class Store : public QObject, public Singleton<Store>
     friend class Singleton<Store>;
 
 public:
+    typedef cPlayer* type_player;
+    typedef gBuilding* type_building;
+    typedef gObject* type_object;
+    typedef gStaticObject* type_staticObject;
+
     static void updatePosition(quint64 code, quint64 id, const Position &pos);
     static void updatePositionPlayer(quint64 id, const Position &pos);
     static void updatePositionBuilding(quint64 id, const Position &pos);
@@ -35,17 +40,23 @@ public:
 
     static void setInformation(WorldElement* el);
     static void setInformationPlayer(gPlayer* p);
-    static void setInformationBuilding(gBuilding *g);
+    static void setInformationBuilding(gBuilding* g);
     static void setInformationObject(gObject* o);
     static void setInformationStaticObject(gStaticObject* s);
+
+    static WorldElement* get(quint64 code, quint64 id);
+    static type_player getPlayer(quint64 id);
+    static type_building getBuilding(quint64 id);
+    static type_object getObjetcs(quint64 id);
+    static type_staticObject getStaticobjects(quint64 id);
 
 private:
     Store();
 
-    QMap<quint64, cPlayer*> m_players;
-    QMap<quint64, gBuilding*> m_building;
-    QMap<quint64, gObject*> m_objetcs;
-    QMap<quint64, gStaticObject*> m_staticobjects;
+    QMap<quint64, type_player> m_players;
+    QMap<quint64, type_building> m_building;
+    QMap<quint64, type_object> m_objetcs;
+    QMap<quint64, type_staticObject> m_staticobjects;
 
     void emitMessage(const Message::Message& message);
 
