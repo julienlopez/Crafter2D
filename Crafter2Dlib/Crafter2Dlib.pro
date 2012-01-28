@@ -39,7 +39,8 @@ SOURCES += \
     idset.cpp \
     message/screen/objectinformation.cpp \
     message/screen/majposition.cpp \
-    message/screen/requestobjectinformation.cpp
+    message/screen/requestobjectinformation.cpp \
+    inventory.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -68,7 +69,8 @@ HEADERS +=\
     message/screen/objectinformation.hpp \
     message/screen/majposition.hpp \
     message/screen/requestobjectinformation.hpp \
-    imessagehandler.hpp
+    imessagehandler.hpp \
+    inventory.hpp
 
 
 
