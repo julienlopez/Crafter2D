@@ -19,8 +19,6 @@
 
 #include <QDebug>
 
-#include <cassert>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
 {
@@ -137,7 +135,7 @@ void MainWindow::handleMessage(Message::Message* message)
     else if(message->id() == 2)
     {
         const Message::LoginFailure* m = qobject_cast<const Message::LoginFailure*>(message);
-        assert(m != 0);
+        Q_ASSERT(m != 0);
         QMessageBox::information(this, "Le login a échoué", "Impossible de se logger: "+m->erreur());
         centralWidget()->deleteLater();
         LoginWidget* lw = new LoginWidget;
@@ -148,14 +146,14 @@ void MainWindow::handleMessage(Message::Message* message)
     {
         QMessageBox::information(this, "Le login a réussi", "Login réussi, chargement du jeu...");
         const Message::LoginSuccess* l = qobject_cast<const Message::LoginSuccess*>(message);
-        assert(l);
+        Q_ASSERT(l);
         setUpScreen(l->idPlayer());
     }
     else if(message->id() >= 1000 && message->id() < 3000)
     {
         qDebug() << "id: " << message->id() << " => " <<message;
         const Message::Erreur::ErreurServeur* e = qobject_cast<const Message::Erreur::ErreurServeur*>(message);
-        assert(e != 0);
+        Q_ASSERT(e != 0);
         QMessageBox::critical(this, "Erreur serveur", e->message());
         throw std::logic_error("Erreur critique");
     }

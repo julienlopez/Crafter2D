@@ -3,11 +3,9 @@
 #include "erreurclient.hpp"
 #include "../screen/screen.hpp"
 
-#include <cassert>
-
 Message::Erreur::Erreur::Erreur(quint64 id, const QString& message): Message(id), m_message(message)
 {
-    assert(id>=Erreur::s_id && id <5000);
+    Q_ASSERT(id>=Erreur::s_id && id <5000);
 }
 
 QString Message::Erreur::Erreur::message() const
@@ -17,7 +15,7 @@ QString Message::Erreur::Erreur::message() const
 
 Message::Erreur::Erreur* Message::Erreur::Erreur::extract(quint64 id, QDataStream& in)
 {
-    assert(id>=Erreur::s_id && id < Screen::Screen::s_id);
+    Q_ASSERT(id>=Erreur::s_id && id < Screen::Screen::s_id);
 
     if(id>=ErreurServeur::s_id && id <ErreurClient::s_id) return ErreurServeur::extract(id, in);
     if(id>=ErreurClient::s_id && id < Screen::Screen::s_id) return ErreurClient::extract(id, in);

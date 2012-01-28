@@ -1,7 +1,5 @@
 #include "requestobjectinformation.hpp"
 
-#include <cassert>
-
 Message::Screen::RequestObjectInformation::RequestObjectInformation(quint64 code, quint64 idPlayer): Screen(s_id), m_code(code), m_idPlayer(idPlayer)
 {}
 
@@ -17,7 +15,7 @@ quint64 Message::Screen::RequestObjectInformation::idPlayer() const
 
 Message::Screen::RequestObjectInformation::RequestObjectInformation* Message::Screen::RequestObjectInformation::extract(QDataStream& in, quint64 id)
 {
-    assert(id == RequestObjectInformation::s_id);
+    Q_ASSERT(id == RequestObjectInformation::s_id);
     quint64 code, i;
     in >> code;
     in >> i;

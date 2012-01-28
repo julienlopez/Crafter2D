@@ -2,8 +2,6 @@
 
 #include <WorldElement>
 
-#include <cassert>
-
 Message::Screen::ObjectInformation::ObjectInformation(WorldElement* element) :
     Screen(ObjectInformation::s_id), m_element(element)
 {}
@@ -15,10 +13,10 @@ WorldElement* Message::Screen::ObjectInformation::element()
 
 Message::Screen::ObjectInformation::ObjectInformation* Message::Screen::ObjectInformation::extract(QDataStream& in, quint64 id)
 {
-    assert(id == ObjectInformation::s_id);
+    Q_ASSERT(id == ObjectInformation::s_id);
     ObjectInformation* res = new ObjectInformation;
     res->m_element = WorldElement::extract(in);
-    assert(res->m_element);
+    Q_ASSERT(res->m_element);
     return res;
 }
 

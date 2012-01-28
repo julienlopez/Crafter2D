@@ -13,8 +13,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include <cassert>
-
 #include <QDebug>
 
 ScreenMessageHandler::ScreenMessageHandler(Client *parent) :
@@ -36,16 +34,16 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
     if(message->id() == Message::Screen::SendPosition::s_id) //mettre à jour la position
     {
         const Message::Screen::SendPosition* m = qobject_cast<const Message::Screen::SendPosition*>(message);
-        assert(m);
+        Q_ASSERT(m);
         m_client->updatePosition(m->position());
         return;
     }
     if(message->id() == Message::Screen::RequestObjectInformation::s_id)
     {
         const Message::Screen::RequestObjectInformation* m = qobject_cast<const Message::Screen::RequestObjectInformation*>(message);
-        assert(m);
+        Q_ASSERT(m);
         WorldElement* e = DataAccessor::getWorldElement(m->code(), m->idPlayer());
-        assert(e);
+        Q_ASSERT(e);
         m_client->send(Message::Screen::ObjectInformation(e));
     }
 }

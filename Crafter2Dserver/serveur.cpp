@@ -9,8 +9,6 @@
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>
 
-#include <cassert>
-
 #include <QCoreApplication>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -109,7 +107,7 @@ void Serveur::nouvelleConnexion()
 void Serveur::deconnexionClient()
 {
     Client* client = qobject_cast<Client*>(sender());
-    assert(client != 0);
+    Q_ASSERT(client != 0);
     clients.removeOne(client);
     client->deleteLater();
 }
@@ -147,10 +145,10 @@ void Serveur::updatePosition()
     Position pos;
     foreach(c, clients)
     {
-        assert(c);
+        Q_ASSERT(c);
         foreach(cl, clients)
         {
-            assert(cl);
+            Q_ASSERT(cl);
             if(c == cl || !c->player() || !cl->player()) continue;
             pos = c->player()->position();
             if((c->player()->position().position() - cl->player()->position().position()).manhattanLength() < 50)

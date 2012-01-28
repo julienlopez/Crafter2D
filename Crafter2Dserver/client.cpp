@@ -6,8 +6,6 @@
 #include <Message/LoginFailure>
 #include <Message/LoginSuccess>
 
-#include <cassert>
-
 #include <QTcpSocket>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -72,7 +70,7 @@ void Client::login(const QString& login, const QString& mdp)
 
 void Client::donneesRecues()
 {
-    assert(m_socket == sender());
+    Q_ASSERT(m_socket == sender());
 //    qDebug() << "Client::donneesRecues()";
     QDataStream in(m_socket);
     if(tailleMessage == 0)

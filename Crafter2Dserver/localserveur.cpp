@@ -7,8 +7,6 @@
 
 #include <QLocalServer>
 
-#include <cassert>
-
 #include <QDebug>
 
 LocalServeur::LocalServeur(Serveur* parent) :

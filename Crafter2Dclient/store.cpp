@@ -6,8 +6,6 @@
 #include <gStaticObject>
 #include <Message/Screen/RequestObjectInformation>
 
-#include <cassert>
-
 void Store::updatePosition(quint64 code, quint64 id, const Position& pos)
 {
     switch(code)
@@ -71,28 +69,28 @@ void Store::setInformation(WorldElement* el)
     if(gPlayer::s_code == el->code())
     {
         gPlayer* p = dynamic_cast<gPlayer*>(el);
-        assert(p);
+        Q_ASSERT(p);
         setInformationPlayer(p);
         return;
     }
     if(gBuilding::s_code == el->code())
     {
         gBuilding* b = dynamic_cast<gBuilding*>(el);
-        assert(b);
+        Q_ASSERT(b);
         setInformationBuilding(b);
         return;
     }
     if(gObject::s_code == el->code())
     {
         gObject* o = dynamic_cast<gObject*>(el);
-        assert(o);
+        Q_ASSERT(o);
         setInformationObject(o);
         return;
     }
     if(gStaticObject::s_code == el->code())
     {
         gStaticObject* s = dynamic_cast<gStaticObject*>(el);
-        assert(s);
+        Q_ASSERT(s);
         setInformationStaticObject(s);
         return;
     }
@@ -115,7 +113,7 @@ void Store::setInformationPlayer(gPlayer* p)
 void Store::setInformationBuilding(gBuilding* b)
 {
     if(instance().m_building.keys().contains(b->id())) {
-        assert(0&&" a faire ");
+        Q_ASSERT(0&&" a faire ");
     }
     else instance().m_building[b->id()] = new gBuilding(*b);
 }
@@ -123,7 +121,7 @@ void Store::setInformationBuilding(gBuilding* b)
 void Store::setInformationObject(gObject* o)
 {
     if(instance().m_objetcs.keys().contains(o->id())) {
-        assert(0&&" a faire ");
+        Q_ASSERT(0&&" a faire ");
     }
     else instance().m_objetcs[o->id()] = new gObject(*o);
 }
@@ -131,7 +129,7 @@ void Store::setInformationObject(gObject* o)
 void Store::setInformationStaticObject(gStaticObject* s)
 {
     if(instance().m_staticobjects.keys().contains(s->id())) {
-        assert(0&&" a faire ");
+        Q_ASSERT(0&&" a faire ");
     }
     else instance().m_staticobjects[s->id()] = new gStaticObject(*s);
 }

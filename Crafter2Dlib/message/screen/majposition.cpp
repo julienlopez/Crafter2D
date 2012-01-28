@@ -1,8 +1,6 @@
 #include "majposition.hpp"
 #include "../../worldelement.hpp"
 
-#include <cassert>
-
 Message::Screen::MajPosition::MajPosition(WorldElement* el) : Screen(s_id), m_objectCode(el->code()), m_objectId(el->id()), m_position(el->position())
 {}
 
@@ -26,7 +24,7 @@ Position Message::Screen::MajPosition::position() const
 
 Message::Screen::MajPosition* Message::Screen::MajPosition::extract(QDataStream& in, quint64 id)
 {
-    assert(id == MajPosition::s_id);
+    Q_ASSERT(id == MajPosition::s_id);
     quint64 obj, code;
     in >> code;
     in >> obj;

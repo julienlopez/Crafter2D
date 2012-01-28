@@ -14,7 +14,6 @@
 #include <QVector2D>
 
 #include <cmath>
-#include <cassert>
 
 #include <QDebug>
 
@@ -79,23 +78,23 @@ void Scene::setPosition(const Position& p)
 
 void Scene::handleMessage(Message::Message* message)
 {
-    assert(message->id() >= 5000);
+    Q_ASSERT(message->id() >= 5000);
     if(message->id() == Message::Screen::SetPosition::s_id)
     {
         const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
-        assert(p);
+        Q_ASSERT(p);
         setPosition(p->position());
     }
     if(message->id() == Message::Screen::MajPosition::s_id)
     {
         const Message::Screen::MajPosition* p = qobject_cast<const Message::Screen::MajPosition*>(message);
-        assert(p);
+        Q_ASSERT(p);
         Store::updatePosition(p->objectCode(), p->objectId(), p->position());
     }
     if(message->id() == Message::Screen::ObjectInformation::s_id)
     {
         Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(message);
-        assert(i);
+        Q_ASSERT(i);
         Store::setInformation(i->element());
     }
 }
