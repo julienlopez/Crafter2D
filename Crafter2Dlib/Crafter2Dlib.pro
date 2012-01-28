@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network
+QT -= gui
 
 TARGET = Crafter2Dlib
 TEMPLATE = lib
