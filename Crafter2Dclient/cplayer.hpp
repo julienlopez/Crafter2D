@@ -10,14 +10,18 @@
   *
   *
   */
-class cPlayer : public cWorldElement, public gPlayer
+class cPlayer : public QObject, public cWorldElement, public gPlayer
 {
+    Q_OBJECT
 public:
     cPlayer(quint64 id, QGraphicsItem *parent);
     cPlayer(gPlayer* player);
 
     void setPosition(const Position& p);
     virtual Position position() const;
+
+signals:
+    void modified();
 };
 
 #endif // CPLAYER_HPP
