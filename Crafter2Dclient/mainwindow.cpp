@@ -3,6 +3,7 @@
 #include "screenwidget.hpp"
 #include "debugdock.hpp"
 #include "scene.hpp"
+#include "inventorydock.hpp"
 
 #include <Message/Login>
 #include <Message/LoginFailure>
@@ -22,6 +23,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
 {
+    inventory = 0;
     showMaximized();
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
@@ -55,6 +57,9 @@ void MainWindow::setUpScreen(quint64 idPlayer)
     connect(m_scene, SIGNAL(newPosition(const Position&)), debug, SLOT(setPosition(const Position&)));
     setCentralWidget(m_screen);
     send(Message::Screen::GetPosition());
+    Q_ASSERT(!inventory);
+    inventory = new InventoryDock(idPlayer);
+    addDockWidget(Qt::RightDockWidgetArea, inventory, Qt::Vertical);
 }
 
 void MainWindow::send(const Message::Message& message)

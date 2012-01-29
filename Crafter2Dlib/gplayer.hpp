@@ -1,7 +1,8 @@
 #ifndef GPLAYER_HPP
 #define GPLAYER_HPP
 
-#include "worldelement.hpp"
+#include <WorldElement>
+#include <Inventory>
 
 class gPlayer : public WorldElement
 {
@@ -14,6 +15,12 @@ public:
     static gPlayer* extract(QDataStream& in);
 
     quint64 code() const;
+
+    Inventory& inventory();
+    const Inventory& inventory() const;
+
+private:
+    Inventory m_inventory;
 };
 
 #endif // GPLAYER_HPP

@@ -11,6 +11,7 @@ class DebugDock;
 class QTcpSocket;
 class Scene;
 class ScreenWidget;
+class InventoryDock;
 
 class MainWindow : public QMainWindow, public iMessageHandler
 {
@@ -29,6 +30,7 @@ private:
     Scene* m_scene;
     ScreenWidget* m_screen;
     DebugDock* debug;
+    InventoryDock* inventory;
 
     void setUpScreen(quint64 idPlayer);
 
