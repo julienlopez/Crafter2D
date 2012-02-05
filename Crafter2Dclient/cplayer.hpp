@@ -5,6 +5,8 @@
 
 #include <gPlayer>
 
+class QGraphicsSimpleTextItem;
+
 /**
   * \brief Spécialisation de la class gPlayer pour le client.
   *
@@ -19,6 +21,11 @@ public:
 
     void setPosition(const Position& p);
     virtual Position position() const;
+
+private:
+    QGraphicsSimpleTextItem* m_label;
+
+    void init();
 
 signals:
     void modified();
