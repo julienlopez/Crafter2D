@@ -7,7 +7,7 @@
 class gPlayer : public WorldElement
 {
 public:
-    gPlayer(quint64 id);
+    gPlayer(quint64 id, const QString& pseudo = QString());
 
     static const quint64 s_code = 1;
 
@@ -15,11 +15,16 @@ public:
     static gPlayer* extract(QDataStream& in);
 
     quint64 code() const;
+    QString pseudo() const;
 
     Inventory& inventory();
     const Inventory& inventory() const;
 
+protected:
+    void setPseudo(const QString& pseudo);
+
 private:
+    QString m_pseudo;
     Inventory m_inventory;
 };
 

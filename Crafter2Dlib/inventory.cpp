@@ -1,15 +1,18 @@
 #include "inventory.hpp"
 
-const QStringList Inventory::itemLabels = QStringList() << "terre" << "sable" << "bouh" << "argile";
+const QStringList Inventory::itemLabels = QStringList() << "terre" << "sable" << "boue" << "argile";
 
 Inventory::Inventory()
 {}
 
 Inventory::Inventory(const Inventory& i)
-{}
+{
+    m_invent = i.m_invent;
+}
 
 Inventory& Inventory::operator=(const Inventory& i)
 {
+    m_invent = i.m_invent;
     emit modified();
     return *this;
 }
@@ -25,6 +28,7 @@ void Inventory::operator()(Item i, quint32 n)
 {
     Q_ASSERT(i < (quint32)itemLabels.size());
     m_invent[i] = n;
+    emit modified();
 }
 
 QList<Inventory::Item> Inventory::keys() const
@@ -56,7 +60,8 @@ QString Inventory::toString() const
 Inventory Inventory::fromString(QString str)
 {
     Inventory res;
-    Q_ASSERT(str.startsWith("[{") && str.endsWith("}]"));
+    if(str.isEmpty()) return res;
+    Q_ASSERT(str.startsWith("[") && str.endsWith("]"));
     str.remove(0,1);
     str.chop(1);
     QStringList items = str.split(',');

@@ -25,7 +25,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Structure de la table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE `user`;
+CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pseudo` text NOT NULL,
   `mdp` text NOT NULL,
@@ -39,5 +40,5 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `pseudo`, `mdp`, `position`, `inventory`) VALUES
-(1, 'epso', 'bouh', '{-6.9,11.1,0.152649}', ''),
+(1, 'epso', 'bouh', '{-6.9,11.1,0.152649}', '[{0;4},{2;10}]'),
 (2, 'moi', 'bouh', '{-12.1,-0.9,1.80093}', '');

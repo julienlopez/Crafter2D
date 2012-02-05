@@ -7,6 +7,7 @@
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>
 #include <Message/Screen/ObjectInformation>
+#include <Message/Screen/RequestObjectInformation>
 
 #include <QTimer>
 #include <QGraphicsTextItem>
@@ -70,6 +71,7 @@ void Scene::setPosition(const Position& p)
         Store::setInformationPlayer(m_player);
         timer->start();
         timer_sendPos->start();
+        emit message(Message::Screen::RequestObjectInformation(gPlayer::s_code, m_idPlayer));
     }
     old_pos = position;
     position = p;
