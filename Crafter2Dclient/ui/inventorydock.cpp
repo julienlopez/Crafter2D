@@ -1,12 +1,12 @@
 #include "inventorydock.hpp"
-#include "store.hpp"
-#include "cplayer.hpp"
+#include "../store.hpp"
+#include "../cplayer.hpp"
 
 #include <QListWidget>
 #include <QBasicTimer>
 #include <QTimerEvent>
 
-InventoryDock::InventoryDock(quint64 idPlayer, QWidget *parent) :
+UI::InventoryDock::InventoryDock(quint64 idPlayer, QWidget *parent) :
     QDockWidget(parent), m_idPlayer(idPlayer)
 {
     m_timer = 0;
@@ -21,12 +21,12 @@ InventoryDock::InventoryDock(quint64 idPlayer, QWidget *parent) :
     }
 }
 
-void InventoryDock::timerEvent(QTimerEvent* event) {
+void UI::InventoryDock::timerEvent(QTimerEvent* event) {
     if(m_timer && event->timerId() == m_timer->timerId()) maj();
     else QDockWidget::timerEvent(event);
 }
 
-void InventoryDock::maj()
+void UI::InventoryDock::maj()
 {
     if(!m_player) {
         m_player = Store::getPlayer(m_idPlayer);

@@ -6,10 +6,12 @@
 #include <QMainWindow>
 #include <QAbstractSocket>
 
-class DebugDock;
-
 class QTcpSocket;
 class Scene;
+
+namespace UI {
+
+class DebugDock;
 class ScreenWidget;
 class InventoryDock;
 
@@ -28,9 +30,9 @@ private:
     quint16 tailleMessage;
     QTcpSocket* socket;
     Scene* m_scene;
-    ScreenWidget* m_screen;
-    DebugDock* debug;
-    InventoryDock* inventory;
+    UI::ScreenWidget* m_screen;
+    UI::DebugDock* debug;
+    UI::InventoryDock* inventory;
 
     void setUpScreen(quint64 idPlayer);
 
@@ -46,5 +48,7 @@ private slots:
 signals:
     void messageRecu(Message::Message*);
 };
+
+}
 
 #endif // MAINWINDOW_HPP

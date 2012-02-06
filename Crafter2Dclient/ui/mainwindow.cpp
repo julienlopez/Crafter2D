@@ -2,7 +2,7 @@
 #include "loginwidget.hpp"
 #include "screenwidget.hpp"
 #include "debugdock.hpp"
-#include "scene.hpp"
+#include "../scene.hpp"
 #include "inventorydock.hpp"
 
 #include <Message/Login>
@@ -20,7 +20,7 @@
 
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
+UI::MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), tailleMessage(0)
 {
     inventory = 0;
@@ -32,23 +32,23 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
     connect(this, SIGNAL(messageRecu(Message::Message*)), this, SLOT(handleMessage(Message::Message*)));
 
-    debug = new DebugDock;
+    debug = new UI::DebugDock;
     addDockWidget(Qt::RightDockWidgetArea, debug, Qt::Vertical);
 
     setCentralWidget(new QLabel(tr("Connexion au serveur...")));
     socket->connectToHost("127.0.0.1", 50885);
 }
 
-MainWindow::~MainWindow()
+UI::MainWindow::~MainWindow()
 {}
 
-void MainWindow::closeEvent(QCloseEvent* evt)
+void UI::MainWindow::closeEvent(QCloseEvent* evt)
 {
     socket->close();
     evt->accept();
 }
 
-void MainWindow::setUpScreen(quint64 idPlayer)
+void UI::MainWindow::setUpScreen(quint64 idPlayer)
 {
     centralWidget()->deleteLater();
     m_scene = new Scene(idPlayer, this);
@@ -62,22 +62,18 @@ void MainWindow::setUpScreen(quint64 idPlayer)
     addDockWidget(Qt::RightDockWidgetArea, inventory, Qt::Vertical);
 }
 
-void MainWindow::send(const Message::Message& message)
+void UI::MainWindow::send(const Message::Message& message)
 {
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
-
-//    qDebug() << "sending " << message.id();
-
     out << (quint16) 0;
     message.serialize(out);
     out.device()->seek(0);
     out << (quint16) (paquet.size() - sizeof(quint16));
     socket->write(paquet);
-//    qDebug() << "sent : " << " (" << paquet.size() << ")";
 }
 
-void MainWindow::donneesRecues()
+void UI::MainWindow::donneesRecues()
 {
     QDataStream in(socket);
     if (tailleMessage == 0)
@@ -93,7 +89,7 @@ void MainWindow::donneesRecues()
     tailleMessage = 0;
 }
 
-void MainWindow::connecte()
+void UI::MainWindow::connecte()
 {
     centralWidget()->deleteLater();
     LoginWidget* lw = new LoginWidget;
@@ -101,12 +97,12 @@ void MainWindow::connecte()
     setCentralWidget(lw);
 }
 
-void MainWindow::deconnecte()
+void UI::MainWindow::deconnecte()
 {
 
 }
 
-void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
+void UI::MainWindow::erreurSocket(QAbstractSocket::SocketError e)
 {
     static QString erreur = "Erreur réseau";
     switch(e)
@@ -125,7 +121,7 @@ void MainWindow::erreurSocket(QAbstractSocket::SocketError e)
     }
 }
 
-void MainWindow::sendLogin(QString login, QString mdp)
+void UI::MainWindow::sendLogin(QString login, QString mdp)
 {
     send(Message::Login(login, mdp));
     QWidget* w = new QWidget;
@@ -134,7 +130,7 @@ void MainWindow::sendLogin(QString login, QString mdp)
     l->deleteLater();
 }
 
-void MainWindow::handleMessage(Message::Message* message)
+void UI::MainWindow::handleMessage(Message::Message* message)
 {
     if(message->id() >= 5000 && m_scene != 0) m_scene->handleMessage(message);
     else if(message->id() == 2)

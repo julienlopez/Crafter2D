@@ -7,6 +7,8 @@
 class Scene;
 class Position;
 
+namespace UI {
+
 class ScreenWidget : public QGraphicsView
 {
     Q_OBJECT
@@ -34,5 +36,7 @@ private:
 private slots:
     void onNewPosition(const Position& p);
 };
+
+}
 
 #endif // SCREENWIDGET_HPP

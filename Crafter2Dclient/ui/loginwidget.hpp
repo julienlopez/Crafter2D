@@ -6,6 +6,8 @@
 class QLineEdit;
 class QPushButton;
 
+namespace UI {
+
 class LoginWidget : public QWidget
 {
     Q_OBJECT
@@ -23,5 +25,7 @@ signals:
 private slots:
     void onLoginSend();
 };
+
+}
 
 #endif // LOGINWIDGET_HPP

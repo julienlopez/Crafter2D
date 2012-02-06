@@ -8,6 +8,8 @@
 class QVBoxLayout;
 class QLineEdit;
 
+namespace UI {
+
 class DebugDock : public QDockWidget
 {
     Q_OBJECT
@@ -26,5 +28,7 @@ signals:
 public slots:
     void setPosition(const Position& pos);
 };
+
+}
 
 #endif // DEBUGDOCK_HPP

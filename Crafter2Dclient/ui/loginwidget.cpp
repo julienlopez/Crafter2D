@@ -6,7 +6,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-LoginWidget::LoginWidget(QWidget *parent) :
+UI::LoginWidget::LoginWidget(QWidget *parent) :
     QWidget(parent)
 {
     QWidget* w = new QWidget();
@@ -44,7 +44,7 @@ LoginWidget::LoginWidget(QWidget *parent) :
     setLayout(l);
 }
 
-void LoginWidget::onLoginSend()
+void UI::LoginWidget::onLoginSend()
 {
     emit sendLogin(loginLabel->text(), mdpLabel->text());
     loginLabel->setDisabled(true);

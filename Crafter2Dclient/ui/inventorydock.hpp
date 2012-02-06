@@ -8,6 +8,8 @@ class QListWidget;
 
 class QBasicTimer;
 
+namespace UI {
+
 class InventoryDock : public QDockWidget
 {
     Q_OBJECT
@@ -29,5 +31,7 @@ signals:
 public slots:
     void maj();
 };
+
+}
 
 #endif // INVENTORYDOCK_HPP

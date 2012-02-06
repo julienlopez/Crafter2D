@@ -1,6 +1,6 @@
 #include "screenwidget.hpp"
-#include "scene.hpp"
-#include "terrainmanager.hpp"
+#include "../scene.hpp"
+#include "../terrainmanager.hpp"
 
 #include <Position>
 
@@ -12,9 +12,9 @@
 
 #include <QDebug>
 
-ScreenWidget* ScreenWidget::s_instance = 0;
+UI::ScreenWidget* UI::ScreenWidget::s_instance = 0;
 
-ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
+UI::ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     QGraphicsView(scene, parent), zoomLevel(10), m_scene(scene)
 {
     connect(scene, SIGNAL(newPosition(Position)), this, SLOT(onNewPosition(Position)));
@@ -32,12 +32,12 @@ ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     s_instance = this;
 }
 
-ScreenWidget* ScreenWidget::instance()
+UI::ScreenWidget* UI::ScreenWidget::instance()
 {
     return s_instance;
 }
 
-void ScreenWidget::wheelEvent(QWheelEvent* event)
+void UI::ScreenWidget::wheelEvent(QWheelEvent* event)
 {
     /*
     qDebug() << "zoom de " << -(double)event->delta()/5000;
@@ -49,7 +49,7 @@ void ScreenWidget::wheelEvent(QWheelEvent* event)
     event->accept();
 }
 
-void ScreenWidget::drawBackground(QPainter* painter, const QRectF &rect)
+void UI::ScreenWidget::drawBackground(QPainter* painter, const QRectF &rect)
 {
     painter->save();
     int right = round(rect.right()) + dx;
@@ -75,7 +75,7 @@ void ScreenWidget::drawBackground(QPainter* painter, const QRectF &rect)
     painter->restore();
 }
 
-void ScreenWidget::onNewPosition(const Position& p)
+void UI::ScreenWidget::onNewPosition(const Position& p)
 {
     if(!p.isValid()) return;
     centerOn(m_scene->player().position());

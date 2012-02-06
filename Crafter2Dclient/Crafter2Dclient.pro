@@ -14,29 +14,29 @@ LIBS += -L../Crafter2Dlib/debug
 LIBS += -lCrafter2Dlib
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    loginwidget.cpp \
-    screenwidget.cpp \
-    debugdock.cpp \
+        ui/mainwindow.cpp \
+    ui/loginwidget.cpp \
+    ui/screenwidget.cpp \
+    ui/debugdock.cpp \
     scene.cpp \
     store.cpp \
     cplayer.cpp \
     cworldelement.cpp \
     terrainmanager.cpp \
-    inventorydock.cpp \
+    ui/inventorydock.cpp \
     ui/menu/menu.cpp \
     ui/menu/textentry.cpp
 
-HEADERS  += mainwindow.hpp \
-    loginwidget.hpp \
-    screenwidget.hpp \
-    debugdock.hpp \
+HEADERS  += ui/mainwindow.hpp \
+    ui/loginwidget.hpp \
+    ui/screenwidget.hpp \
+    ui/debugdock.hpp \
     scene.hpp \
     store.hpp \
     cplayer.hpp \
     cworldelement.hpp \
     terrainmanager.hpp \
-    inventorydock.hpp \
+    ui/inventorydock.hpp \
     ui/menu/menu.hpp \
     ui/menu/textentry.hpp
 

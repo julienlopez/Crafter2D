@@ -5,7 +5,7 @@
 #include <QGroupBox>
 #include <QLineEdit>
 
-DebugDock::DebugDock(QWidget *parent) :
+UI::DebugDock::DebugDock(QWidget *parent) :
     QDockWidget("debug", parent)
 {
     setFixedWidth(200);
@@ -19,7 +19,7 @@ DebugDock::DebugDock(QWidget *parent) :
     setWidget(w);
 }
 
-void DebugDock::creerGBPosition()
+void UI::DebugDock::creerGBPosition()
 {
     QGroupBox* gb = new QGroupBox("position");
     QHBoxLayout* hl = new QHBoxLayout;
@@ -38,7 +38,7 @@ void DebugDock::creerGBPosition()
     layout->addWidget(gb);
 }
 
-void DebugDock::setPosition(const Position& pos)
+void UI::DebugDock::setPosition(const Position& pos)
 {
     if(!pos.isValid()) {
         lePosx->setText("");
