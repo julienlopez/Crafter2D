@@ -3,6 +3,8 @@
 
 #include <Utils>
 
+#include <QGraphicsSceneMouseEvent>
+
 cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsPolygonItem(parent), m_menu(0)
 {}
 
@@ -39,4 +41,5 @@ void cWorldElement::mousePressEvent(QGraphicsSceneMouseEvent* evt)
 {
     Q_UNUSED(evt);
     showMenu();
+    evt->accept();
 }

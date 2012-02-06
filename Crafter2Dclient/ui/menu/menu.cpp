@@ -2,13 +2,15 @@
 
 #include <QGraphicsLinearLayout>
 
+#include <QDebug>
+
 UI::Menu* UI::Menu::s_openedMenu = 0;
 
 UI::Menu::Menu(QGraphicsItem *parent) :
     QGraphicsWidget(parent)
 {
     m_layout = new QGraphicsLinearLayout(Qt::Vertical);
-
+    m_layout->setContentsMargins(1,1,1,1);
     setLayout(m_layout);
 
     setAutoFillBackground(true);
@@ -38,6 +40,7 @@ UI::Menu* UI::Menu::openedMenu()
 
 void UI::Menu::fermer()
 {
+    qDebug() << "Menu::femer()";
     hide();
     deleteLater();
 }

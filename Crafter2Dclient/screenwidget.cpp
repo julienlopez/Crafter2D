@@ -12,6 +12,8 @@
 
 #include <QDebug>
 
+ScreenWidget* ScreenWidget::s_instance = 0;
+
 ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     QGraphicsView(scene, parent), zoomLevel(10), m_scene(scene)
 {
@@ -25,6 +27,14 @@ ScreenWidget::ScreenWidget(Scene* scene, QWidget *parent) :
     m_sandPen = QPen(QBrush(QColor(255,255,100), Qt::SolidPattern/*Qt::RadialGradientPattern*/), dx);
     m_grassPen = QPen(QBrush(QColor(100,255,100), Qt::SolidPattern), dx/2-2);
     m_waterPen = QPen(QBrush(QColor(100,100,255), Qt::SolidPattern), dx/2-2);
+
+    Q_ASSERT(!s_instance);
+    s_instance = this;
+}
+
+ScreenWidget* ScreenWidget::instance()
+{
+    return s_instance;
 }
 
 void ScreenWidget::wheelEvent(QWheelEvent* event)

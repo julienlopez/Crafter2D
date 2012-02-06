@@ -1,6 +1,7 @@
 #include "scene.hpp"
 #include "store.hpp"
 #include "cplayer.hpp"
+#include "ui/menu/menu.hpp"
 
 #include <Utils>
 #include <Message/Screen/SetPosition>
@@ -50,6 +51,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
     if(event->button() == Qt::RightButton)
         togo.clear();
+
+    if(UI::Menu::openedMenu()) UI::Menu::openedMenu()->close();
 }
 
 void Scene::setPosition(const Position& p)

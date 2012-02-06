@@ -13,11 +13,15 @@ class ScreenWidget : public QGraphicsView
 public:
     ScreenWidget(Scene* scene, QWidget *parent = 0);
 
+    static ScreenWidget* instance();
+
 protected:
     void wheelEvent(QWheelEvent* event);
     void drawBackground(QPainter* painter, const QRectF& rect);
 
 private:
+    static ScreenWidget* s_instance;
+
     double zoomLevel;
     Scene* m_scene;
 
