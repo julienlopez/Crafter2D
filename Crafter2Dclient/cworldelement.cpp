@@ -1,5 +1,5 @@
 #include "cworldelement.hpp"
-#include "menu.hpp"
+#include "ui/menu/menu.hpp"
 
 #include <Utils>
 
@@ -21,11 +21,11 @@ void cWorldElement::setPosition(const Position& p)
     setRotation(180*p.angle()/Utils::PI);
 }
 
-Menu* cWorldElement::menu()
+UI::Menu* cWorldElement::menu()
 {
     if(!m_menu)
     {
-        m_menu = new Menu(this);
+        m_menu = new UI::Menu(this);
     }
     return m_menu;
 }

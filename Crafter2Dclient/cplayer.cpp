@@ -1,6 +1,7 @@
 #include "cplayer.hpp"
 #include "store.hpp"
-#include "menu.hpp"
+#include "ui/menu/menu.hpp"
+#include "ui/menu/textentry.hpp"
 
 #include <Utils>
 
@@ -8,6 +9,8 @@
 #include <QFont>
 
 #include <cmath>
+
+#include <QDebug>
 
 cPlayer::cPlayer(quint64 id, QGraphicsItem* parent): QObject(&Store::instance()), cWorldElement(parent), gPlayer(id)
 {
@@ -32,11 +35,17 @@ Position cPlayer::position() const
     return gPlayer::position();
 }
 
+QRectF cPlayer::boundingRect() const
+{
+    return QRectF(-10,-10,20,20);
+}
+
 void cPlayer::showMenu()
 {
-    Menu* menu = menu();
-    Q_ASSERT(menu);
-    menu->addItem(new QGraphicsWidget());
+    UI::Menu* m = menu();
+    Q_ASSERT(m);
+    qDebug() << "showMenu()";
+    m->addItem(new UI::TextEntry(pseudo()));
 }
 
 void cPlayer::init()

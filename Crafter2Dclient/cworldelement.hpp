@@ -5,7 +5,9 @@
 
 #include <QGraphicsItem>
 
-class Menu;
+namespace UI {
+    class Menu;
+}
 
 /**
   * \brief spécialisation de la classe WorldElement pour le client.
@@ -21,7 +23,7 @@ public:
     virtual void setPosition(const Position& p);
     virtual Position position() const =0;
 
-    Menu* menu();
+    UI::Menu* menu();
 
 protected:
     cWorldElement();
@@ -32,7 +34,7 @@ protected:
     virtual void showMenu() =0;
 
 private:
-    Menu* m_menu;
+    UI::Menu* m_menu;
 };
 
 #endif // CWORLDELEMENT_HPP

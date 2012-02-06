@@ -24,7 +24,7 @@ SOURCES += main.cpp\
     cworldelement.cpp \
     terrainmanager.cpp \
     inventorydock.cpp \
-    menu.cpp \
+    ui/menu/menu.cpp \
     ui/menu/textentry.cpp
 
 HEADERS  += mainwindow.hpp \
@@ -37,7 +37,7 @@ HEADERS  += mainwindow.hpp \
     cworldelement.hpp \
     terrainmanager.hpp \
     inventorydock.hpp \
-    menu.hpp \
+    ui/menu/menu.hpp \
     ui/menu/textentry.hpp
 
 

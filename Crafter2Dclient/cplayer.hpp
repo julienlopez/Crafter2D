@@ -22,6 +22,8 @@ public:
     void setPosition(const Position& p);
     virtual Position position() const;
 
+    QRectF boundingRect() const;
+
 protected:
     void showMenu();
 
