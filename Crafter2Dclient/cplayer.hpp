@@ -22,6 +22,9 @@ public:
     void setPosition(const Position& p);
     virtual Position position() const;
 
+protected:
+    void showMenu();
+
 private:
     QGraphicsSimpleTextItem* m_label;
 

@@ -1,5 +1,6 @@
 #include "cplayer.hpp"
 #include "store.hpp"
+#include "menu.hpp"
 
 #include <Utils>
 
@@ -29,6 +30,13 @@ void cPlayer::setPosition(const Position& p) {
 Position cPlayer::position() const
 {
     return gPlayer::position();
+}
+
+void cPlayer::showMenu()
+{
+    Menu* menu = menu();
+    Q_ASSERT(menu);
+    menu->addItem(new QGraphicsWidget());
 }
 
 void cPlayer::init()

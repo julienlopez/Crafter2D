@@ -1,11 +1,12 @@
 #include "cworldelement.hpp"
+#include "menu.hpp"
 
 #include <Utils>
 
-cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsPolygonItem(parent)
+cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsPolygonItem(parent), m_menu(0)
 {}
 
-cWorldElement::cWorldElement(const QPolygonF& forme, QGraphicsItem* parent): QGraphicsPolygonItem(forme, parent)
+cWorldElement::cWorldElement(const QPolygonF& forme, QGraphicsItem* parent): QGraphicsPolygonItem(forme, parent), m_menu(0)
 {
     init();
 }
@@ -20,19 +21,22 @@ void cWorldElement::setPosition(const Position& p)
     setRotation(180*p.angle()/Utils::PI);
 }
 
+Menu* cWorldElement::menu()
+{
+    if(!m_menu)
+    {
+        m_menu = new Menu(this);
+    }
+    return m_menu;
+}
+
 void cWorldElement::init()
 {
     setPosition(position());
 }
 
-/*
-QRectF cWorldElement::boundingRect() const
+void cWorldElement::mousePressEvent(QGraphicsSceneMouseEvent* evt)
 {
-    return QRect();
+    Q_UNUSED(evt);
+    showMenu();
 }
-
-void cWorldElement::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
-{
-
-}
-*/
