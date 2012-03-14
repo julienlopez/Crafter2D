@@ -7,6 +7,7 @@
 
 #include <QBrush>
 #include <QFont>
+#include <QPainter>
 
 #include <cmath>
 
@@ -37,7 +38,22 @@ Position cPlayer::position() const
 
 QRectF cPlayer::boundingRect() const
 {
-    return QRectF(-10,-10,20,20);
+    return QRectF(-2,-2,4,4);
+}
+
+void cPlayer::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+    painter->save();
+
+    painter->setPen(QPen(Qt::black));
+    painter->setBrush(Qt::lightGray);
+
+    QVector<QPointF> v;
+    v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
+    painter->drawConvexPolygon(QPolygonF(v));
+    painter->drawLine(0,0,1,0);
+
+    painter->restore();
 }
 
 void cPlayer::showMenu()
@@ -45,15 +61,13 @@ void cPlayer::showMenu()
     UI::Menu* m = menu();
     Q_ASSERT(m);
     qDebug() << "showMenu()";
+    m->rotate();
     m->addItem(new UI::TextEntry(pseudo()));
+    m->ouvrir();
 }
 
 void cPlayer::init()
 {
-    QVector<QPointF> v;
-    v << QPointF(-0.5,1) << QPointF(-1,0) << QPointF(-0.5,-1) << QPointF(0.5,-1) << QPointF(1,0) << QPointF(0.5,1);
-    setPolygon(QPolygonF(v));
-    new QGraphicsLineItem(0,0,1,0,this);
     connect(&inventory(), SIGNAL(modified()), this, SIGNAL(modified()));
     m_label = new QGraphicsSimpleTextItem(parentItem());
     m_label->setText(pseudo());

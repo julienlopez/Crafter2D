@@ -17,7 +17,9 @@ public:
     void addStretch(int stretch = 1);
 
     static Menu* openedMenu();
+    static bool fermerOpenedMenu();
 
+    void ouvrir();
     void fermer();
 
 private:

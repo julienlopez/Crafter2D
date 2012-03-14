@@ -44,15 +44,17 @@ Position Scene::player() const
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+    if(UI::Menu::fermerOpenedMenu()) return;
     if(event->button() == Qt::LeftButton) {
         QPointF click = event->scenePos();
         togo.clear();
         togo << click;
     }
     if(event->button() == Qt::RightButton)
+    {
+        qDebug() << "Scene::click droit";
         togo.clear();
-
-    if(UI::Menu::openedMenu()) UI::Menu::openedMenu()->close();
+    }
 }
 
 void Scene::setPosition(const Position& p)

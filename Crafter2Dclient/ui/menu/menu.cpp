@@ -15,9 +15,6 @@ UI::Menu::Menu(QGraphicsItem *parent) :
 
     setAutoFillBackground(true);
     setPalette(QPalette(Qt::black, Qt::gray));
-
-    if(s_openedMenu) s_openedMenu->fermer();
-    s_openedMenu = this;
 }
 
 void UI::Menu::addItem(QGraphicsWidget *item)
@@ -38,9 +35,25 @@ UI::Menu* UI::Menu::openedMenu()
     return s_openedMenu;
 }
 
+bool UI::Menu::fermerOpenedMenu()
+{
+    if(!s_openedMenu) return false;
+    s_openedMenu->fermer();
+    return true;
+}
+
+void UI::Menu::ouvrir()
+{
+    qDebug() << "Menu::ouvrir()";
+    fermerOpenedMenu();
+    show();
+    s_openedMenu = this;
+}
+
 void UI::Menu::fermer()
 {
     qDebug() << "Menu::femer()";
     hide();
     deleteLater();
+    if(s_openedMenu == this) s_openedMenu = 0;
 }

@@ -14,11 +14,10 @@ namespace UI {
   *
   *
   */
-class cWorldElement : public QGraphicsPolygonItem
+class cWorldElement : public QGraphicsItem
 {
 public:
     cWorldElement(QGraphicsItem* parent);
-    cWorldElement(const QPolygonF& forme, QGraphicsItem* parent);
 
     virtual void setPosition(const Position& p);
     virtual Position position() const =0;

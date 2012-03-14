@@ -5,16 +5,12 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsPolygonItem(parent), m_menu(0)
+#include <QDebug>
+
+cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsItem(parent), m_menu(0)
 {}
 
-cWorldElement::cWorldElement(const QPolygonF& forme, QGraphicsItem* parent): QGraphicsPolygonItem(forme, parent), m_menu(0)
-{
-    init();
-}
-
-cWorldElement::cWorldElement() {
-
+cWorldElement::cWorldElement(): m_menu(0) {
 }
 
 void cWorldElement::setPosition(const Position& p)
@@ -39,7 +35,7 @@ void cWorldElement::init()
 
 void cWorldElement::mousePressEvent(QGraphicsSceneMouseEvent* evt)
 {
-    Q_UNUSED(evt);
+    qDebug() << "cWorldElement::mousePressEvent";
     showMenu();
     evt->accept();
 }
