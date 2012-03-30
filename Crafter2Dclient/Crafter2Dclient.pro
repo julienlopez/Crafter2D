@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     terrainmanager.cpp \
     ui/inventorydock.cpp \
     ui/menu/menu.cpp \
-    ui/menu/textentry.cpp
+    ui/menu/textentry.cpp \
+    cmiscellaneous.cpp \
+    cstaticobject.cpp
 
 HEADERS  += ui/mainwindow.hpp \
     ui/loginwidget.hpp \
@@ -38,7 +40,9 @@ HEADERS  += ui/mainwindow.hpp \
     terrainmanager.hpp \
     ui/inventorydock.hpp \
     ui/menu/menu.hpp \
-    ui/menu/textentry.hpp
+    ui/menu/textentry.hpp \
+    cmiscellaneous.hpp \
+    cstaticobject.hpp
 
 
 
