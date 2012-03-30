@@ -57,3 +57,11 @@ void UI::Menu::fermer()
     deleteLater();
     if(s_openedMenu == this) s_openedMenu = 0;
 }
+
+bool UI::Menu::empty() const {
+    return m_layout->count()==0;
+}
+
+int UI::Menu::count() const {
+    return m_layout->count();
+}

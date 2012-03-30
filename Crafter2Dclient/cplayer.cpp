@@ -61,8 +61,10 @@ void cPlayer::showMenu()
     UI::Menu* m = menu();
     Q_ASSERT(m);
     qDebug() << "showMenu()";
-    m->rotate();
-    m->addItem(new UI::TextEntry(pseudo()));
+    //m->rotate(position().angle() - m->rotation());
+    if(m->empty()) {
+        m->addItem(new UI::TextEntry(pseudo()));
+    }
     m->ouvrir();
 }
 

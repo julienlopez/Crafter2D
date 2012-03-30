@@ -8,9 +8,15 @@
 #include <QDebug>
 
 cWorldElement::cWorldElement(QGraphicsItem* parent): QGraphicsItem(parent), m_menu(0)
-{}
+{
+    m_menu = new UI::Menu(this);
+    m_menu->fermer();
+}
 
-cWorldElement::cWorldElement(): m_menu(0) {
+cWorldElement::cWorldElement(): m_menu(0)
+{
+    m_menu = new UI::Menu(this);
+    m_menu->fermer();
 }
 
 void cWorldElement::setPosition(const Position& p)
@@ -21,10 +27,6 @@ void cWorldElement::setPosition(const Position& p)
 
 UI::Menu* cWorldElement::menu()
 {
-    if(!m_menu)
-    {
-        m_menu = new UI::Menu(this);
-    }
     return m_menu;
 }
 

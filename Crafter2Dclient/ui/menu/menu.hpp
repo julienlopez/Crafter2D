@@ -22,6 +22,9 @@ public:
     void ouvrir();
     void fermer();
 
+    bool empty() const;
+    int count() const;
+
 private:
     QGraphicsLinearLayout* m_layout;
 
