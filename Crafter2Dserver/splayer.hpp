@@ -9,10 +9,14 @@
 class sPlayer : public gPlayer, public sWorldElement
 {
 public:
-    sPlayer(quint64 id) throw(DataAccessor::Exception);
     virtual ~sPlayer();
 
     virtual void save();
+
+    static sPlayer* load(quint64 id) throw(DataAccessor::Exception);
+
+private:
+    sPlayer(quint64 id);
 };
 
 #endif // SPLAYER_HPP

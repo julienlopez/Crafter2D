@@ -9,10 +9,14 @@
 class sBuilding : public gBuilding, public sWorldElement
 {
 public:
-    sBuilding(quint64 id) throw(DataAccessor::Exception);
     ~sBuilding();
 
     void save();
+
+    static sBuilding* load(quint64 id) throw(DataAccessor::Exception);
+
+protected:
+    sBuilding(quint64 id);
 };
 
 #endif // SBUILDING_HPP

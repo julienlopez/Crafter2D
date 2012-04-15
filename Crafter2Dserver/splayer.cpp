@@ -7,20 +7,8 @@
 #include <QSqlError>
 #include <QDebug>
 
-sPlayer::sPlayer(quint64 id) throw(DataAccessor::Exception): gPlayer(id)
-{
-    QSqlQuery q("SELECT pseudo, position, inventory FROM user WHERE id=" + QString::number(id));
-    if(!q.exec()) throw DataAccessor::Exception("Impossible d'executer la requetes");
-    if(q.size() != 1) throw DataAccessor::Exception("Erreur de base de données");
-
-    q.first();
-    setPseudo(q.value(0).toString());
-    Position p(q.value(1).toString());
-    if(!p.isValid()) throw DataAccessor::Exception("position invalide");
-    setPosition(p);
-
-    inventory() = Inventory::fromString(q.value(2).toString());
-}
+sPlayer::sPlayer(quint64 id): gPlayer(id)
+{}
 
 sPlayer::~sPlayer()
 {
@@ -29,7 +17,6 @@ sPlayer::~sPlayer()
 
 void sPlayer::save()
 {
-    qDebug() << "sauvegarde du player " << id();
     QSqlQuery query;
     query.prepare("UPDATE user SET position=:pos WHERE id=:id");
     query.bindValue(":pos", position().toString());
@@ -40,5 +27,22 @@ void sPlayer::save()
         qDebug() << "impossible d'executer la sauvegarde de sPlayer" << query.lastError().text();
         return;
     }
-    qDebug() << "player sauvegardé";
+}
+
+sPlayer* sPlayer::load(quint64 id) throw(DataAccessor::Exception)
+{
+    QSqlQuery q("SELECT pseudo, position, inventory FROM user WHERE id=" + QString::number(id));
+    if(!q.exec()) throw DataAccessor::Exception("Impossible d'executer la requetes");
+    if(q.size() != 1) throw DataAccessor::Exception("Erreur de base de données");
+
+    sPlayer* player = new sPlayer(id);
+    q.first();
+    player->setPseudo(q.value(0).toString());
+    Position p(q.value(1).toString());
+    if(!p.isValid()) throw DataAccessor::Exception("position invalide");
+    player->setPosition(p);
+
+    player->inventory() = Inventory::fromString(q.value(2).toString());
+
+    return player;
 }

@@ -9,10 +9,14 @@
 class sObject : public gObject, public sWorldElement
 {
 public:
-    sObject(quint64 id) throw(DataAccessor::Exception);
     virtual ~sObject();
 
     virtual void save();
+
+    static sObject* load(quint64 id) throw(DataAccessor::Exception);
+
+protected:
+    sObject(quint64 id);
 };
 
 #endif // SOBJECT_HPP

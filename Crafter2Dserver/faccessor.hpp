@@ -8,6 +8,8 @@
 #include <QMap>
 
 #include <typeinfo>
+#include <cassert>
+
 #include <QDebug>
 
 template<class G, class S> class fAccessor
@@ -29,7 +31,8 @@ public:
     S* get(quint64 id)
     {
         if(buffer.keys().contains(id)) return buffer[id];
-        S* s = new S(id);
+        S* s = S::load(id);
+        assert(s);
         buffer[id] = s;
         return s;
     }
