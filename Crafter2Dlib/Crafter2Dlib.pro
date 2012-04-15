@@ -42,7 +42,9 @@ SOURCES += \
     message/screen/requestobjectinformation.cpp \
     inventory.cpp \
     jsonparser.cpp \
-    gtree.cpp
+    gtree.cpp \
+    message/screen/getnearbyobjects.cpp \
+    message/screen/nearbyobjects.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -75,4 +77,6 @@ HEADERS +=\
     singleton.hpp \
     inventory.hpp \
     jsonparser.hpp \
-    gtree.hpp
+    gtree.hpp \
+    message/screen/getnearbyobjects.hpp \
+    message/screen/nearbyobjects.hpp
