@@ -30,6 +30,8 @@ private:
 
     void envoyerATous(const Message::Message& message);
 
+    void loadObjects();
+
 signals:
 
 private slots:

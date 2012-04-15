@@ -15,6 +15,7 @@
 #include <QSqlDatabase>
 #include <QStringList>
 #include <QTimer>
+#include <QSqlQuery>
 
 #include <QDebug>
 
@@ -64,6 +65,9 @@ bool Serveur::start()
         return false;
     }
 
+    qDebug() << "chargement des objets";
+    loadObjects();
+
     connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
     qDebug() << "serveur pret";
     return true;
@@ -93,6 +97,25 @@ void Serveur::envoyerATous(const Message::Message& message)
     {
         clients.at(i)->write(paquet);
     }
+}
+
+void Serveur::loadObjects()
+{
+    //statics objects
+    QSqlQuery query("SELECT id FROM staticobject");
+    if(!query.exec()) qDebug() << "Impossible d'executer la requetes";
+    while(query.next()) {
+        quint64 id = query.value(0).toUInt();
+        try
+        {
+            DataAccessor::getStaticObject(id);
+        }
+        catch(DataAccessor::Exception& ex)
+        {
+            qDebug() << "Impossible de charger le staticobject " << id << ": " << ex.message();
+        }
+    }
+
 }
 
 void Serveur::nouvelleConnexion()
