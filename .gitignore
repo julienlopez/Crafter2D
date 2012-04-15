@@ -9,3 +9,4 @@ moc_*
 *.txt
 *.a
 *.dll
+*.pro.user.*
