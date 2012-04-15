@@ -40,7 +40,9 @@ SOURCES += \
     message/screen/objectinformation.cpp \
     message/screen/majposition.cpp \
     message/screen/requestobjectinformation.cpp \
-    inventory.cpp
+    inventory.cpp \
+    jsonparser.cpp \
+    gtree.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -71,4 +73,6 @@ HEADERS +=\
     message/screen/requestobjectinformation.hpp \
     imessagehandler.hpp \
     singleton.hpp \
-    inventory.hpp
+    inventory.hpp \
+    jsonparser.hpp \
+    gtree.hpp

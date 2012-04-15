@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     sbuilding.cpp \
     sobject.cpp \
     sstaticobject.cpp \
-    localserveur.cpp
+    localserveur.cpp \
+    stree.cpp
 
 HEADERS += \
     serveur.hpp \
@@ -55,7 +56,8 @@ HEADERS += \
     sbuilding.hpp \
     sobject.hpp \
     sstaticobject.hpp \
-    localserveur.hpp
+    localserveur.hpp \
+    stree.hpp
 
 
 
