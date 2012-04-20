@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     ui/menu/menu.cpp \
     ui/menu/textentry.cpp \
     cmiscellaneous.cpp \
-    cstaticobject.cpp
+    cstaticobject.cpp \
+    ctree.cpp
 
 HEADERS  += ui/mainwindow.hpp \
     ui/loginwidget.hpp \
@@ -42,7 +43,8 @@ HEADERS  += ui/mainwindow.hpp \
     ui/menu/menu.hpp \
     ui/menu/textentry.hpp \
     cmiscellaneous.hpp \
-    cstaticobject.hpp
+    cstaticobject.hpp \
+    ctree.hpp
 
 
 
