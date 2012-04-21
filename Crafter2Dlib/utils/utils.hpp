@@ -3,6 +3,8 @@
 
 #include <QTextStream>
 
+namespace Utils {
+
 class Utils
 {
 public:
@@ -10,5 +12,7 @@ public:
 
     static const double PI = 3.14159265;
 };
+
+}
 
 #endif // UTILS_HPP

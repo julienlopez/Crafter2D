@@ -3,7 +3,7 @@
 
 #include <Message/Message>
 #include <Position>
-#include <Singleton>
+#include <Utils/Singleton>
 
 #include <QMap>
 
@@ -21,10 +21,10 @@ class cWorldElement;
   * Conteneur global contenant toutes les données serveurs dont le client a besoin.
   * Demande automatiquement les informations nécessaires si besoin est.
   */
-class Store : public QObject, public Singleton<Store>
+class Store : public QObject, public Utils::Singleton<Store>
 {
     Q_OBJECT
-    friend class Singleton<Store>;
+    friend class Utils::Singleton<Store>;
 
 public:
     typedef cPlayer* type_player;

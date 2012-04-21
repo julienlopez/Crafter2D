@@ -3,6 +3,8 @@
 
 #include <QVariantList>
 
+namespace Utils {
+
 class JsonParser
 {
 
@@ -32,5 +34,6 @@ public:
     void clearLastError();
 };
 
+}
 
 #endif // JSONPARSER_HPP

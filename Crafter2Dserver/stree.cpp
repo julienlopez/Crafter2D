@@ -1,6 +1,6 @@
 #include "stree.hpp"
 
-#include <JsonParser>
+#include <Utils/JsonParser>
 
 #include <QStringList>
 
@@ -13,7 +13,7 @@ bool sTree::setData(QString data)
     if(data.isEmpty()) return false;
 
     bool res = true;
-    JsonParser p;
+    Utils::JsonParser p;
     QVariantMap d = p.parse(data, &res);
     if(!res) return false;
 

@@ -1,6 +1,8 @@
 #ifndef SINGLETON_HPP
 #define SINGLETON_HPP
 
+namespace Utils {
+
 template<class T> class Singleton {
 public:
     static T& instance() {
@@ -15,5 +17,7 @@ private:
 protected:
     Singleton() {}
 };
+
+}
 
 #endif // SINGLETON_HPP

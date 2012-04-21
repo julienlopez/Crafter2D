@@ -1,7 +1,7 @@
 #include "cworldelement.hpp"
 #include "ui/menu/menu.hpp"
 
-#include <Utils>
+#include <Utils/Utils>
 
 #include <QGraphicsSceneMouseEvent>
 
@@ -22,7 +22,7 @@ cWorldElement::cWorldElement(): m_menu(0)
 void cWorldElement::setPosition(const Position& p)
 {
     setPos(p.position());
-    setRotation(180*p.angle()/Utils::PI);
+    setRotation(180*p.angle()/Utils::Utils::PI);
 }
 
 UI::Menu* cWorldElement::menu()

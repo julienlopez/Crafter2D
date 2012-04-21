@@ -33,7 +33,6 @@ SOURCES += \
     gobject.cpp \
     gstaticobject.cpp \
     position.cpp \
-    utils.cpp \
     worldelement.cpp \
     commande/statusupdate.cpp \
     idset.cpp \
@@ -41,10 +40,11 @@ SOURCES += \
     message/screen/majposition.cpp \
     message/screen/requestobjectinformation.cpp \
     inventory.cpp \
-    jsonparser.cpp \
     gtree.cpp \
     message/screen/getnearbyobjects.cpp \
-    message/screen/nearbyobjects.cpp
+    message/screen/nearbyobjects.cpp \
+    utils/utils.cpp \
+    utils/jsonparser.cpp
 
 HEADERS +=\
     commande/commande.hpp \
@@ -66,7 +66,6 @@ HEADERS +=\
     gbuilding.hpp \
     gstaticobject.hpp \
     position.hpp \
-    utils.hpp \
     worldelement.hpp \
     commande/statusupdate.hpp \
     idset.hpp \
@@ -74,9 +73,11 @@ HEADERS +=\
     message/screen/majposition.hpp \
     message/screen/requestobjectinformation.hpp \
     imessagehandler.hpp \
-    singleton.hpp \
     inventory.hpp \
-    jsonparser.hpp \
     gtree.hpp \
     message/screen/getnearbyobjects.hpp \
-    message/screen/nearbyobjects.hpp
+    message/screen/nearbyobjects.hpp \
+    utils/factory.hpp \
+    utils/utils.hpp \
+    utils/singleton.hpp \
+    utils/jsonparser.hpp

@@ -7,7 +7,7 @@ class cTree : public cStaticObject
 {
     Q_OBJECT
 public:
-    cTree(QObject *parent = 0);
+    cTree();
     
 signals:
     

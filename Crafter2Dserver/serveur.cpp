@@ -5,7 +5,6 @@
 #include "localserveur.hpp"
 #include "splayer.hpp"
 
-#include <Utils>
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>
 

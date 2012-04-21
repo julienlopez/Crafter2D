@@ -1,6 +1,6 @@
 #include "ctree.hpp"
 
-cTree::cTree(QObject *parent): cStaticObject(parent)
+cTree::cTree(): cStaticObject(0)
 {
     //TODO yup
 }

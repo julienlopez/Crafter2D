@@ -3,7 +3,6 @@
 #include "cplayer.hpp"
 #include "ui/menu/menu.hpp"
 
-#include <Utils>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>

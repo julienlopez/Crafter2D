@@ -3,8 +3,6 @@
 #include "ui/menu/menu.hpp"
 #include "ui/menu/textentry.hpp"
 
-#include <Utils>
-
 #include <QBrush>
 #include <QFont>
 #include <QPainter>

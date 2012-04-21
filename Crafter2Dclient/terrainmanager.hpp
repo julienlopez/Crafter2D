@@ -1,13 +1,13 @@
 #ifndef TERRAINMANAGER_HPP
 #define TERRAINMANAGER_HPP
 
-#include <Singleton>
+#include <Utils/Singleton>
 
 #include <QtGlobal>
 
-class TerrainManager : public Singleton<TerrainManager>
+class TerrainManager : public Utils::Singleton<TerrainManager>
 {
-    friend class Singleton<TerrainManager>;
+    friend class Utils::Singleton<TerrainManager>;
 
 public:
     typedef quint8 Terrain;

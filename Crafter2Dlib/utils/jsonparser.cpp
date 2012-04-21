@@ -3,15 +3,15 @@
 #include <QStringList>
 #include <QStack>
 
-QList<QChar> JsonParser::caractereEvitementDebut = QList<QChar>() << '"' << '{' << '[';
-QList<QChar> JsonParser::caractereEvitementFin = QList<QChar>() << '"' << '}' << ']';
+QList<QChar> Utils::JsonParser::caractereEvitementDebut = QList<QChar>() << '"' << '{' << '[';
+QList<QChar> Utils::JsonParser::caractereEvitementFin = QList<QChar>() << '"' << '}' << ']';
 
-JsonParser::JsonParser()
+Utils::JsonParser::JsonParser()
 {
     clearLastError();
 }
 
-QVariantMap JsonParser::parse( const QString &jsonData, bool *ok )
+QVariantMap Utils::JsonParser::parse( const QString &jsonData, bool *ok )
 {
     bool parsingOk = false;
     QVariantMap resultat = parseObject( jsonData, &parsingOk );
@@ -27,17 +27,17 @@ QVariantMap JsonParser::parse( const QString &jsonData, bool *ok )
     }
 }
 
-QString JsonParser::lastError() const
+QString Utils::JsonParser::lastError() const
 {
     return m_lastError;
 }
 
-void JsonParser::clearLastError()
+void Utils::JsonParser::clearLastError()
 {
     m_lastError = "Aucune erreur";
 }
 
-QVariantMap JsonParser::parseObject( QString object, bool *ok )
+QVariantMap Utils::JsonParser::parseObject( QString object, bool *ok )
 {
     if ( ! object.startsWith( '{' ) || ! object.endsWith( '}' ) )
     {
@@ -64,7 +64,7 @@ QVariantMap JsonParser::parseObject( QString object, bool *ok )
     }
 }
 
-QVariantMap JsonParser::parsePair( const QString &object, bool *ok )
+QVariantMap Utils::JsonParser::parsePair( const QString &object, bool *ok )
 {
     QVariantMap resultat;
     QStringList membres = JsonParser::split( object, ',' );
@@ -98,7 +98,7 @@ QVariantMap JsonParser::parsePair( const QString &object, bool *ok )
     return resultat;
 }
 
-QVariant JsonParser::parseValue( QString valeur, bool *ok )
+QVariant Utils::JsonParser::parseValue( QString valeur, bool *ok )
 {
     bool res = false;
     if ( valeur.startsWith( '{' ) && valeur.endsWith( '}' ) )
@@ -161,7 +161,7 @@ QVariant JsonParser::parseValue( QString valeur, bool *ok )
     }
 }
 
-QVariantList JsonParser::parseArray ( QString array, bool *ok )
+QVariantList Utils::JsonParser::parseArray ( QString array, bool *ok )
 {
     if ( !array.startsWith( '[' ) || !array.endsWith( ']' ) )
     {
@@ -187,7 +187,7 @@ QVariantList JsonParser::parseArray ( QString array, bool *ok )
     return resultat;
 }
 
-QVariant JsonParser::parseNumber( const QString &value, bool *ok )
+QVariant Utils::JsonParser::parseNumber( const QString &value, bool *ok )
 {
     QVariant resultat;
     bool res;
@@ -203,10 +203,10 @@ QVariant JsonParser::parseNumber( const QString &value, bool *ok )
     return resultat;
 }
 
-QStringList JsonParser::split(QString string, QChar separator)
+QStringList Utils::JsonParser::split(QString string, QChar separator)
 {
     QStringList resultat;
-    while ( true )
+    while(true)
     {
         int pos = string.indexOf( separator );
         if ( pos == -1 ) break;
