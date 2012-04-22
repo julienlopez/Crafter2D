@@ -23,6 +23,10 @@ public:
     type_list objects() const;
     type_list staticObjects() const;
 
+    void setBuildings(const type_list& lst);
+    void setObjects(const type_list& lst);
+    void setStaticObjects(const type_list& lst);
+
 private:
     type_list m_buildings;
     type_list m_objects;

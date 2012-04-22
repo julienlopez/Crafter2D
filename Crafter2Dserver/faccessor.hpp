@@ -37,6 +37,15 @@ public:
         return s;
     }
 
+    QList<quint64> getIdByPosition(const Position& pos, double distance)
+    {
+        QList<quint64> res;
+        S* s;
+        foreach(s, buffer)
+            if(s->position().distance(pos) >= distance) res << s->id();
+        return res;
+    }
+
     void clear()
     {
         S* s;

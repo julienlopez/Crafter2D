@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QQueue>
 
+class Position;
 class sWorldElement;
 class WorldElement;
 class sPlayer;
@@ -32,6 +33,8 @@ public:
     static gBuilding* getBuilding(quint64 id);
     static gObject* getObject(quint64 id);
     static gStaticObject* getStaticObject(quint64 id);
+
+    static QList<quint64> getNearbyStaticObjects(const Position& pos, double distance);
 
     static void save(sWorldElement* element, bool destroy = false);
     void clearAll();

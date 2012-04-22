@@ -60,6 +60,13 @@ gStaticObject* DataAccessor::getStaticObject(quint64 id)
     return instance().staticObjectAccessor->get(id);
 }
 
+QList<quint64> DataAccessor::getNearbyStaticObjects(const Position& pos, double distance)
+{
+    StaticObjectAccessor* acc = instance().staticObjectAccessor;
+    Q_ASSERT(acc);
+    return acc->getIdByPosition(pos, distance);
+}
+
 void DataAccessor::save(sWorldElement* element, bool destroy)
 {
     instance().m_saveQueue.push_back(toSave(element, destroy));

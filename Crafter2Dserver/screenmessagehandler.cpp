@@ -6,10 +6,14 @@
 #include <Position>
 #include <gPlayer>
 #include <Message/Erreur/ErreurServeur>
+#include <Message/Screen/GetPosition>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/RequestObjectInformation>
 #include <Message/Screen/ObjectInformation>
+#include <Message/Screen/GetNearbyObjects>
+#include <Message/Screen/NearbyObjects>
+
 #include <QSqlQuery>
 #include <QSqlError>
 
@@ -21,12 +25,12 @@ ScreenMessageHandler::ScreenMessageHandler(Client *parent) :
 
 void ScreenMessageHandler::traiter(const Message::Message* message) const
 {
-    if(message->id() < 5000)
+    if(message->id() < Message::Screen::Screen::s_id)
     {
         qDebug() << "message invalide!";
         return;
     }
-    if(message->id() == 5001)
+    if(message->id() == Message::Screen::GetPosition::s_id)
     {
         sendPosition();
         return;
@@ -45,6 +49,18 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
         WorldElement* e = DataAccessor::getWorldElement(m->code(), m->idPlayer());
         Q_ASSERT(e);
         m_client->send(Message::Screen::ObjectInformation(e));
+        return;
+    }
+    if(message->id() == Message::Screen::GetNearbyObjects::s_id)
+    {
+        const Message::Screen::GetNearbyObjects* m = qobject_cast<const Message::Screen::GetNearbyObjects*>(message);
+        Q_ASSERT(m);
+        qDebug() << "GetNearbyObjects: " << m->position().position();
+        QList<quint64> staticObjects = DataAccessor::getNearbyStaticObjects(m->position(), m->distance());
+        Message::Screen::NearbyObjects mess;
+        mess.setStaticObjects(staticObjects);
+        m_client->send(mess);
+        return;
     }
 }
 

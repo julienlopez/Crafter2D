@@ -37,6 +37,21 @@ Message::Screen::NearbyObjects::type_list Message::Screen::NearbyObjects::static
     return m_staticObjects;
 }
 
+void Message::Screen::NearbyObjects::setBuildings(const type_list& lst)
+{
+    m_objects = lst;
+}
+
+void Message::Screen::NearbyObjects::setObjects(const type_list& lst)
+{
+    m_buildings = lst;
+}
+
+void Message::Screen::NearbyObjects::setStaticObjects(const type_list& lst)
+{
+    m_staticObjects = lst;
+}
+
 namespace {
 
 const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::NearbyObjects::s_id, &Message::Screen::NearbyObjects::extract);
