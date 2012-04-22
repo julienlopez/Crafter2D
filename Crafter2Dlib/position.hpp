@@ -27,6 +27,9 @@ public:
     bool operator == (const Position& pos) const;
     bool operator != (const Position& pos) const;
 
+    double distance(const Position& pos) const;
+    double distance2(const Position& pos) const;
+
 private:
     bool m_valid;
     double m_angle;

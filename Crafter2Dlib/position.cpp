@@ -2,6 +2,8 @@
 
 #include <QStringList>
 
+#include <cmath>
+
 Position::Position(): m_valid(false), m_angle(0)
 {}
 
@@ -80,4 +82,16 @@ bool Position::operator == (const Position& pos) const
 bool Position::operator != (const Position& pos) const
 {
     return m_valid!=pos.m_valid || m_position != pos.m_position || m_angle != pos.m_angle;
+}
+
+double Position::distance(const Position& pos) const
+{
+    if(!isValid() || !pos.isValid()) return -1;
+    return sqrt((m_position-pos.m_position).manhattanLength());
+}
+
+double Position::distance2(const Position& pos) const
+{
+    if(!isValid() || !pos.isValid()) return -1;
+    return (m_position-pos.m_position).manhattanLength();
 }
