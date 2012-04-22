@@ -23,8 +23,8 @@ protected:
 };
 
 template< class T, typename IdentifierType,
-          template<class, typename> class FactoryErrorPolicy = DefaultFactoryError,
-          class ProductCreator = T*(*)(QDataStream&) >
+          class ProductCreator = T*(*)(QDataStream&),
+          template<class, typename> class FactoryErrorPolicy = DefaultFactoryError >
 class Factory : public Singleton<Factory<T, IdentifierType> >, public FactoryErrorPolicy<IdentifierType, T>
 {
     friend class Singleton<Factory<T, IdentifierType> >;

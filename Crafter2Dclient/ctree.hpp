@@ -3,11 +3,14 @@
 
 #include "cstaticobject.hpp"
 
-class cTree : public cStaticObject
+#include <gTree>
+
+class cTree : public cStaticObject, public gTree
 {
     Q_OBJECT
 public:
     cTree();
+    cTree(const gTree* tree);
     
 signals:
     

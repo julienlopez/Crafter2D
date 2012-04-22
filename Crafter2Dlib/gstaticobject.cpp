@@ -20,3 +20,8 @@ quint64 gStaticObject::code() const
 {
     return s_code;
 }
+
+gStaticObject::Type gStaticObject::type() const
+{
+    return 0;
+}

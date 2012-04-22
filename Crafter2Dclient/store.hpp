@@ -13,6 +13,7 @@ class cPlayer;
 class gBuilding;
 class gObject;
 class gStaticObject;
+class cStaticObject;
 class cWorldElement;
 
 /**
@@ -30,7 +31,7 @@ public:
     typedef cPlayer* type_player;
     typedef gBuilding* type_building;
     typedef gObject* type_object;
-    typedef gStaticObject* type_staticObject;
+    typedef cStaticObject* type_staticObject;
 
     static void updatePosition(quint64 code, quint64 id, const Position &pos);
     static void updatePositionPlayer(quint64 id, const Position &pos);
@@ -48,7 +49,7 @@ public:
     static type_player getPlayer(quint64 id);
     static type_building getBuilding(quint64 id);
     static type_object getObjetcs(quint64 id);
-    static type_staticObject getStaticobjects(quint64 id);
+    static type_staticObject getStaticObjects(quint64 id);
 
 private:
     Store();

@@ -55,7 +55,6 @@ void ScreenMessageHandler::traiter(const Message::Message* message) const
     {
         const Message::Screen::GetNearbyObjects* m = qobject_cast<const Message::Screen::GetNearbyObjects*>(message);
         Q_ASSERT(m);
-        qDebug() << "GetNearbyObjects: " << m->position().position();
         QList<quint64> staticObjects = DataAccessor::getNearbyStaticObjects(m->position(), m->distance());
         Message::Screen::NearbyObjects mess;
         mess.setStaticObjects(staticObjects);

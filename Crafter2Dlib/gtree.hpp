@@ -14,6 +14,10 @@ public:
     void setNom(QString nom);
     void setMax(quint32 max);
 
+    static const Type s_type = 1;
+
+    Type type() const;
+
 private:
     QString m_nom;
     quint32 m_max;

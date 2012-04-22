@@ -42,6 +42,6 @@ sStaticObject* sStaticObject::load(quint64 id) throw(DataAccessor::Exception)
 
 sStaticObject* sStaticObject::instanciate(Type type, quint64 id)
 {
-    if(type == sTree::s_type) return new sTree(id);
+    if(type == gTree::s_type) return new sTree(id);
     return 0;
 }

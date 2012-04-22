@@ -23,3 +23,8 @@ void gTree::setMax(quint32 max)
 {
     m_max = max;
 }
+
+gTree::Type gTree::type() const
+{
+    return s_type;
+}

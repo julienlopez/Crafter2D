@@ -9,7 +9,6 @@
 class sStaticObject : virtual public gStaticObject, public sWorldElement
 {
 public:
-    typedef quint32 Type;
 
     virtual ~sStaticObject();
 

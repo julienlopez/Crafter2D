@@ -1,13 +1,17 @@
 #include "scene.hpp"
 #include "store.hpp"
 #include "cplayer.hpp"
+#include "generalsettings.hpp"
 #include "ui/menu/menu.hpp"
 
+#include <gStaticObject>
 #include <Message/Screen/SetPosition>
 #include <Message/Screen/SendPosition>
 #include <Message/Screen/MajPosition>
 #include <Message/Screen/ObjectInformation>
 #include <Message/Screen/RequestObjectInformation>
+#include <Message/Screen/GetNearbyObjects>
+#include <Message/Screen/NearbyObjects>
 
 #include <QTimer>
 #include <QGraphicsTextItem>
@@ -34,6 +38,8 @@ Scene::Scene(quint64 idPlayer, QObject *parent) :
     connect(&Store::instance(), SIGNAL(newElement(cWorldElement*)), this, SLOT(onNewElement(cWorldElement*)));
 
     if(!position.isValid()) addItem(new QGraphicsTextItem("Chargement en cours..."));
+
+    connect(this, SIGNAL(newPosition(Position)), this, SLOT(onNewPosition(Position)));
 }
 
 Position Scene::player() const
@@ -82,26 +88,36 @@ void Scene::setPosition(const Position& p)
     emit newPosition(p);
 }
 
-void Scene::handleMessage(Message::Message* message)
+void Scene::handleMessage(Message::Message* mess)
 {
-    Q_ASSERT(message->id() >= 5000);
-    if(message->id() == Message::Screen::SetPosition::s_id)
+    Q_ASSERT(mess->id() >= 5000);
+    if(mess->id() == Message::Screen::SetPosition::s_id)
     {
-        const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(message);
+        const Message::Screen::SetPosition* p = qobject_cast<const Message::Screen::SetPosition*>(mess);
         Q_ASSERT(p);
         setPosition(p->position());
     }
-    if(message->id() == Message::Screen::MajPosition::s_id)
+    if(mess->id() == Message::Screen::MajPosition::s_id)
     {
-        const Message::Screen::MajPosition* p = qobject_cast<const Message::Screen::MajPosition*>(message);
+        const Message::Screen::MajPosition* p = qobject_cast<const Message::Screen::MajPosition*>(mess);
         Q_ASSERT(p);
         Store::updatePosition(p->objectCode(), p->objectId(), p->position());
     }
-    if(message->id() == Message::Screen::ObjectInformation::s_id)
+    if(mess->id() == Message::Screen::ObjectInformation::s_id)
     {
-        Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(message);
+        Message::Screen::ObjectInformation* i = qobject_cast<Message::Screen::ObjectInformation*>(mess);
         Q_ASSERT(i);
         Store::setInformation(i->element());
+    }
+    if(mess->id() == Message::Screen::NearbyObjects::s_id)
+    {
+        Message::Screen::NearbyObjects* m = qobject_cast<Message::Screen::NearbyObjects*>(mess);
+        Q_ASSERT(m);
+        Message::Screen::NearbyObjects::type_list staticObjects = m->staticObjects();
+        qDebug() << "staticObjects: " << staticObjects;
+        quint64 id;
+        foreach(id, staticObjects)
+            if(!Store::getStaticObjects(id)) emit message(Message::Screen::RequestObjectInformation(gStaticObject::s_code, id));
     }
 }
 
@@ -135,4 +151,12 @@ void Scene::onNewElement(cWorldElement* el)
 {
     if(el->parentItem() != m_root)
         el->setParentItem(m_root);
+}
+
+void Scene::onNewPosition(const Position& p)
+{
+    if(lastNearbyObjectUpdate.isValid() && lastNearbyObjectUpdate.distance(p) < GeneralSettings::distanceToRefreshNearbyObject()) return;
+    qDebug() << "onNewPosition(" << p.position() << ")";
+    emit message(Message::Screen::GetNearbyObjects(p, GeneralSettings::distanceToLoadNearbyObject()));
+    lastNearbyObjectUpdate = p;
 }

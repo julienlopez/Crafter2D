@@ -15,6 +15,18 @@ class cStaticObject : public QObject, public cWorldElement, public gStaticObject
 public:
     cStaticObject(quint64 id, QGraphicsItem* parent);
     cStaticObject(gStaticObject* staticObject);
+
+    virtual void setPosition(const Position& p);
+    virtual Position position() const;
+
+    QRectF boundingRect() const;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+
+protected:
+    void showMenu();
+
+    static cStaticObject* instanciate(gStaticObject* staticobject);
+    static cStaticObject* instanciate(gStaticObject::Type type, quint64 id);
     
 signals:
     

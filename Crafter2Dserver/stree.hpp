@@ -10,8 +10,6 @@ class sTree : virtual gStaticObject, public gTree, public sStaticObject
 public:
     sTree(quint64 id);
 
-    static const Type s_type = 0;
-
     virtual bool setData(QString data);
 };
 

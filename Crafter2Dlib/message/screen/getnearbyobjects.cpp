@@ -1,7 +1,9 @@
 #include "getnearbyobjects.hpp"
 
-Message::Screen::GetNearbyObjects::GetNearbyObjects(const Position& position, double distance): Screen(GetNearbyObjects::s_id), m_distance(distance)
+Message::Screen::GetNearbyObjects::GetNearbyObjects(const Position& position, double distance): Screen(GetNearbyObjects::s_id)
 {
+    m_position = position;
+    m_distance = distance;
 }
 
 Position Message::Screen::GetNearbyObjects::position() const

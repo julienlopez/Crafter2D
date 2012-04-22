@@ -1,10 +1,13 @@
 #include "store.hpp"
 #include "cplayer.hpp"
+#include "cstaticobject.hpp"
 
 #include <gBuilding>
 #include <gObject>
 #include <gStaticObject>
 #include <Message/Screen/RequestObjectInformation>
+
+#include <QDebug>
 
 void Store::updatePosition(quint64 code, quint64 id, const Position& pos)
 {
@@ -131,7 +134,12 @@ void Store::setInformationStaticObject(gStaticObject* s)
     if(instance().m_staticobjects.keys().contains(s->id())) {
         Q_ASSERT(0&&" a faire ");
     }
-    else instance().m_staticobjects[s->id()] = new gStaticObject(*s);
+    else { //instance().m_staticobjects[s->id()] = new gStaticObject(*s);
+        cStaticObject* cso = dynamic_cast<cStaticObject*>(s);
+        if(!cso) cso = cStaticObject::instanciate(s);
+        instance().m_staticobjects[s->id()] = cso;
+        emit instance().newElement(cso);
+    }
 }
 
 WorldElement* Store::get(quint64 code, quint64 id)
@@ -139,7 +147,7 @@ WorldElement* Store::get(quint64 code, quint64 id)
     if(gPlayer::s_code == code) return getPlayer(id);
     if(gBuilding::s_code == code) return getBuilding(id);
     if(gObject::s_code == code) return getObjetcs(id);
-    if(gStaticObject::s_code == code) return getStaticobjects(id);
+    if(gStaticObject::s_code == code) return getStaticObjects(id);
     return 0;
 }
 
@@ -161,9 +169,11 @@ Store::type_object Store::getObjetcs(quint64 id)
     return 0;
 }
 
-Store::type_staticObject Store::getStaticobjects(quint64 id)
+Store::type_staticObject Store::getStaticObjects(quint64 id)
 {
     if(instance().m_staticobjects.keys().contains(id)) return instance().m_staticobjects[id];
+    qDebug() << "static object inconnu: " << id;
+    instance().m_staticobjects[id] = 0;
     return 0;
 }
 

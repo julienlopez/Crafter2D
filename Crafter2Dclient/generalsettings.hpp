@@ -11,6 +11,7 @@ class GeneralSettings : Utils::Singleton<GeneralSettings>
 
 public:
     static double distanceToRefreshNearbyObject();
+    static double distanceToLoadNearbyObject();
 
 private:
     GeneralSettings();

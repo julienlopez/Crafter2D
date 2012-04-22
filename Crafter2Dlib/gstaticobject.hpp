@@ -6,6 +6,8 @@
 class gStaticObject : public WorldElement
 {
 public:
+    typedef quint32 Type;
+
     gStaticObject(quint64 id);
 
     static const quint64 s_code = 3;
@@ -14,6 +16,8 @@ public:
     static gStaticObject* extract(QDataStream& in);
 
     quint64 code() const;
+
+    virtual Type type() const;
 };
 
 #endif // GSTATICOBJECT_HPP

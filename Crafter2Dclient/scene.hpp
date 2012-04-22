@@ -28,6 +28,7 @@ protected:
 private:
     Position position;
     Position old_pos;
+    Position lastNearbyObjectUpdate;
     QList<QPointF> togo;
     quint64 m_idPlayer;
     cPlayer* m_player;
@@ -42,12 +43,13 @@ signals:
     void newPosition(const Position&);
 
 public slots:
-    void handleMessage(Message::Message* message);
+    void handleMessage(Message::Message* mess);
 
 private slots:
     void maj();
     void sendPosition();
     void onNewElement(cWorldElement*);
+    void onNewPosition(const Position& p);
 };
 
 #endif // SCENE_HPP

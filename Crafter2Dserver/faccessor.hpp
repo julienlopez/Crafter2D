@@ -4,6 +4,8 @@
 #include "dataaccessor.hpp"
 #include "sworldelement.hpp"
 
+#include <Position>
+
 #include <QObject>
 #include <QMap>
 
@@ -42,7 +44,7 @@ public:
         QList<quint64> res;
         S* s;
         foreach(s, buffer)
-            if(s->position().distance(pos) >= distance) res << s->id();
+            if(s->position().distance(pos) <= distance) res << s->id();
         return res;
     }
 

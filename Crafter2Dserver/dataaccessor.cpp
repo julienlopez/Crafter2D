@@ -1,6 +1,4 @@
 #include "dataaccessor.hpp"
-#include "sutils.hpp"
-
 #include "playeraccessor.hpp"
 #include "buildingaccessor.hpp"
 #include "objectaccessor.hpp"
@@ -74,7 +72,7 @@ void DataAccessor::save(sWorldElement* element, bool destroy)
 
 void DataAccessor::clearAll()
 {
-    sUtils::log() << "DataAccessor::clearAll\n";
+    qDebug() << "DataAccessor::clearAll\n";
     playerAccessor->clear();
     buildingAccessor->clear();
     objectAccessor->clear();
