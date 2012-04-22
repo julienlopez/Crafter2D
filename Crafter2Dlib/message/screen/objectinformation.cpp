@@ -11,9 +11,8 @@ WorldElement* Message::Screen::ObjectInformation::element()
     return m_element;
 }
 
-Message::Screen::ObjectInformation::ObjectInformation* Message::Screen::ObjectInformation::extract(QDataStream& in, quint64 id)
+Message::Message* Message::Screen::ObjectInformation::extract(QDataStream& in)
 {
-    Q_ASSERT(id == ObjectInformation::s_id);
     ObjectInformation* res = new ObjectInformation;
     res->m_element = WorldElement::extract(in);
     Q_ASSERT(res->m_element);
@@ -25,4 +24,10 @@ QDataStream& Message::Screen::ObjectInformation::serialize(QDataStream& out) con
     out << id();
     m_element->serialize(out);
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::ObjectInformation::s_id, &Message::Screen::ObjectInformation::extract);
+
 }

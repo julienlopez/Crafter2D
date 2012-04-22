@@ -13,7 +13,7 @@ class Screen : public Message
 public:
     Screen(quint64 id);
 
-    static Screen* extract(QDataStream& in, quint64 id);
+    static Message *extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 5000;

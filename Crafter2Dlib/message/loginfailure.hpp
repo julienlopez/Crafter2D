@@ -13,7 +13,7 @@ public:
 
     QString erreur() const;
 
-    static LoginFailure* extract(QDataStream& in);
+    static Message* extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 2;

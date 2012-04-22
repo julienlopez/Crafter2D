@@ -8,7 +8,7 @@ QString Message::LoginFailure::erreur() const
     return m_erreur;
 }
 
-Message::LoginFailure* Message::LoginFailure::extract(QDataStream& in)
+Message::Message *Message::LoginFailure::extract(QDataStream& in)
 {
     QString erreur;
     in >> erreur;
@@ -20,4 +20,10 @@ QDataStream& Message::LoginFailure::serialize(QDataStream& out) const
     out << m_id;
     out << m_erreur;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::LoginFailure::s_id, &Message::LoginFailure::extract);
+
 }

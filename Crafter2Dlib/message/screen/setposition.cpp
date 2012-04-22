@@ -8,9 +8,8 @@ Position Message::Screen::SetPosition::position() const
     return m_position;
 }
 
-Message::Screen::SetPosition* Message::Screen::SetPosition::extract(QDataStream& in, quint64 id)
+Message::Message* Message::Screen::SetPosition::extract(QDataStream& in)
 {
-    Q_ASSERT(id == SetPosition::s_id);
     Position p;
     in >> p;
     return new SetPosition(p);
@@ -21,4 +20,10 @@ QDataStream& Message::Screen::SetPosition::serialize(QDataStream& out) const
     out << m_id;
     out << m_position;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::SetPosition::s_id, &Message::Screen::SetPosition::extract);
+
 }

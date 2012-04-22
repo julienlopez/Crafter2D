@@ -22,9 +22,8 @@ Position Message::Screen::MajPosition::position() const
     return m_position;
 }
 
-Message::Screen::MajPosition* Message::Screen::MajPosition::extract(QDataStream& in, quint64 id)
+Message::Message* Message::Screen::MajPosition::extract(QDataStream& in)
 {
-    Q_ASSERT(id == MajPosition::s_id);
     quint64 obj, code;
     in >> code;
     in >> obj;
@@ -40,4 +39,10 @@ QDataStream& Message::Screen::MajPosition::serialize(QDataStream& out) const
     out << m_objectId;
     out << m_position;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::MajPosition::s_id, &Message::Screen::MajPosition::extract);
+
 }

@@ -9,9 +9,8 @@ Position Message::Screen::GetNearbyObjects::position() const
     return m_position;
 }
 
-Message::Screen::GetNearbyObjects* Message::Screen::GetNearbyObjects::extract(QDataStream& in, quint64 id)
+Message::Message *Message::Screen::GetNearbyObjects::extract(QDataStream& in)
 {
-    Q_ASSERT(id == GetNearbyObjects::s_id);
     Position position;
     in >> position;
     return new GetNearbyObjects(position);
@@ -21,4 +20,10 @@ QDataStream& Message::Screen::GetNearbyObjects::serialize(QDataStream& out) cons
 {
     out << m_id;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::GetNearbyObjects::s_id, &Message::Screen::GetNearbyObjects::extract);
+
 }

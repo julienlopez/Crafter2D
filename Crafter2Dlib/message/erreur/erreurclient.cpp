@@ -9,13 +9,12 @@ Message::Erreur::ErreurClient::ErreurClient(quint64 id, const QString& message):
     Q_ASSERT(id>=ErreurClient::s_id && id < Screen::Screen::Screen::s_id);
 }
 
-Message::Erreur::ErreurClient* Message::Erreur::ErreurClient::extract(quint64 id, QDataStream& in)
+Message::Message* Message::Erreur::ErreurClient::extract(QDataStream &in)
 {
-    Q_ASSERT(id>=ErreurClient::s_id && id < Screen::Screen::s_id);
     QString mess;
     in >> mess;
 
-    return new ErreurClient(id, mess);
+    return new ErreurClient(s_id, mess);
 }
 
 QDataStream& Message::Erreur::ErreurClient::serialize(QDataStream& out) const
@@ -23,4 +22,10 @@ QDataStream& Message::Erreur::ErreurClient::serialize(QDataStream& out) const
     out << m_id;
     out << message();
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Erreur::ErreurClient::s_id, &Message::Erreur::ErreurClient::extract);
+
 }

@@ -8,7 +8,7 @@ quint64 Message::LoginSuccess::idPlayer() const
     return m_idPlayer;
 }
 
-Message::LoginSuccess* Message::LoginSuccess::extract(QDataStream& in)
+Message::Message *Message::LoginSuccess::extract(QDataStream& in)
 {
     quint64 idPlayer;
     in >> idPlayer;
@@ -20,4 +20,10 @@ QDataStream& Message::LoginSuccess::serialize(QDataStream& out) const
     out << m_id;
     out << m_idPlayer;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::LoginSuccess::s_id, &Message::LoginSuccess::extract);
+
 }

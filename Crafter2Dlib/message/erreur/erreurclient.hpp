@@ -13,7 +13,7 @@ public:
     ErreurClient(const QString& message);
     ErreurClient(quint64 id, const QString& message);
 
-    static ErreurClient* extract(quint64 id, QDataStream& in);
+    static Message* extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 3000;

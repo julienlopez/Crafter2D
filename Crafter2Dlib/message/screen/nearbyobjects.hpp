@@ -14,7 +14,7 @@ public:
 
     explicit NearbyObjects();
 
-    static NearbyObjects* extract(QDataStream& in, quint64 id);
+    static Message* extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 5008;

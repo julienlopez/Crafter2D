@@ -15,7 +15,7 @@ public:
 
     Position position() const;
 
-    static SendPosition* extract(QDataStream& in, quint64 id);
+    static Message *extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 5003;

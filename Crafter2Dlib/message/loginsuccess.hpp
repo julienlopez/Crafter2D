@@ -13,7 +13,7 @@ public:
 
     quint64 idPlayer() const;
 
-    static LoginSuccess* extract(QDataStream& in);
+    static Message* extract(QDataStream& in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 3;

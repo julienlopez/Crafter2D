@@ -15,7 +15,7 @@ public:
     QString login() const;
     QString mdp() const;
 
-    static Login* extract(QDataStream& in);
+    static Message *extract(QDataStream& in);
     QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 1;

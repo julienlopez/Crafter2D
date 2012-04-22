@@ -13,9 +13,8 @@ quint64 Message::Screen::RequestObjectInformation::idPlayer() const
     return m_idPlayer;
 }
 
-Message::Screen::RequestObjectInformation::RequestObjectInformation* Message::Screen::RequestObjectInformation::extract(QDataStream& in, quint64 id)
+Message::Message* Message::Screen::RequestObjectInformation::extract(QDataStream& in)
 {
-    Q_ASSERT(id == RequestObjectInformation::s_id);
     quint64 code, i;
     in >> code;
     in >> i;
@@ -28,4 +27,10 @@ QDataStream& Message::Screen::RequestObjectInformation::serialize(QDataStream& o
     out << m_code;
     out << m_idPlayer;
     return out;
+}
+
+namespace {
+
+const bool registered = Message::Message::type_factory::instance().registerClasse(Message::Screen::RequestObjectInformation::s_id, &Message::Screen::RequestObjectInformation::extract);
+
 }

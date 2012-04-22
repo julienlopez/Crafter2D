@@ -14,7 +14,7 @@ public:
 
     QString message() const;
 
-    static Erreur* extract(quint64 id, QDataStream& in);
+    static Message* extract(QDataStream &in);
     virtual QDataStream& serialize(QDataStream& out) const;
 
     static const quint64 s_id = 1000;

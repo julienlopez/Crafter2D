@@ -21,15 +21,7 @@ Message::Message* Message::Message::extract(QDataStream& in)
 {
     quint64 id;
     in >> id;
-    if(id == Login::s_id) return Login::extract(in);
-    if(id == LoginFailure::s_id) return LoginFailure::extract(in);
-    if(id == LoginSuccess::s_id) return LoginSuccess::extract(in);
-
-    if(id >= Erreur::Erreur::s_id && id < Screen::Screen::s_id) return Erreur::Erreur::extract(id, in); //TODO mettre les extract dans le même ordre
-
-    if(id >= Screen::Screen::s_id) return Screen::Screen::extract(in, id);
-
-    return new Message(id);
+    return type_factory::instance().creer(id, in);
 }
 
 QDataStream& Message::Message::serialize(QDataStream& out) const
@@ -37,4 +29,3 @@ QDataStream& Message::Message::serialize(QDataStream& out) const
     out << m_id;
     return out;
 }
-
