@@ -9,19 +9,12 @@
 #include <typeinfo>
 #include <QDebug>
 
-DataAccessor DataAccessor::m_instance;
-
 DataAccessor::~DataAccessor()
 {
     delete playerAccessor;
     delete buildingAccessor;
     delete objectAccessor;
     delete staticObjectAccessor;
-}
-
-DataAccessor& DataAccessor::instance()
-{
-    return m_instance;
 }
 
 DataAccessor::DataAccessor(): QObject()

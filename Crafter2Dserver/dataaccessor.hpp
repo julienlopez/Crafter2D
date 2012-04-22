@@ -1,6 +1,8 @@
 #ifndef DATAACCESSOR_HPP
 #define DATAACCESSOR_HPP
 
+#include <Utils/Singleton>
+
 #include <QObject>
 #include <QQueue>
 
@@ -17,12 +19,13 @@ class ObjectAccessor;
 class StaticObjectAccessor;
 class QTimer;
 
-class DataAccessor : public QObject
+class DataAccessor : public QObject, public Utils::Singleton<DataAccessor>
 {
     Q_OBJECT
+
+    friend class Utils::Singleton<DataAccessor>;
 public:
     ~DataAccessor();
-    static DataAccessor& instance();
 
     static WorldElement* getWorldElement(quint64 code, quint64 id);
     static sPlayer* getPlayer(quint64 id);
@@ -45,7 +48,6 @@ private:
         bool m_destroy;
     };
 
-    static DataAccessor m_instance;
     QQueue<toSave> m_saveQueue;
 
     PlayerAccessor* playerAccessor;
